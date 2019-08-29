@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TPaperMapper">
+    
+    <resultMap type="TPaper" id="TPaperResult">
+        <result property="qid"    column="qid"    />
+        <result property="tid"    column="tid"    />
+        <result property="choose"    column="choose"    />
+        <result property="judge"    column="judge"    />
+        <result property="answer"    column="answer"    />
+    </resultMap>
+
+    <sql id="selectTPaperVo">
+        select qid, tid, choose, judge, answer from t_paper
+    </sql>
+
+    <select id="selectTPaperList" parameterType="TPaper" resultMap="TPaperResult">
+        <include refid="selectTPaperVo"/>
+        <where>  
+            <if test="tid != null "> and tid = #{tid}</if>
+            <if test="choose != null  and choose != ''"> and choose = #{choose}</if>
+            <if test="judge != null  and judge != ''"> and judge = #{judge}</if>
+            <if test="answer != null  and answer != ''"> and answer = #{answer}</if>
+        </where>
+    </select>
+    
+    <select id="selectTPaperById" parameterType="Long" resultMap="TPaperResult">
+        <include refid="selectTPaperVo"/>
+        where qid = #{qid}
+    </select>
+        
+    <insert id="insertTPaper" parameterType="TPaper" useGeneratedKeys="true" keyProperty="qid">
+        insert into t_paper
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tid != null ">tid,</if>
+            <if test="choose != null  and choose != ''">choose,</if>
+            <if test="judge != null  and judge != ''">judge,</if>
+            <if test="answer != null  and answer != ''">answer,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tid != null ">#{tid},</if>
+            <if test="choose != null  and choose != ''">#{choose},</if>
+            <if test="judge != null  and judge != ''">#{judge},</if>
+            <if test="answer != null  and answer != ''">#{answer},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTPaper" parameterType="TPaper">
+        update t_paper
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tid != null ">tid = #{tid},</if>
+            <if test="choose != null  and choose != ''">choose = #{choose},</if>
+            <if test="judge != null  and judge != ''">judge = #{judge},</if>
+            <if test="answer != null  and answer != ''">answer = #{answer},</if>
+        </trim>
+        where qid = #{qid}
+    </update>
+
+    <delete id="deleteTPaperById" parameterType="Long">
+        delete from t_paper where qid = #{qid}
+    </delete>
+
+    <delete id="deleteTPaperByIds" parameterType="String">
+        delete from t_paper where qid in 
+        <foreach item="qid" collection="array" open="(" separator="," close=")">
+            #{qid}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TTestNumberMapper">
+    
+    <resultMap type="TTestNumber" id="TTestNumberResult">
+        <result property="kid"    column="kid"    />
+        <result property="createtime"    column="createTime"    />
+        <result property="endtime"    column="endTime"    />
+        <result property="kaoshitime"    column="kaoshiTime"    />
+        <result property="tid"    column="tid"    />
+        <result property="pid"    column="pid"    />
+    </resultMap>
+
+    <sql id="selectTTestNumberVo">
+        select kid, createTime, endTime, kaoshiTime, tid, pid from t_test_number
+    </sql>
+
+    <select id="selectTTestNumberList" parameterType="TTestNumber" resultMap="TTestNumberResult">
+        <include refid="selectTTestNumberVo"/>
+        <where>  
+            <if test="createtime != null "> and createTime = #{createtime}</if>
+            <if test="endtime != null "> and endTime = #{endtime}</if>
+            <if test="kaoshitime != null  and kaoshitime != ''"> and kaoshiTime = #{kaoshitime}</if>
+            <if test="tid != null "> and tid = #{tid}</if>
+            <if test="pid != null "> and pid = #{pid}</if>
+        </where>
+    </select>
+    
+    <select id="selectTTestNumberById" parameterType="Long" resultMap="TTestNumberResult">
+        <include refid="selectTTestNumberVo"/>
+        where kid = #{kid}
+    </select>
+        
+    <insert id="insertTTestNumber" parameterType="TTestNumber" useGeneratedKeys="true" keyProperty="kid">
+        insert into t_test_number
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createtime != null ">createTime,</if>
+            <if test="endtime != null ">endTime,</if>
+            <if test="kaoshitime != null  and kaoshitime != ''">kaoshiTime,</if>
+            <if test="tid != null ">tid,</if>
+            <if test="pid != null ">pid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createtime != null ">#{createtime},</if>
+            <if test="endtime != null ">#{endtime},</if>
+            <if test="kaoshitime != null  and kaoshitime != ''">#{kaoshitime},</if>
+            <if test="tid != null ">#{tid},</if>
+            <if test="pid != null ">#{pid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTTestNumber" parameterType="TTestNumber">
+        update t_test_number
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="createtime != null ">createTime = #{createtime},</if>
+            <if test="endtime != null ">endTime = #{endtime},</if>
+            <if test="kaoshitime != null  and kaoshitime != ''">kaoshiTime = #{kaoshitime},</if>
+            <if test="tid != null ">tid = #{tid},</if>
+            <if test="pid != null ">pid = #{pid},</if>
+        </trim>
+        where kid = #{kid}
+    </update>
+
+    <delete id="deleteTTestNumberById" parameterType="Long">
+        delete from t_test_number where kid = #{kid}
+    </delete>
+
+    <delete id="deleteTTestNumberByIds" parameterType="String">
+        delete from t_test_number where kid in 
+        <foreach item="kid" collection="array" open="(" separator="," close=")">
+            #{kid}
+        </foreach>
+    </delete>
+    
+</mapper>

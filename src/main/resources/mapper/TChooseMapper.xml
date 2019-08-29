@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TChooseMapper">
+    
+    <resultMap type="TChoose" id="TChooseResult">
+        <result property="cid"    column="cid"    />
+        <result property="coment"    column="coment"    />
+        <result property="axuanxiang"    column="Axuanxiang"    />
+        <result property="bxuanxiang"    column="Bxuanxiang"    />
+        <result property="cxuanxiang"    column="Cxuanxiang"    />
+        <result property="dxuanxiang"    column="Dxuanxiang"    />
+        <result property="right"    column="right"    />
+        <result property="score"    column="score"    />
+        <result property="tid"    column="tid"    />
+        <result property="dec"    column="dec"    />
+    </resultMap>
+
+    <sql id="selectTChooseVo">
+        select cid, coment, Axuanxiang, Bxuanxiang, Cxuanxiang, Dxuanxiang, right, score, tid, dec from t_choose
+    </sql>
+
+    <select id="selectTChooseList" parameterType="TChoose" resultMap="TChooseResult">
+        <include refid="selectTChooseVo"/>
+        <where>  
+            <if test="coment != null  and coment != ''"> and coment = #{coment}</if>
+            <if test="axuanxiang != null  and axuanxiang != ''"> and Axuanxiang = #{axuanxiang}</if>
+            <if test="bxuanxiang != null  and bxuanxiang != ''"> and Bxuanxiang = #{bxuanxiang}</if>
+            <if test="cxuanxiang != null  and cxuanxiang != ''"> and Cxuanxiang = #{cxuanxiang}</if>
+            <if test="dxuanxiang != null  and dxuanxiang != ''"> and Dxuanxiang = #{dxuanxiang}</if>
+            <if test="right != null  and right != ''"> and right = #{right}</if>
+            <if test="score != null "> and score = #{score}</if>
+            <if test="tid != null "> and tid = #{tid}</if>
+            <if test="dec != null  and dec != ''"> and dec = #{dec}</if>
+        </where>
+    </select>
+    
+    <select id="selectTChooseById" parameterType="Long" resultMap="TChooseResult">
+        <include refid="selectTChooseVo"/>
+        where cid = #{cid}
+    </select>
+        
+    <insert id="insertTChoose" parameterType="TChoose" useGeneratedKeys="true" keyProperty="cid">
+        insert into t_choose
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="coment != null  and coment != ''">coment,</if>
+            <if test="axuanxiang != null  and axuanxiang != ''">Axuanxiang,</if>
+            <if test="bxuanxiang != null  and bxuanxiang != ''">Bxuanxiang,</if>
+            <if test="cxuanxiang != null  and cxuanxiang != ''">Cxuanxiang,</if>
+            <if test="dxuanxiang != null  and dxuanxiang != ''">Dxuanxiang,</if>
+            <if test="right != null  and right != ''">right,</if>
+            <if test="score != null ">score,</if>
+            <if test="tid != null ">tid,</if>
+            <if test="dec != null  and dec != ''">dec,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="coment != null  and coment != ''">#{coment},</if>
+            <if test="axuanxiang != null  and axuanxiang != ''">#{axuanxiang},</if>
+            <if test="bxuanxiang != null  and bxuanxiang != ''">#{bxuanxiang},</if>
+            <if test="cxuanxiang != null  and cxuanxiang != ''">#{cxuanxiang},</if>
+            <if test="dxuanxiang != null  and dxuanxiang != ''">#{dxuanxiang},</if>
+            <if test="right != null  and right != ''">#{right},</if>
+            <if test="score != null ">#{score},</if>
+            <if test="tid != null ">#{tid},</if>
+            <if test="dec != null  and dec != ''">#{dec},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTChoose" parameterType="TChoose">
+        update t_choose
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="coment != null  and coment != ''">coment = #{coment},</if>
+            <if test="axuanxiang != null  and axuanxiang != ''">Axuanxiang = #{axuanxiang},</if>
+            <if test="bxuanxiang != null  and bxuanxiang != ''">Bxuanxiang = #{bxuanxiang},</if>
+            <if test="cxuanxiang != null  and cxuanxiang != ''">Cxuanxiang = #{cxuanxiang},</if>
+            <if test="dxuanxiang != null  and dxuanxiang != ''">Dxuanxiang = #{dxuanxiang},</if>
+            <if test="right != null  and right != ''">right = #{right},</if>
+            <if test="score != null ">score = #{score},</if>
+            <if test="tid != null ">tid = #{tid},</if>
+            <if test="dec != null  and dec != ''">dec = #{dec},</if>
+        </trim>
+        where cid = #{cid}
+    </update>
+
+    <delete id="deleteTChooseById" parameterType="Long">
+        delete from t_choose where cid = #{cid}
+    </delete>
+
+    <delete id="deleteTChooseByIds" parameterType="String">
+        delete from t_choose where cid in 
+        <foreach item="cid" collection="array" open="(" separator="," close=")">
+            #{cid}
+        </foreach>
+    </delete>
+    
+</mapper>

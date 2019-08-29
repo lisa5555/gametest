@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TUserMapper">
+    
+    <resultMap type="TUser" id="TUserResult">
+        <result property="uid"    column="uid"    />
+        <result property="username"    column="username"    />
+        <result property="password"    column="password"    />
+    </resultMap>
+
+    <sql id="selectTUserVo">
+        select uid, username, password from t_user
+    </sql>
+
+    <select id="selectTUserList" parameterType="TUser" resultMap="TUserResult">
+        <include refid="selectTUserVo"/>
+        <where>  
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+        </where>
+    </select>
+    
+    <select id="selectTUserById" parameterType="Long" resultMap="TUserResult">
+        <include refid="selectTUserVo"/>
+        where uid = #{uid}
+    </select>
+        
+    <insert id="insertTUser" parameterType="TUser" useGeneratedKeys="true" keyProperty="uid">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null  and username != ''">username,</if>
+            <if test="password != null  and password != ''">password,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null  and username != ''">#{username},</if>
+            <if test="password != null  and password != ''">#{password},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTUser" parameterType="TUser">
+        update t_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null  and username != ''">username = #{username},</if>
+            <if test="password != null  and password != ''">password = #{password},</if>
+        </trim>
+        where uid = #{uid}
+    </update>
+
+    <delete id="deleteTUserById" parameterType="Long">
+        delete from t_user where uid = #{uid}
+    </delete>
+
+    <delete id="deleteTUserByIds" parameterType="String">
+        delete from t_user where uid in 
+        <foreach item="uid" collection="array" open="(" separator="," close=")">
+            #{uid}
+        </foreach>
+    </delete>
+    <select id="findByName" parameterType="string" resultType="TUser">
+        select * from t_user where username=#{name}
+    </select>
+
+    <select id="findRolesByName" parameterType="string" resultType="string">
+        select r.rolename from t_user u
+        inner join t_user_role ur
+        on u.uid=ur.uid
+        inner join t_role r
+        on r.rid=ur.rid
+        where u.username=#{name}
+    </select>
+
+    <select id="findPermsByName" parameterType="string" resultType="string">
+        select DISTINCT p.permision_name from t_user u
+        inner join t_user_role ur
+        on ur.uid=u.uid
+        inner join t_role_permision rp
+        on rp.rid=ur.rid
+        inner join t_permision p
+        on p.pid=rp.pid
+        where p.permision_name is not null and u.username=#{name}
+    </select>
+    
+</mapper>

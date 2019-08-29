@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TKuinfoMapper">
+    
+    <resultMap type="TKuinfo" id="TKuinfoResult">
+        <result property="kinfoid"    column="kinfoid"    />
+        <result property="kid"    column="kid"    />
+        <result property="uid"    column="uid"    />
+    </resultMap>
+
+    <sql id="selectTKuinfoVo">
+        select kinfoid, kid, uid from t_kuinfo
+    </sql>
+
+    <select id="selectTKuinfoList" parameterType="TKuinfo" resultMap="TKuinfoResult">
+        <include refid="selectTKuinfoVo"/>
+        <where>  
+            <if test="kid != null "> and kid = #{kid}</if>
+            <if test="uid != null "> and uid = #{uid}</if>
+        </where>
+    </select>
+    
+    <select id="selectTKuinfoById" parameterType="Long" resultMap="TKuinfoResult">
+        <include refid="selectTKuinfoVo"/>
+        where kinfoid = #{kinfoid}
+    </select>
+        
+    <insert id="insertTKuinfo" parameterType="TKuinfo" useGeneratedKeys="true" keyProperty="kinfoid">
+        insert into t_kuinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="kid != null ">kid,</if>
+            <if test="uid != null ">uid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="kid != null ">#{kid},</if>
+            <if test="uid != null ">#{uid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTKuinfo" parameterType="TKuinfo">
+        update t_kuinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="kid != null ">kid = #{kid},</if>
+            <if test="uid != null ">uid = #{uid},</if>
+        </trim>
+        where kinfoid = #{kinfoid}
+    </update>
+
+    <delete id="deleteTKuinfoById" parameterType="Long">
+        delete from t_kuinfo where kinfoid = #{kinfoid}
+    </delete>
+
+    <delete id="deleteTKuinfoByIds" parameterType="String">
+        delete from t_kuinfo where kinfoid in 
+        <foreach item="kinfoid" collection="array" open="(" separator="," close=")">
+            #{kinfoid}
+        </foreach>
+    </delete>
+    
+</mapper>

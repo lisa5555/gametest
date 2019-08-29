@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TOverPaperMapper">
+    
+    <resultMap type="TOverPaper" id="TOverPaperResult">
+        <result property="oid"    column="oid"    />
+        <result property="pid"    column="pid"    />
+        <result property="uid"    column="uid"    />
+        <result property="commitchoose"    column="commitChoose"    />
+        <result property="commitjudge"    column="commitJudge"    />
+        <result property="commitanswer"    column="commitAnswer"    />
+    </resultMap>
+
+    <sql id="selectTOverPaperVo">
+        select oid, pid, uid, commitChoose, commitJudge, commitAnswer from t_over_paper
+    </sql>
+
+    <select id="selectTOverPaperList" parameterType="TOverPaper" resultMap="TOverPaperResult">
+        <include refid="selectTOverPaperVo"/>
+        <where>  
+            <if test="pid != null "> and pid = #{pid}</if>
+            <if test="uid != null "> and uid = #{uid}</if>
+            <if test="commitchoose != null  and commitchoose != ''"> and commitChoose = #{commitchoose}</if>
+            <if test="commitjudge != null  and commitjudge != ''"> and commitJudge = #{commitjudge}</if>
+            <if test="commitanswer != null  and commitanswer != ''"> and commitAnswer = #{commitanswer}</if>
+        </where>
+    </select>
+    
+    <select id="selectTOverPaperById" parameterType="Long" resultMap="TOverPaperResult">
+        <include refid="selectTOverPaperVo"/>
+        where oid = #{oid}
+    </select>
+        
+    <insert id="insertTOverPaper" parameterType="TOverPaper" useGeneratedKeys="true" keyProperty="oid">
+        insert into t_over_paper
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null ">pid,</if>
+            <if test="uid != null ">uid,</if>
+            <if test="commitchoose != null  and commitchoose != ''">commitChoose,</if>
+            <if test="commitjudge != null  and commitjudge != ''">commitJudge,</if>
+            <if test="commitanswer != null  and commitanswer != ''">commitAnswer,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null ">#{pid},</if>
+            <if test="uid != null ">#{uid},</if>
+            <if test="commitchoose != null  and commitchoose != ''">#{commitchoose},</if>
+            <if test="commitjudge != null  and commitjudge != ''">#{commitjudge},</if>
+            <if test="commitanswer != null  and commitanswer != ''">#{commitanswer},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTOverPaper" parameterType="TOverPaper">
+        update t_over_paper
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="pid != null ">pid = #{pid},</if>
+            <if test="uid != null ">uid = #{uid},</if>
+            <if test="commitchoose != null  and commitchoose != ''">commitChoose = #{commitchoose},</if>
+            <if test="commitjudge != null  and commitjudge != ''">commitJudge = #{commitjudge},</if>
+            <if test="commitanswer != null  and commitanswer != ''">commitAnswer = #{commitanswer},</if>
+        </trim>
+        where oid = #{oid}
+    </update>
+
+    <delete id="deleteTOverPaperById" parameterType="Long">
+        delete from t_over_paper where oid = #{oid}
+    </delete>
+
+    <delete id="deleteTOverPaperByIds" parameterType="String">
+        delete from t_over_paper where oid in 
+        <foreach item="oid" collection="array" open="(" separator="," close=")">
+            #{oid}
+        </foreach>
+    </delete>
+    
+</mapper>

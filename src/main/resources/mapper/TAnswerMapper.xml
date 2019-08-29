@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TAnswerMapper">
+    
+    <resultMap type="TAnswer" id="TAnswerResult">
+        <result property="aid"    column="aid"    />
+        <result property="coment"    column="coment"    />
+        <result property="tid"    column="tid"    />
+        <result property="dec"    column="dec"    />
+        <result property="score"    column="score"    />
+    </resultMap>
+
+    <sql id="selectTAnswerVo">
+        select aid, coment, tid, dec, score from t_answer
+    </sql>
+
+    <select id="selectTAnswerList" parameterType="TAnswer" resultMap="TAnswerResult">
+        <include refid="selectTAnswerVo"/>
+        <where>  
+            <if test="coment != null  and coment != ''"> and coment = #{coment}</if>
+            <if test="tid != null "> and tid = #{tid}</if>
+            <if test="dec != null  and dec != ''"> and dec = #{dec}</if>
+            <if test="score != null "> and score = #{score}</if>
+        </where>
+    </select>
+    
+    <select id="selectTAnswerById" parameterType="Long" resultMap="TAnswerResult">
+        <include refid="selectTAnswerVo"/>
+        where aid = #{aid}
+    </select>
+        
+    <insert id="insertTAnswer" parameterType="TAnswer" useGeneratedKeys="true" keyProperty="aid">
+        insert into t_answer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="coment != null  and coment != ''">coment,</if>
+            <if test="tid != null ">tid,</if>
+            <if test="dec != null  and dec != ''">dec,</if>
+            <if test="score != null ">score,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="coment != null  and coment != ''">#{coment},</if>
+            <if test="tid != null ">#{tid},</if>
+            <if test="dec != null  and dec != ''">#{dec},</if>
+            <if test="score != null ">#{score},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTAnswer" parameterType="TAnswer">
+        update t_answer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="coment != null  and coment != ''">coment = #{coment},</if>
+            <if test="tid != null ">tid = #{tid},</if>
+            <if test="dec != null  and dec != ''">dec = #{dec},</if>
+            <if test="score != null ">score = #{score},</if>
+        </trim>
+        where aid = #{aid}
+    </update>
+
+    <delete id="deleteTAnswerById" parameterType="Long">
+        delete from t_answer where aid = #{aid}
+    </delete>
+
+    <delete id="deleteTAnswerByIds" parameterType="String">
+        delete from t_answer where aid in 
+        <foreach item="aid" collection="array" open="(" separator="," close=")">
+            #{aid}
+        </foreach>
+    </delete>
+    
+</mapper>

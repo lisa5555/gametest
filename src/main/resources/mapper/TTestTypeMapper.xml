@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TTestTypeMapper">
+    
+    <resultMap type="TTestType" id="TTestTypeResult">
+        <result property="tid"    column="tid"    />
+        <result property="typename"    column="typeName"    />
+    </resultMap>
+
+    <sql id="selectTTestTypeVo">
+        select tid, typeName from t_test_type
+    </sql>
+
+    <select id="selectTTestTypeList" parameterType="TTestType" resultMap="TTestTypeResult">
+        <include refid="selectTTestTypeVo"/>
+        <where>  
+            <if test="typename != null  and typename != ''"> and typeName like concat('%', #{typename}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTTestTypeById" parameterType="Long" resultMap="TTestTypeResult">
+        <include refid="selectTTestTypeVo"/>
+        where tid = #{tid}
+    </select>
+        
+    <insert id="insertTTestType" parameterType="TTestType" useGeneratedKeys="true" keyProperty="tid">
+        insert into t_test_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typename != null  and typename != ''">typeName,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="typename != null  and typename != ''">#{typename},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTTestType" parameterType="TTestType">
+        update t_test_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typename != null  and typename != ''">typeName = #{typename},</if>
+        </trim>
+        where tid = #{tid}
+    </update>
+
+    <delete id="deleteTTestTypeById" parameterType="Long">
+        delete from t_test_type where tid = #{tid}
+    </delete>
+
+    <delete id="deleteTTestTypeByIds" parameterType="String">
+        delete from t_test_type where tid in 
+        <foreach item="tid" collection="array" open="(" separator="," close=")">
+            #{tid}
+        </foreach>
+    </delete>
+    
+</mapper>

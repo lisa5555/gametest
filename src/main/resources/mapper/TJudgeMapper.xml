@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TJudgeMapper">
+    
+    <resultMap type="TJudge" id="TJudgeResult">
+        <result property="jid"    column="jid"    />
+        <result property="coment"    column="coment"    />
+        <result property="right"    column="right"    />
+        <result property="score"    column="score"    />
+        <result property="tid"    column="tid"    />
+        <result property="dec"    column="dec"    />
+    </resultMap>
+
+    <sql id="selectTJudgeVo">
+        select jid, coment, right, score, tid, dec from t_judge
+    </sql>
+
+    <select id="selectTJudgeList" parameterType="TJudge" resultMap="TJudgeResult">
+        <include refid="selectTJudgeVo"/>
+        <where>  
+            <if test="coment != null  and coment != ''"> and coment = #{coment}</if>
+            <if test="right != null  and right != ''"> and right = #{right}</if>
+            <if test="score != null  and score != ''"> and score = #{score}</if>
+            <if test="tid != null "> and tid = #{tid}</if>
+            <if test="dec != null  and dec != ''"> and dec = #{dec}</if>
+        </where>
+    </select>
+    
+    <select id="selectTJudgeById" parameterType="Long" resultMap="TJudgeResult">
+        <include refid="selectTJudgeVo"/>
+        where jid = #{jid}
+    </select>
+        
+    <insert id="insertTJudge" parameterType="TJudge" useGeneratedKeys="true" keyProperty="jid">
+        insert into t_judge
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="coment != null  and coment != ''">coment,</if>
+            <if test="right != null  and right != ''">right,</if>
+            <if test="score != null  and score != ''">score,</if>
+            <if test="tid != null ">tid,</if>
+            <if test="dec != null  and dec != ''">dec,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="coment != null  and coment != ''">#{coment},</if>
+            <if test="right != null  and right != ''">#{right},</if>
+            <if test="score != null  and score != ''">#{score},</if>
+            <if test="tid != null ">#{tid},</if>
+            <if test="dec != null  and dec != ''">#{dec},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTJudge" parameterType="TJudge">
+        update t_judge
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="coment != null  and coment != ''">coment = #{coment},</if>
+            <if test="right != null  and right != ''">right = #{right},</if>
+            <if test="score != null  and score != ''">score = #{score},</if>
+            <if test="tid != null ">tid = #{tid},</if>
+            <if test="dec != null  and dec != ''">dec = #{dec},</if>
+        </trim>
+        where jid = #{jid}
+    </update>
+
+    <delete id="deleteTJudgeById" parameterType="Long">
+        delete from t_judge where jid = #{jid}
+    </delete>
+
+    <delete id="deleteTJudgeByIds" parameterType="String">
+        delete from t_judge where jid in 
+        <foreach item="jid" collection="array" open="(" separator="," close=")">
+            #{jid}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TRoleMapper">
+    
+    <resultMap type="TRole" id="TRoleResult">
+        <result property="rid"    column="rid"    />
+        <result property="rolename"    column="rolename"    />
+    </resultMap>
+
+    <sql id="selectTRoleVo">
+        select rid, rolename from t_role
+    </sql>
+
+    <select id="selectTRoleList" parameterType="TRole" resultMap="TRoleResult">
+        <include refid="selectTRoleVo"/>
+        <where>  
+            <if test="rolename != null  and rolename != ''"> and rolename like concat('%', #{rolename}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectTRoleById" parameterType="Long" resultMap="TRoleResult">
+        <include refid="selectTRoleVo"/>
+        where rid = #{rid}
+    </select>
+        
+    <insert id="insertTRole" parameterType="TRole" useGeneratedKeys="true" keyProperty="rid">
+        insert into t_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rolename != null  and rolename != ''">rolename,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rolename != null  and rolename != ''">#{rolename},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTRole" parameterType="TRole">
+        update t_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="rolename != null  and rolename != ''">rolename = #{rolename},</if>
+        </trim>
+        where rid = #{rid}
+    </update>
+
+    <delete id="deleteTRoleById" parameterType="Long">
+        delete from t_role where rid = #{rid}
+    </delete>
+
+    <delete id="deleteTRoleByIds" parameterType="String">
+        delete from t_role where rid in 
+        <foreach item="rid" collection="array" open="(" separator="," close=")">
+            #{rid}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TUserRoleMapper">
+    
+    <resultMap type="TUserRole" id="TUserRoleResult">
+        <result property="userRoleUid"    column="user_role_uid"    />
+        <result property="rid"    column="rid"    />
+        <result property="uid"    column="uid"    />
+    </resultMap>
+
+    <sql id="selectTUserRoleVo">
+        select user_role_uid, rid, uid from t_user_role
+    </sql>
+
+    <select id="selectTUserRoleList" parameterType="TUserRole" resultMap="TUserRoleResult">
+        <include refid="selectTUserRoleVo"/>
+        <where>  
+            <if test="rid != null "> and rid = #{rid}</if>
+            <if test="uid != null "> and uid = #{uid}</if>
+        </where>
+    </select>
+    
+    <select id="selectTUserRoleById" parameterType="Long" resultMap="TUserRoleResult">
+        <include refid="selectTUserRoleVo"/>
+        where user_role_uid = #{userRoleUid}
+    </select>
+        
+    <insert id="insertTUserRole" parameterType="TUserRole" useGeneratedKeys="true" keyProperty="userRoleUid">
+        insert into t_user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rid != null ">rid,</if>
+            <if test="uid != null ">uid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rid != null ">#{rid},</if>
+            <if test="uid != null ">#{uid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTUserRole" parameterType="TUserRole">
+        update t_user_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="rid != null ">rid = #{rid},</if>
+            <if test="uid != null ">uid = #{uid},</if>
+        </trim>
+        where user_role_uid = #{userRoleUid}
+    </update>
+
+    <delete id="deleteTUserRoleById" parameterType="Long">
+        delete from t_user_role where user_role_uid = #{userRoleUid}
+    </delete>
+
+    <delete id="deleteTUserRoleByIds" parameterType="String">
+        delete from t_user_role where user_role_uid in 
+        <foreach item="userRoleUid" collection="array" open="(" separator="," close=")">
+            #{userRoleUid}
+        </foreach>
+    </delete>
+    
+</mapper>

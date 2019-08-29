@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lisa.gametest.dao.TRolePermisionMapper">
+    
+    <resultMap type="TRolePermision" id="TRolePermisionResult">
+        <result property="tRolePermisionId"    column="t_role_permision_id"    />
+        <result property="rid"    column="rid"    />
+        <result property="pid"    column="pid"    />
+    </resultMap>
+
+    <sql id="selectTRolePermisionVo">
+        select t_role_permision_id, rid, pid from t_role_permision
+    </sql>
+
+    <select id="selectTRolePermisionList" parameterType="TRolePermision" resultMap="TRolePermisionResult">
+        <include refid="selectTRolePermisionVo"/>
+        <where>  
+            <if test="rid != null "> and rid = #{rid}</if>
+            <if test="pid != null "> and pid = #{pid}</if>
+        </where>
+    </select>
+    
+    <select id="selectTRolePermisionById" parameterType="Long" resultMap="TRolePermisionResult">
+        <include refid="selectTRolePermisionVo"/>
+        where t_role_permision_id = #{tRolePermisionId}
+    </select>
+        
+    <insert id="insertTRolePermision" parameterType="TRolePermision" useGeneratedKeys="true" keyProperty="tRolePermisionId">
+        insert into t_role_permision
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rid != null ">rid,</if>
+            <if test="pid != null ">pid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rid != null ">#{rid},</if>
+            <if test="pid != null ">#{pid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTRolePermision" parameterType="TRolePermision">
+        update t_role_permision
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="rid != null ">rid = #{rid},</if>
+            <if test="pid != null ">pid = #{pid},</if>
+        </trim>
+        where t_role_permision_id = #{tRolePermisionId}
+    </update>
+
+    <delete id="deleteTRolePermisionById" parameterType="Long">
+        delete from t_role_permision where t_role_permision_id = #{tRolePermisionId}
+    </delete>
+
+    <delete id="deleteTRolePermisionByIds" parameterType="String">
+        delete from t_role_permision where t_role_permision_id in 
+        <foreach item="tRolePermisionId" collection="array" open="(" separator="," close=")">
+            #{tRolePermisionId}
+        </foreach>
+    </delete>
+    
+</mapper>
