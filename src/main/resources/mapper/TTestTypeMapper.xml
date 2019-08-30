@@ -35,6 +35,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
+    <select id="findByName" parameterType="String" resultMap="TTestTypeResult">
+        <include refid="selectTTestTypeVo"/>
+        where typeName = #{typeName}
+    </select>
+
     <update id="updateTTestType" parameterType="TTestType">
         update t_test_type
         <trim prefix="SET" suffixOverrides=",">

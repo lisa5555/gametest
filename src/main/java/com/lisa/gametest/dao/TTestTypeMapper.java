@@ -7,13 +7,20 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface TTestTypeMapper {
+
+    int insert(TTestType tTestType);
+
+    TTestType findByName(String typeName);
+
+
+
     int countByExample(TTestType example);
 
     int deleteByExample(TTestType example);
 
     int deleteByPrimaryKey(Integer tid);
 
-    int insert(TTestType record);
+
 
     int insertSelective(TTestType record);
 

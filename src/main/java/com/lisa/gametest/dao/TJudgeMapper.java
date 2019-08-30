@@ -7,25 +7,18 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface TJudgeMapper {
-    int countByExample(TJudge example);
 
-    int deleteByExample(TJudge example);
+    int deleteByTJudgeId(Integer jid);
 
-    int deleteByPrimaryKey(Integer jid);
+    int deleteTJudgeByIds(String[] arr);
 
-    int insert(TJudge record);
+    int insertTJudge(TJudge tJudge);
 
-    int insertSelective(TJudge record);
+    int insertSomeJudge(List<TJudge> list);
 
-    List<TJudge> selectByExample(TJudge example);
+    TJudge selectTJudgeById(Integer jid);
 
-    TJudge selectByPrimaryKey(Integer jid);
+    List<TJudge> selectByTid(Integer tid);
 
-    int updateByExampleSelective(@Param("record") TJudge record, @Param("example") TJudge example);
-
-    int updateByExample(@Param("record") TJudge record, @Param("example") TJudge example);
-
-    int updateByPrimaryKeySelective(TJudge record);
-
-    int updateByPrimaryKey(TJudge record);
+    int updateTJudge(TJudge tJudge);
 }

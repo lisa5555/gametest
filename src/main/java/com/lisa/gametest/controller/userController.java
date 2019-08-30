@@ -16,7 +16,7 @@ public class userController {
     @RequestMapping("/login.do")
     public AjaxResult login(String username,String password){
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        // 获取Suject主体对象
+        // 获取Subject主体对象
         Subject subject = SecurityUtils.getSubject();
         AjaxResult result = new AjaxResult();
         try {

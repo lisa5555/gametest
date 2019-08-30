@@ -7,25 +7,18 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface TAnswerMapper {
-    int countByExample(TAnswer example);
 
-    int deleteByExample(TAnswer example);
+    int deleteByTAnswerId(Integer aid);
 
-    int deleteByPrimaryKey(Integer aid);
+    int deleteTAnswerByIds(String[] arr);
 
-    int insert(TAnswer record);
+    int insert(TAnswer tAnswer);
 
-    int insertSelective(TAnswer record);
+    int insertSomeAnswer(List<TAnswer> list);
 
-    List<TAnswer> selectByExample(TAnswer example);
+    TAnswer selectTAnswerById(Integer aid);
 
-    TAnswer selectByPrimaryKey(Integer aid);
+    List<TAnswer> selectByTid(Integer tid);
 
-    int updateByExampleSelective(@Param("record") TAnswer record, @Param("example") TAnswer example);
-
-    int updateByExample(@Param("record") TAnswer record, @Param("example") TAnswer example);
-
-    int updateByPrimaryKeySelective(TAnswer record);
-
-    int updateByPrimaryKey(TAnswer record);
+    int updateTAnswer(TAnswer tAnswer);
 }

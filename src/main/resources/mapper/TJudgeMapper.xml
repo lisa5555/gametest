@@ -32,6 +32,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTJudgeVo"/>
         where jid = #{jid}
     </select>
+
+    <insert id="insertSomeJudge" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into t_answer
+        (coment, right, score, tid, dec)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.coment},
+            #{item.right},
+            #{item.score},
+            #{item.tid},
+            #{item.dec}
+            )
+        </foreach>
+    </insert>
         
     <insert id="insertTJudge" parameterType="TJudge" useGeneratedKeys="true" keyProperty="jid">
         insert into t_judge
@@ -63,11 +78,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where jid = #{jid}
     </update>
 
-    <delete id="deleteTJudgeById" parameterType="Long">
+    <delete id="deleteByTJudgeId" parameterType="Long">
         delete from t_judge where jid = #{jid}
     </delete>
 
-    <delete id="deleteTJudgeByIds" parameterType="String">
+    <delete id="deleteTJudgeByIds" parameterType="Map">
         delete from t_judge where jid in 
         <foreach item="jid" collection="array" open="(" separator="," close=")">
             #{jid}

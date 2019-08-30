@@ -40,7 +40,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTChooseVo"/>
         where cid = #{cid}
     </select>
-        
+
+    <select id="selectByTid" parameterType="int" resultMap="TChooseResult">
+        select * from t_choose where tid = #{tid}
+    </select>
+
+    <insert id="insertSomeChoose" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into t_choose
+        (coment, Axuanxiang, Bxuanxiang, Cxuanxiang, Dxuanxiang, right, score, tid, dec)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.coment},
+            #{item.Axuanxiang},
+            #{item.Bxuanxiang},
+            #{item.Cxuanxiang},
+            #{item.Dxuanxiang},
+            #{item.right},
+            #{item.score},
+            #{item.tid},
+            #{item.dec}
+            )
+        </foreach>
+    </insert>
+
     <insert id="insertTChoose" parameterType="TChoose" useGeneratedKeys="true" keyProperty="cid">
         insert into t_choose
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -83,11 +106,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where cid = #{cid}
     </update>
 
-    <delete id="deleteTChooseById" parameterType="Long">
+    <delete id="deleteByTChooseId" parameterType="Long">
         delete from t_choose where cid = #{cid}
     </delete>
 
-    <delete id="deleteTChooseByIds" parameterType="String">
+    <delete id="deleteTChooseByIds" parameterType="Map">
         delete from t_choose where cid in 
         <foreach item="cid" collection="array" open="(" separator="," close=")">
             #{cid}

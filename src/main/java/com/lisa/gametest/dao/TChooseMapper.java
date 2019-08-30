@@ -7,25 +7,20 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface TChooseMapper {
-    int countByExample(TChoose example);
 
-    int deleteByExample(TChoose example);
+    int deleteByTChooseId(Integer cid);
 
-    int deleteByPrimaryKey(Integer cid);
+    int deleteTChooseByIds(String[] array);
 
-    int insert(TChoose record);
+    int insert(TChoose tChoose);
 
-    int insertSelective(TChoose record);
+    int insertSomeChoose(List<TChoose> list);
 
-    List<TChoose> selectByExample(TChoose example);
+    int updateTChoose(TChoose tChoose);
 
-    TChoose selectByPrimaryKey(Integer cid);
+    List<TChoose> selectByTid(Integer tid);
 
-    int updateByExampleSelective(@Param("record") TChoose record, @Param("example") TChoose example);
+    TChoose selectTChooseById(Integer cid);
 
-    int updateByExample(@Param("record") TChoose record, @Param("example") TChoose example);
 
-    int updateByPrimaryKeySelective(TChoose record);
-
-    int updateByPrimaryKey(TChoose record);
 }
