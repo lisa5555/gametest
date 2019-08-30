@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface TOverPaperMapper {
 
-    public void findAllOverPaper();
+
 
 }
