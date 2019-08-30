@@ -2,12 +2,16 @@ package com.lisa.gametest.service.impl;
 
 
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.lisa.gametest.dao.TJudgeMapper;
 import com.lisa.gametest.entity.TJudge;
 import com.lisa.gametest.service.ITJudgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class TJudgeServiceImpl implements ITJudgeService {
@@ -41,12 +45,25 @@ public class TJudgeServiceImpl implements ITJudgeService {
     }
 
     @Override
-    public List<TJudge> selectByTid(Integer tid) {
-        return tJudgeMapper.selectByTid(tid);
+    public int updateTJudge(TJudge tJudge) {
+        return tJudgeMapper.updateTJudge(tJudge);
     }
 
     @Override
-    public int updateTJudge(TJudge tJudge) {
-        return tJudgeMapper.updateTJudge(tJudge);
+    public Map<String, Object> selectBySearch(Integer page, Integer limit, Integer tid, String searchName, Integer score) {
+        PageHelper.startPage(page,limit);
+        List<TJudge> list = tJudgeMapper.selectBySearch(tid,searchName,score);
+
+        // 获取总记录数
+        long total = ((Page) list).getTotal();
+        // 获取总页数
+        int pages = ((Page) list).getPages();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", total);
+        map.put("data", list);
+        return map;
     }
 }

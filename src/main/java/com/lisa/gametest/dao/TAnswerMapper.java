@@ -18,7 +18,7 @@ public interface TAnswerMapper {
 
     TAnswer selectTAnswerById(Integer aid);
 
-    List<TAnswer> selectByTid(Integer tid);
+    List<TAnswer> selectBySearch(@Param("tid") Integer tid, @Param("searchName") String searchName, @Param("score") Integer score);
 
     int updateTAnswer(TAnswer tAnswer);
 }

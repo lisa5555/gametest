@@ -24,11 +24,16 @@ public class TJudgeController {
     @Autowired(required = false)
     private ITJudgeService itJudgeService;
 
-    @RequestMapping("/addTjudge")
+    /**
+     * 添加判断题
+     * @param tJudge
+     * @return
+     */
+    @RequestMapping("/addTJudge")
     @ResponseBody
     public AjaxResult addJudge(TJudge tJudge){
         try {
-            itJudgeService.insert(tJudge);
+            itJudgeService.insertTJudge(tJudge);
         }catch (Exception e) {
             e.printStackTrace();
             return new AjaxResult(0,"添加失败");
@@ -41,7 +46,7 @@ public class TJudgeController {
      * @param upfile
      * @return
      */
-    @RequestMapping("/importTjudge")
+    @RequestMapping("/importTJudge")
     @ResponseBody
     public AjaxResult importExcel(@RequestParam MultipartFile upfile){
 
@@ -64,5 +69,88 @@ public class TJudgeController {
         return new AjaxResult(1,null);
     }
 
+
+    /**
+     * 根据id删除
+     * @param jid
+     * @return
+     */
+    @RequestMapping("/deleteTJudge")
+    @ResponseBody
+    public AjaxResult deleteTJudge(Integer jid) {
+        try {
+            itJudgeService.deleteByTJudgeId(jid);
+            return new AjaxResult(1, null);
+        } catch (Exception e) {
+            return new AjaxResult(0,"更新失败");
+        }
+    }
+
+
+    /**
+     * 批量删除
+     * @param string
+     * @return
+     */
+    @RequestMapping("/deleteTSomeJudge")
+    @ResponseBody
+    public AjaxResult deleteSomeTJudge(String string) {
+        String[] array = string.split(",");
+
+        try {
+            itJudgeService.deleteTJudgeByIds(array);
+            return new AjaxResult(1,null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AjaxResult(0, "批量删除失败");
+        }
+    }
+
+
+    /**
+     * 根据id查找
+     * @param jid
+     * @return
+     */
+    @RequestMapping("/findTJudge")
+    @ResponseBody
+    public AjaxResult queryTJudge(Integer jid) {
+        TJudge tJudge = itJudgeService.selectTJudgeById(jid);
+        return new AjaxResult(1, tJudge);
+    }
+
+
+    /**
+     * 更新判断题
+     * @param tJudge
+     * @return
+     */
+    @RequestMapping("/updateTJudge")
+    @ResponseBody
+    public AjaxResult updateTJudge(TJudge tJudge) {
+        try {
+            itJudgeService.updateTJudge(tJudge);
+            return new AjaxResult(1, null);
+        } catch (Exception e) {
+            return new AjaxResult(0, "更新失败");
+        }
+    }
+
+    /**
+     * 查找当前课程有关的多有判断题
+     * @param page
+     * @param limit
+     * @param searchName
+     * @param score
+     * @param tid
+     * @return
+     */
+    @RequestMapping("/listTJudge")
+    @ResponseBody
+    public Map<String, Object> queryByTid(Integer page, Integer limit, String searchName, Integer score, Integer tid){
+        Map<String, Object> map = itJudgeService.selectBySearch(page, limit, tid, searchName, score);
+        return map;
+
+    }
 
 }

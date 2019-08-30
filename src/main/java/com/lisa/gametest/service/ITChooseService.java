@@ -4,6 +4,7 @@ package com.lisa.gametest.service;
 import com.lisa.gametest.entity.TChoose;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface ITChooseService {
@@ -18,7 +19,9 @@ public interface ITChooseService {
 
     public int updateTChoose(TChoose tChoose);
 
-    public List<TChoose> selectByTid(Integer tid);
 
     public TChoose selectTChooseById(Integer cid);
+
+    public Map<String,Object> selectBySearch(Integer page, Integer limit,Integer tid, String searchName, Integer score);
+
 }

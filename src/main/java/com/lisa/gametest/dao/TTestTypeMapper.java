@@ -28,11 +28,4 @@ public interface TTestTypeMapper {
 
     TTestType selectByPrimaryKey(Integer tid);
 
-    int updateByExampleSelective(@Param("record") TTestType record, @Param("example") TTestType example);
-
-    int updateByExample(@Param("record") TTestType record, @Param("example") TTestType example);
-
-    int updateByPrimaryKeySelective(TTestType record);
-
-    int updateByPrimaryKey(TTestType record);
 }

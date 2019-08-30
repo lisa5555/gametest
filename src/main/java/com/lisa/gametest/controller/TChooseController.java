@@ -26,9 +26,9 @@ public class TChooseController {
     @Autowired
     private ITChooseService itChooseService;
 
-    @RequestMapping("/addTchoose")
+    @RequestMapping("/addTChoose")
     @ResponseBody
-    public AjaxResult addTchoose(TChoose tChoose){
+    public AjaxResult addTChoose(TChoose tChoose){
         try{
             itChooseService.insert(tChoose);
         }catch (Exception e) {
@@ -42,7 +42,7 @@ public class TChooseController {
      * @param upfile
      * @return
      */
-    @RequestMapping("/importTchoose")
+    @RequestMapping("/importTChoose")
     @ResponseBody
     public AjaxResult importExcel(@RequestParam MultipartFile upfile){
 
@@ -66,7 +66,7 @@ public class TChooseController {
     }
 
     /**
-     * 根据Tchoose的id查找
+     * 根据TChoose的id查找
      * @param id
      * @return
      */
@@ -100,7 +100,7 @@ public class TChooseController {
      * @param string
      * @return
      */
-    @RequestMapping("/")
+    @RequestMapping("/deleteSomeTChoose")
     @ResponseBody
     public AjaxResult deleteSomeTChoose(String string) {
         //根据传入的字符串进行切割，得到字符串数组
@@ -119,7 +119,7 @@ public class TChooseController {
      * @param tChoose
      * @return
      */
-    @RequestMapping("/")
+    @RequestMapping("/updateTChoose")
     @ResponseBody
     public AjaxResult updateTChoose(TChoose tChoose) {
         try {
@@ -132,28 +132,15 @@ public class TChooseController {
 
 
     /**
-     * 根据选择题id进行查询
-     * @param id
-     * @return
-     */
-    @RequestMapping("/")
-    @ResponseBody
-    public AjaxResult queryChoose(Integer id){
-        TChoose tChoose = itChooseService.selectTChooseById(id);
-        return new AjaxResult(1,tChoose);
-    }
-
-
-    /**
      * 根据tid进行查询
      * @param tid
      * @return
      */
-    @RequestMapping("/")
+    @RequestMapping("/listTChoose")
     @ResponseBody
-    public AjaxResult queryByTid(Integer tid){
-        List<TChoose> tChooseList = itChooseService.selectByTid(tid);
-        return new AjaxResult(1,tChooseList);
+    public Map<String, Object> queryByTid(Integer page, Integer limit, String searchName, Integer score, Integer tid){
+        Map<String, Object> map = itChooseService.selectBySearch(page, limit, tid, searchName, score);
+        return map;
 
     }
 

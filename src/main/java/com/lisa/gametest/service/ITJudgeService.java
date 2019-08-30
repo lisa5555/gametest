@@ -4,6 +4,7 @@ package com.lisa.gametest.service;
 import com.lisa.gametest.entity.TJudge;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface ITJudgeService 
@@ -19,8 +20,9 @@ public interface ITJudgeService
 
     public TJudge selectTJudgeById(Integer jid);
 
-    public List<TJudge> selectByTid(Integer tid);
-
     public int updateTJudge(TJudge tJudge);
+
+    public Map<String,Object> selectBySearch(Integer page, Integer limit, Integer tid, String searchName, Integer score);
+
 
 }

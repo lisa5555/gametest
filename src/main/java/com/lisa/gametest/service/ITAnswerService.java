@@ -4,6 +4,7 @@ package com.lisa.gametest.service;
 import com.lisa.gametest.entity.TAnswer;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ITAnswerService {
 
@@ -17,8 +18,9 @@ public interface ITAnswerService {
 
      public TAnswer selectTAnswerById(Integer aid);
 
-     public List<TAnswer> selectByTid(Integer tid);
-
      public int updateTAnswer(TAnswer tAnswer);
+
+     public Map<String,Object> selectBySearch(Integer page, Integer limit,Integer tid, String searchName, Integer score);
+
 
 }

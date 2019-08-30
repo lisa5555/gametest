@@ -75,7 +75,7 @@ public class TAnswerController {
      */
     @RequestMapping("/")
     @ResponseBody
-    public AjaxResult deleteTanswer(Integer aid){
+    public AjaxResult deleteTAnswer(Integer aid){
 
         itAnswerService.deleteByTAnswerId(aid);
         return new AjaxResult(1,null);
@@ -118,17 +118,17 @@ public class TAnswerController {
      * @param tid
      * @return
      */
-    @RequestMapping("/")
+    @RequestMapping("/listTAnswer")
     @ResponseBody
-    public AjaxResult selectSomeTAnswer(Integer tid){
-        List<TAnswer> tAnswerList = itAnswerService.selectByTid(tid);
-        return new AjaxResult(1,tAnswerList);
+    public Map<String, Object> selectSomeTAnswer(Integer tid,String searchName,Integer score,Integer page, Integer limit){
+        Map<String, Object> map = itAnswerService.selectBySearch(page, limit, tid, searchName, score);
+        return map;
     }
 
 
-    @RequestMapping("/updateTAswer")
+    @RequestMapping("/updateTAnswer")
     @ResponseBody
-    public AjaxResult updateTAswer(TAnswer tAnswer) {
+    public AjaxResult updateTAnswer(TAnswer tAnswer) {
         try {
             itAnswerService.updateTAnswer(tAnswer);
             return new AjaxResult(1,null);

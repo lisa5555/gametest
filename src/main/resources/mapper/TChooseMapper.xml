@@ -41,8 +41,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where cid = #{cid}
     </select>
 
-    <select id="selectByTid" parameterType="int" resultMap="TChooseResult">
-        select * from t_choose where tid = #{tid}
+
+    <select id="selectBySearch" parameterType="map" resultMap="TChooseResult">
+        select * from t_choose t
+        where 1 = 1
+        <if test="tid != null">
+            and t.tid = #{tid}
+        </if>
+        <if test="searchName != null ">
+            and t.coment like "%${searchName}%"
+        </if>
+        <if test="score != null">
+            and t.score = #{score}
+        </if>
     </select>
 
     <insert id="insertSomeChoose" parameterType="java.util.List" useGeneratedKeys="true">

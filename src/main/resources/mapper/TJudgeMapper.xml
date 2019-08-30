@@ -28,9 +28,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectTJudgeById" parameterType="Long" resultMap="TJudgeResult">
-        <include refid="selectTJudgeVo"/>
-        where jid = #{jid}
+
+
+    <select id="selectByTid" parameterType="map" resultMap="TJudgeResult">
+        select * from t_judge t
+        where 1 = 1
+        <if test="tid != null">
+            and t.tid = #{tid}
+        </if>
+        <if test="searchName != null ">
+            and t.coment like "%${searchName}%"
+        </if>
+        <if test="score != null">
+            and t.score = #{score}
+        </if>
     </select>
 
     <insert id="insertSomeJudge" parameterType="java.util.List" useGeneratedKeys="true">

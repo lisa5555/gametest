@@ -18,9 +18,8 @@ public interface TChooseMapper {
 
     int updateTChoose(TChoose tChoose);
 
-    List<TChoose> selectByTid(Integer tid);
-
     TChoose selectTChooseById(Integer cid);
 
+    List<TChoose> selectBySearch(@Param("tid") Integer tid, @Param("searchName") String searchName, @Param("score") Integer score);
 
 }
