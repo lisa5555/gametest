@@ -81,5 +81,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         on p.pid=rp.pid
         where p.permision_name is not null and u.username=#{name}
     </select>
+
+
+    <select id="findAll" resultType="TUser">
+        select * from t_user
+    </select>
+
+    <select id="findAllByLimit"  resultType="TUser">
+        select * from t_user
+    </select>
+
+
     
 </mapper>

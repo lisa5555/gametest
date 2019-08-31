@@ -15,25 +15,16 @@ public interface TUserMapper {
     // 根据登陆用户的用户名获取权限信息
     public List<String> findPermsByName(String name);
 
-    int countByExample(TUser example);
-
-    int deleteByExample(TUser example);
-
-    int deleteByPrimaryKey(Integer uid);
-
-    int insert(TUser record);
-
-    int insertSelective(TUser record);
-
-    List<TUser> selectByExample(TUser example);
-
-    TUser selectByPrimaryKey(Integer uid);
-
-    int updateByExampleSelective(@Param("record") TUser record, @Param("example") TUser example);
-
-    int updateByExample(@Param("record") TUser record, @Param("example") TUser example);
-
-    int updateByPrimaryKeySelective(TUser record);
-
-    int updateByPrimaryKey(TUser record);
+    // 获取所有用户信息的list集合
+    public List<TUser> findAll();
+    // 分页获取用户信息
+    public List<TUser> findAllByLimit();
+    // 添加用户信息
+    public void add(TUser tUser);
+    // 通过id修改用户信息
+    public TUser queryById(Integer id);
+    // 修改用户信息
+    public void update(TUser tUser);
+    // 删除指定id的用户
+    public void deleteById(Integer id);
 }

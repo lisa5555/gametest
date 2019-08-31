@@ -1,5 +1,6 @@
 package com.lisa.gametest.controller;
 
+import com.github.pagehelper.Page;
 import com.lisa.gametest.common.AjaxResult;
 import com.lisa.gametest.entity.TUser;
 import com.lisa.gametest.service.ITUserService;
@@ -12,7 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @ResponseBody
@@ -41,4 +46,129 @@ public class userController {
             return result;
         }
     }
+
+    /**
+     * 查询所有用户信息
+     * @return
+     *     成功返回 AjaxResult
+     */
+    @RequestMapping("query.do")
+    public AjaxResult findAll() {
+
+        AjaxResult ajaxResult = new AjaxResult();
+
+        try {
+            List<TUser> list = service.findAll();
+            ajaxResult.setCode(0);
+            ajaxResult.setInfo(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxResult.setCode(1);
+            ajaxResult.setInfo(null);
+        }
+        return ajaxResult;
+    }
+
+    /**
+     *  分页查询所有数据
+     * @param page
+     * @param limit
+     * @return
+     */
+    @RequestMapping("/queryLimit.do")
+    public Map<String,Object> findAllByLimit(Integer page, Integer limit){
+        List<TUser> list = service.findAllByLimit(page, limit);
+        long total = ((Page) list).getTotal();
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", total);
+        map.put("data", list);
+        return map;
+    }
+
+    /**
+     * 添加用户信息
+     * @param tUser
+     * @return
+     */
+    @RequestMapping("/add.do")
+    public AjaxResult add(TUser tUser){
+        AjaxResult ajaxResult = new AjaxResult();
+        try {
+            service.add(tUser);
+            ajaxResult.setCode(0);
+            ajaxResult.setInfo(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxResult.setCode(1);
+            ajaxResult.setInfo(e.getMessage());
+        }
+        return ajaxResult;
+    }
+
+    /**
+     *  查找指定id用户
+     */
+    @RequestMapping("/queryById.do")
+    public AjaxResult queryById(HttpServletRequest request){
+        String id = request.getParameter("id");
+        AjaxResult asonResult = new AjaxResult();
+        try {
+            TUser s = service.queryById(Integer.parseInt(id));
+            asonResult.setCode(0);
+            asonResult.setInfo(s);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            asonResult.setCode(1);
+            asonResult.setInfo(e.getMessage());
+        }
+
+        return asonResult;
+    }
+
+    /**
+     * 修改指定用户信息
+     * @param s
+     * @param request
+     * @return
+     */
+    @RequestMapping("/update.do")
+    public AjaxResult update(TUser s, HttpServletRequest request){
+        String id = request.getParameter("id");
+        AjaxResult asonResult = new AjaxResult();
+        try {
+            s.setUid(Integer.parseInt(id));
+            service.update(s);
+            asonResult.setCode(0);
+            asonResult.setInfo(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            asonResult.setCode(1);
+            asonResult.setInfo(e.getMessage());
+        }
+        return asonResult;
+    }
+
+    /**
+     * 删除指定id用户
+     * @param id
+     * @return
+     */
+    @RequestMapping("/delete.do")
+    public AjaxResult deleteById(Integer id){
+        AjaxResult asonResult = new AjaxResult();
+        try {
+            service.deleteById(id);
+            asonResult.setCode(0);
+            asonResult.setInfo(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            asonResult.setCode(1);
+            asonResult.setInfo(e.getMessage());
+        }
+        return asonResult;
+    }
+
+
 }
