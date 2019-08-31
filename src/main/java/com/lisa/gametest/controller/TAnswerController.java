@@ -73,7 +73,7 @@ public class TAnswerController {
      * @param aid
      * @return
      */
-    @RequestMapping("/")
+    @RequestMapping("/deleteTAnswer")
     @ResponseBody
     public AjaxResult deleteTAnswer(Integer aid){
 
@@ -87,7 +87,7 @@ public class TAnswerController {
      * @param string
      * @return
      */
-    @RequestMapping("/")
+    @RequestMapping("/deleteSomeTAnswer")
     @ResponseBody
     public AjaxResult deleteSomeTAnswer(String string) {
         String[] array = string.split(",");
@@ -105,7 +105,7 @@ public class TAnswerController {
      * @param aid
      * @return
      */
-    @RequestMapping("/")
+    @RequestMapping("/findTAnswer")
     @ResponseBody
     public AjaxResult queryTAnswer(Integer aid) {
         TAnswer tAnswer = itAnswerService.selectTAnswerById(aid);
