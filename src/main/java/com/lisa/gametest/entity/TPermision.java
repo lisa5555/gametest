@@ -1,5 +1,7 @@
 package com.lisa.gametest.entity;
 
+import java.util.List;
+
 public class TPermision {
     private Integer pid;
 
@@ -12,6 +14,15 @@ public class TPermision {
     private String resourceType;
 
     private String url;
+    private List<TPermision> tPermisionlist;
+
+    public List<TPermision> gettPermisionlist() {
+        return tPermisionlist;
+    }
+
+    public void settPermisionlist(List<TPermision> tPermisionlist) {
+        this.tPermisionlist = tPermisionlist;
+    }
 
     public Integer getPid() {
         return pid;
@@ -55,6 +66,19 @@ public class TPermision {
 
     public String getUrl() {
         return url;
+    }
+
+    @Override
+    public String toString() {
+        return "TPermision{" +
+                "pid=" + pid +
+                ", resourceName='" + resourceName + '\'' +
+                ", parentId=" + parentId +
+                ", permisionName='" + permisionName + '\'' +
+                ", resourceType='" + resourceType + '\'' +
+                ", url='" + url + '\'' +
+                ", tPermisionlist=" + tPermisionlist +
+                '}';
     }
 
     public void setUrl(String url) {

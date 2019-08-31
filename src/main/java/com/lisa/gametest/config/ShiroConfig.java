@@ -32,11 +32,13 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // authc:必须认证通过才可以访问;
         // anon: 匿名访问
-        filterChainDefinitionMap.put("/assets/js/**", "anon");
-        filterChainDefinitionMap.put("/assets/css/**", "anon");
-        filterChainDefinitionMap.put("/assets/fonts/**", "anon");
-        filterChainDefinitionMap.put("/assets/img/**", "anon");
-        filterChainDefinitionMap.put("/assets/sass/**", "anon");
+        filterChainDefinitionMap.put("/assets/**", "anon");
+        filterChainDefinitionMap.put("/layuiadmin/**", "anon");
+        filterChainDefinitionMap.put("/views/**", "anon");
+//        filterChainDefinitionMap.put("/assets/css/**", "anon");
+//        filterChainDefinitionMap.put("/assets/fonts/**", "anon");
+//        filterChainDefinitionMap.put("/assets/img/**", "anon");
+//        filterChainDefinitionMap.put("/assets/sass/**", "anon");
 //        filterChainDefinitionMap.put("/login.html", "anon");
         filterChainDefinitionMap.put("/user/login.*", "anon");
 

@@ -11,67 +11,87 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="permisionName"    column="permision_name"    />
         <result property="resourceType"    column="resource_type"    />
         <result property="url"    column="url"    />
+        <collection property="tPermisionlist" javaType="list" ofType="TPermision">
+            <result property="pid"    column="pid"    />
+            <result property="resourceName"    column="resource_name1"    />
+            <result property="parentId"    column="parent_id"    />
+            <result property="permisionName"    column="permision_name"    />
+            <result property="resourceType"    column="resource_type"    />
+            <result property="url"    column="url1"    />
+        </collection>
     </resultMap>
 
-    <sql id="selectTPermisionVo">
-        select pid, resource_name, parent_id, permision_name, resource_type, url from t_permision
-    </sql>
+<!--    <sql id="selectTPermisionVo">-->
+<!--        select pid, resource_name, parent_id, permision_name, resource_type, url from t_permision-->
+<!--    </sql>-->
 
-    <select id="selectTPermisionList" parameterType="TPermision" resultMap="TPermisionResult">
-        <include refid="selectTPermisionVo"/>
-        <where>  
-            <if test="resourceName != null  and resourceName != ''"> and resource_name like concat('%', #{resourceName}, '%')</if>
-            <if test="parentId != null "> and parent_id = #{parentId}</if>
-            <if test="permisionName != null  and permisionName != ''"> and permision_name like concat('%', #{permisionName}, '%')</if>
-            <if test="resourceType != null  and resourceType != ''"> and resource_type = #{resourceType}</if>
-            <if test="url != null  and url != ''"> and url = #{url}</if>
-        </where>
+<!--    <select id="selectTPermisionList" parameterType="TPermision" resultMap="TPermisionResult">-->
+<!--        <include refid="selectTPermisionVo"/>-->
+<!--        <where>  -->
+<!--            <if test="resourceName != null  and resourceName != ''"> and resource_name like concat('%', #{resourceName}, '%')</if>-->
+<!--            <if test="parentId != null "> and parent_id = #{parentId}</if>-->
+<!--            <if test="permisionName != null  and permisionName != ''"> and permision_name like concat('%', #{permisionName}, '%')</if>-->
+<!--            <if test="resourceType != null  and resourceType != ''"> and resource_type = #{resourceType}</if>-->
+<!--            <if test="url != null  and url != ''"> and url = #{url}</if>-->
+<!--        </where>-->
+<!--    </select>-->
+<!--    -->
+<!--    <select id="selectTPermisionById" parameterType="Long" resultMap="TPermisionResult">-->
+<!--        <include refid="selectTPermisionVo"/>-->
+<!--        where pid = #{pid}-->
+<!--    </select>-->
+<!--        -->
+<!--    <insert id="insertTPermision" parameterType="TPermision" useGeneratedKeys="true" keyProperty="pid">-->
+<!--        insert into t_permision-->
+<!--        <trim prefix="(" suffix=")" suffixOverrides=",">-->
+<!--            <if test="resourceName != null  and resourceName != ''">resource_name,</if>-->
+<!--            <if test="parentId != null ">parent_id,</if>-->
+<!--            <if test="permisionName != null  and permisionName != ''">permision_name,</if>-->
+<!--            <if test="resourceType != null  and resourceType != ''">resource_type,</if>-->
+<!--            <if test="url != null  and url != ''">url,</if>-->
+<!--         </trim>-->
+<!--        <trim prefix="values (" suffix=")" suffixOverrides=",">-->
+<!--            <if test="resourceName != null  and resourceName != ''">#{resourceName},</if>-->
+<!--            <if test="parentId != null ">#{parentId},</if>-->
+<!--            <if test="permisionName != null  and permisionName != ''">#{permisionName},</if>-->
+<!--            <if test="resourceType != null  and resourceType != ''">#{resourceType},</if>-->
+<!--            <if test="url != null  and url != ''">#{url},</if>-->
+<!--         </trim>-->
+<!--    </insert>-->
+
+<!--    <update id="updateTPermision" parameterType="TPermision">-->
+<!--        update t_permision-->
+<!--        <trim prefix="SET" suffixOverrides=",">-->
+<!--            <if test="resourceName != null  and resourceName != ''">resource_name = #{resourceName},</if>-->
+<!--            <if test="parentId != null ">parent_id = #{parentId},</if>-->
+<!--            <if test="permisionName != null  and permisionName != ''">permision_name = #{permisionName},</if>-->
+<!--            <if test="resourceType != null  and resourceType != ''">resource_type = #{resourceType},</if>-->
+<!--            <if test="url != null  and url != ''">url = #{url},</if>-->
+<!--        </trim>-->
+<!--        where pid = #{pid}-->
+<!--    </update>-->
+
+<!--    <delete id="deleteTPermisionById" parameterType="Long">-->
+<!--        delete from t_permision where pid = #{pid}-->
+<!--    </delete>-->
+
+<!--    <delete id="deleteTPermisionByIds" parameterType="String">-->
+<!--        delete from t_permision where pid in -->
+<!--        <foreach item="pid" collection="array" open="(" separator="," close=")">-->
+<!--            #{pid}-->
+<!--        </foreach>-->
+<!--    </delete>-->
+    <select id="findpermisionByName" parameterType="int" resultMap="TPermisionResult">
+       select DISTINCT p.resource_name,p.url,s.resource_name resource_name1,s.url url1 from t_permision p
+		INNER JOIN t_permision s
+		on s.parent_id=p.pid
+        inner join t_role_permision rp
+        on p.pid=rp.pid
+        inner join t_user_role ur
+        on rp.rid=ur.rid
+        inner join t_user u
+        on ur.uid=u.uid
+        where u.uid=${uid}
     </select>
-    
-    <select id="selectTPermisionById" parameterType="Long" resultMap="TPermisionResult">
-        <include refid="selectTPermisionVo"/>
-        where pid = #{pid}
-    </select>
-        
-    <insert id="insertTPermision" parameterType="TPermision" useGeneratedKeys="true" keyProperty="pid">
-        insert into t_permision
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="resourceName != null  and resourceName != ''">resource_name,</if>
-            <if test="parentId != null ">parent_id,</if>
-            <if test="permisionName != null  and permisionName != ''">permision_name,</if>
-            <if test="resourceType != null  and resourceType != ''">resource_type,</if>
-            <if test="url != null  and url != ''">url,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="resourceName != null  and resourceName != ''">#{resourceName},</if>
-            <if test="parentId != null ">#{parentId},</if>
-            <if test="permisionName != null  and permisionName != ''">#{permisionName},</if>
-            <if test="resourceType != null  and resourceType != ''">#{resourceType},</if>
-            <if test="url != null  and url != ''">#{url},</if>
-         </trim>
-    </insert>
-
-    <update id="updateTPermision" parameterType="TPermision">
-        update t_permision
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="resourceName != null  and resourceName != ''">resource_name = #{resourceName},</if>
-            <if test="parentId != null ">parent_id = #{parentId},</if>
-            <if test="permisionName != null  and permisionName != ''">permision_name = #{permisionName},</if>
-            <if test="resourceType != null  and resourceType != ''">resource_type = #{resourceType},</if>
-            <if test="url != null  and url != ''">url = #{url},</if>
-        </trim>
-        where pid = #{pid}
-    </update>
-
-    <delete id="deleteTPermisionById" parameterType="Long">
-        delete from t_permision where pid = #{pid}
-    </delete>
-
-    <delete id="deleteTPermisionByIds" parameterType="String">
-        delete from t_permision where pid in 
-        <foreach item="pid" collection="array" open="(" separator="," close=")">
-            #{pid}
-        </foreach>
-    </delete>
     
 </mapper>
