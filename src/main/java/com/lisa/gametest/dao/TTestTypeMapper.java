@@ -8,24 +8,20 @@ import java.util.List;
 
 public interface TTestTypeMapper {
 
-    int insert(TTestType tTestType);
+    List<TTestType> findAll();
+
+    int insertTTestType(TTestType tTestType);
 
     TTestType findByName(String typeName);
 
+    TTestType findById(Integer tid);
 
+    int deleteTTestType(Integer tid);
 
-    int countByExample(TTestType example);
+    int deleteTTestTypeByIds(String[] arr);
 
-    int deleteByExample(TTestType example);
+    List<TTestType> selectBySearch(String searchName);
 
-    int deleteByPrimaryKey(Integer tid);
-
-
-
-    int insertSelective(TTestType record);
-
-    List<TTestType> selectByExample(TTestType example);
-
-    TTestType selectByPrimaryKey(Integer tid);
+    int updateTTestType(TTestType tTestType);
 
 }

@@ -19,10 +19,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="typename != null  and typename != ''"> and typeName like concat('%', #{typename}, '%')</if>
         </where>
     </select>
+
+    <select id="findAll" resultMap="TTestTypeResult">
+        select * from t_test_type
+    </select>
+
+    <select id="selectBySearch" parameterType="map" resultMap="TTestTypeResult">
+    select * from t_test_type t
+    where 1 = 1
+        <if test="searchName != null ">
+            and t.typeName like "%${searchName}%"
+        </if>
+    </select>
     
-    <select id="selectTTestTypeById" parameterType="Long" resultMap="TTestTypeResult">
+    <select id="findById" parameterType="Long" resultMap="TTestTypeResult">
         <include refid="selectTTestTypeVo"/>
         where tid = #{tid}
+    </select>
+
+    <select id="findByName" parameterType="String" resultMap="TTestTypeResult">
+        <include refid="selectTTestTypeVo"/>
+        where typeName = #{typeName}
     </select>
         
     <insert id="insertTTestType" parameterType="TTestType" useGeneratedKeys="true" keyProperty="tid">
@@ -35,11 +52,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <select id="findByName" parameterType="String" resultMap="TTestTypeResult">
-        <include refid="selectTTestTypeVo"/>
-        where typeName = #{typeName}
-    </select>
-
     <update id="updateTTestType" parameterType="TTestType">
         update t_test_type
         <trim prefix="SET" suffixOverrides=",">
@@ -48,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where tid = #{tid}
     </update>
 
-    <delete id="deleteTTestTypeById" parameterType="Long">
+    <delete id="deleteTTestType" parameterType="Long">
         delete from t_test_type where tid = #{tid}
     </delete>
 
