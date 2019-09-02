@@ -28,4 +28,5 @@ public interface TPaperMapper {
     int updateByPrimaryKeySelective(TPaper record);
 
     int updateByPrimaryKey(TPaper record);
+    public TPaper findPaperById(Integer qid);
 }

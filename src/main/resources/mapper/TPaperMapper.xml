@@ -10,63 +10,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="choose"    column="choose"    />
         <result property="judge"    column="judge"    />
         <result property="answer"    column="answer"    />
+
     </resultMap>
-
-    <sql id="selectTPaperVo">
-        select qid, tid, choose, judge, answer from t_paper
-    </sql>
-
-    <select id="selectTPaperList" parameterType="TPaper" resultMap="TPaperResult">
-        <include refid="selectTPaperVo"/>
-        <where>  
-            <if test="tid != null "> and tid = #{tid}</if>
-            <if test="choose != null  and choose != ''"> and choose = #{choose}</if>
-            <if test="judge != null  and judge != ''"> and judge = #{judge}</if>
-            <if test="answer != null  and answer != ''"> and answer = #{answer}</if>
+    <select id="findAll" resultType="com.lisa.gametest.vo.KsnInfo">
+        select n.kid,n.createTime,n.endTime,n.kaoshiTime,t.typeName
+        from t_test_number n inner join t_test_type t
+        on n.tid = t.tid
+        <where>
+            <if test="title != null and title  != ''">
+                title   like"%"#{title}"%"
+            </if>
+            <if test="typeName != null and typeName != ''">
+                and typeName=#{typeName}
+            </if>
         </where>
     </select>
-    
-    <select id="selectTPaperById" parameterType="Long" resultMap="TPaperResult">
-        <include refid="selectTPaperVo"/>
-        where qid = #{qid}
-    </select>
-        
-    <insert id="insertTPaper" parameterType="TPaper" useGeneratedKeys="true" keyProperty="qid">
-        insert into t_paper
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="tid != null ">tid,</if>
-            <if test="choose != null  and choose != ''">choose,</if>
-            <if test="judge != null  and judge != ''">judge,</if>
-            <if test="answer != null  and answer != ''">answer,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="tid != null ">#{tid},</if>
-            <if test="choose != null  and choose != ''">#{choose},</if>
-            <if test="judge != null  and judge != ''">#{judge},</if>
-            <if test="answer != null  and answer != ''">#{answer},</if>
-         </trim>
-    </insert>
 
-    <update id="updateTPaper" parameterType="TPaper">
-        update t_paper
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="tid != null ">tid = #{tid},</if>
-            <if test="choose != null  and choose != ''">choose = #{choose},</if>
-            <if test="judge != null  and judge != ''">judge = #{judge},</if>
-            <if test="answer != null  and answer != ''">answer = #{answer},</if>
-        </trim>
-        where qid = #{qid}
+
+    <delete id="deleteById" parameterType="int">
+            delete from t_test_number where kid=#{kid}
+    </delete>
+
+    <update id="update" parameterType="TTestNumber">
+         update t_test_number set createTime=#{createTime},endTime=#{endTime},
+         kaoshiTime=#{kaoshiTime},tid=#{tid} where kid=#{kid}
     </update>
 
-    <delete id="deleteTPaperById" parameterType="Long">
-        delete from t_paper where qid = #{qid}
-    </delete>
+    <insert id="add" parameterType="TTestNumber">
+        insert into t_test_number(createTime,endTime,kaoshiTime,tid)
+        values (#{createTime},#{endTime},#{kaoshiTime},#{tid})
+    </insert>
 
-    <delete id="deleteTPaperByIds" parameterType="String">
-        delete from t_paper where qid in 
-        <foreach item="qid" collection="array" open="(" separator="," close=")">
-            #{qid}
-        </foreach>
-    </delete>
-    
+
+
+    <select id="findPaperById" parameterType="int" resultMap="TPaperResult">
+        select choose,judge from t_paper where qid=#{qid}
+    </select>
 </mapper>

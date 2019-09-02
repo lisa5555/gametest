@@ -13,7 +13,7 @@ public class TTestNumber {
 
     private Integer tid;
 
-    private Integer pid;
+    private Integer qid;
 
     public Integer getKid() {
         return kid;
@@ -55,11 +55,11 @@ public class TTestNumber {
         this.tid = tid;
     }
 
-    public Integer getPid() {
-        return pid;
+    public Integer getQid() {
+        return qid;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setQid(Integer qid) {
+        this.qid = qid;
     }
 }
