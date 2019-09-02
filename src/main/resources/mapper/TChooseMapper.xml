@@ -16,34 +16,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="tid"    column="tid"    />
         <result property="dec"    column="dec"    />
     </resultMap>
-
-    <sql id="selectTChooseVo">
-    select a.* t.* from t_choose a inner join t_test_type t on a.tid = t.tid
-    </sql>
-
-    <select id="selectTChooseList" parameterType="TChoose" resultMap="TChooseResult">
-        <include refid="selectTChooseVo"/>
-        <where>  
-            <if test="coment != null  and coment != ''"> and coment = #{coment}</if>
-            <if test="axuanxiang != null  and axuanxiang != ''"> and Axuanxiang = #{axuanxiang}</if>
-            <if test="bxuanxiang != null  and bxuanxiang != ''"> and Bxuanxiang = #{bxuanxiang}</if>
-            <if test="cxuanxiang != null  and cxuanxiang != ''"> and Cxuanxiang = #{cxuanxiang}</if>
-            <if test="dxuanxiang != null  and dxuanxiang != ''"> and Dxuanxiang = #{dxuanxiang}</if>
-            <if test="right != null  and right != ''"> and right = #{right}</if>
-            <if test="score != null "> and score = #{score}</if>
-            <if test="tid != null "> and tid = #{tid}</if>
-            <if test="dec != null  and dec != ''"> and dec = #{dec}</if>
-        </where>
-    </select>
     
-    <select id="selectTChooseById" parameterType="Long" resultMap="myChoose">
-        <include refid="selectTChooseVo"/>
+    <select id="selectTChooseById" parameterType="Long" resultMap="TChooseResult">
+        select * from t_choose
         where cid = #{cid}
     </select>
 
 
-    <select id="selectBySearch" parameterType="map" resultMap="myChoose">
-        <include refid="selectTChooseVo"/>
+    <select id="selectBySearch" parameterType="map" resultType="MyChoose">
+        select t.* ty.* from t_choose t
+        inner join t_test_type ty
+        on t.tid = ty.tid
         where 1 = 1
         <if test="tid != null">
             and t.tid = #{tid}

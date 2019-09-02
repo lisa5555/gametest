@@ -13,28 +13,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="dec"    column="dec"    />
     </resultMap>
 
-    <sql id="selectTJudgeVo">
-       select a.* t.* from t_judge a inner join t_test_type t on a.tid = t.tid
-    </sql>
-
-    <select id="selectTJudgeList" parameterType="TJudge" resultMap="TJudgeResult">
-        <include refid="selectTJudgeVo"/>
-        <where>  
-            <if test="coment != null  and coment != ''"> and coment = #{coment}</if>
-            <if test="right != null  and right != ''"> and right = #{right}</if>
-            <if test="score != null  and score != ''"> and score = #{score}</if>
-            <if test="tid != null "> and tid = #{tid}</if>
-            <if test="dec != null  and dec != ''"> and dec = #{dec}</if>
-        </where>
+    <select id="selectTJudgeById" parameterType="Long" resultMap="TJudgeResult">
+        select * from t_judge
+        where jid = #{jid}
     </select>
 
-    <select id="selectTJudgeById" parameterType="Long" resultMap="myJudge">
-        <include refid="selectTChooseVo"/>
-        where cid = #{cid}
-    </select>
-
-    <select id="selectByTid" parameterType="map" resultMap="TJudgeResult">
-        <include refid="selectTChooseVo"/>
+    <select id="selectBySearch" parameterType="map" resultType="MyJudge">
+        select t.* ty.* from t_judge t
+        inner join t_test_type ty
+        on t.tid = ty.tid
         where 1 = 1
         <if test="tid != null">
             and t.tid = #{tid}

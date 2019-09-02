@@ -2,6 +2,7 @@ package com.lisa.gametest.dao;
 
 import com.lisa.gametest.entity.TJudge;
 
+import com.lisa.gametest.vo.MyJudge;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -21,5 +22,5 @@ public interface TJudgeMapper {
 
     int updateTJudge(TJudge tJudge);
 
-    List<TJudge> selectBySearch(@Param("tid") Integer tid,@Param("searchName") String searchName, @Param("score") Integer score);
+    List<MyJudge> selectBySearch(@Param("tid") Integer tid, @Param("searchName") String searchName, @Param("score") Integer score);
 }
