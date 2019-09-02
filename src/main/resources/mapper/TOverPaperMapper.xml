@@ -12,8 +12,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="commitjudge"    column="commitJudge"    />
         <result property="commitanswer"    column="commitAnswer"    />
         <result property="score"    column="score"    />
+        <result property="state"    column="state"    />
     </resultMap>
 
-
+    <select id="findAllTP" parameterType="map" resultType="com.lisa.gametest.vo.overPaperInfo">
+        select * from t_score ts
+        inner join t_over_paper top
+        on ts.oid=top.oid
+        inner join t_paper tp
+        on tp.tid=top.qid
+        inner join t_test_type ty
+        on ts.uid=ts.uid
+        <where>
+            <if test="typeName != null and typeName != ''">
+                and typeName=#{typeName}
+            </if>
+        </where>
+    </select>
     
 </mapper>
