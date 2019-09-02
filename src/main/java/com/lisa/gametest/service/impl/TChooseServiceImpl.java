@@ -9,6 +9,7 @@ import com.lisa.gametest.entity.TChoose;
 import com.lisa.gametest.entity.TJudge;
 import com.lisa.gametest.service.ITChooseService;
 
+import com.lisa.gametest.vo.MyChoose;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +57,7 @@ public class TChooseServiceImpl implements ITChooseService
     @Override
     public Map<String, Object> selectBySearch(Integer page, Integer limit, Integer tid, String searchName, Integer score) {
         PageHelper.startPage(page,limit);
-        List<TChoose> list = tChooseMapper.selectBySearch(tid,searchName,score);
+        List<MyChoose> list = tChooseMapper.selectBySearch(tid,searchName,score);
 
         // 获取总记录数
         long total = ((Page) list).getTotal();

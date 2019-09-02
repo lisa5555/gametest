@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.lisa.gametest.dao.TJudgeMapper;
 import com.lisa.gametest.entity.TJudge;
 import com.lisa.gametest.service.ITJudgeService;
+import com.lisa.gametest.vo.MyJudge;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public class TJudgeServiceImpl implements ITJudgeService {
     @Override
     public Map<String, Object> selectBySearch(Integer page, Integer limit, Integer tid, String searchName, Integer score) {
         PageHelper.startPage(page,limit);
-        List<TJudge> list = tJudgeMapper.selectBySearch(tid,searchName,score);
+        List<MyJudge> list = tJudgeMapper.selectBySearch(tid,searchName,score);
 
         // 获取总记录数
         long total = ((Page) list).getTotal();

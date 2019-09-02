@@ -8,6 +8,7 @@ import com.lisa.gametest.dao.TAnswerMapper;
 import com.lisa.gametest.entity.TAnswer;
 import com.lisa.gametest.entity.TJudge;
 import com.lisa.gametest.service.ITAnswerService;
+import com.lisa.gametest.vo.MyAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +56,7 @@ public class TAnswerServiceImpl implements ITAnswerService {
     @Override
     public Map<String, Object> selectBySearch(Integer page, Integer limit, Integer tid, String searchName, Integer score) {
         PageHelper.startPage(page,limit);
-        List<TAnswer> list = tAnswerMapper.selectBySearch(tid,searchName,score);
+        List<MyAnswer> list = tAnswerMapper.selectBySearch(tid,searchName,score);
 
         // 获取总记录数
         long total = ((Page) list).getTotal();
