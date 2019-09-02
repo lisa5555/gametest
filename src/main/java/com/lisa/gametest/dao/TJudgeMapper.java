@@ -19,7 +19,6 @@ public interface TJudgeMapper {
 
     TJudge selectTJudgeById(Integer jid);
 
-
     int updateTJudge(TJudge tJudge);
 
     List<MyJudge> selectBySearch(@Param("tid") Integer tid, @Param("searchName") String searchName, @Param("score") Integer score);

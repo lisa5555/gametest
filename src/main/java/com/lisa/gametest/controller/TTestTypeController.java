@@ -53,6 +53,8 @@ public class TTestTypeController {
     }
 
 
+
+
     /**
      * 查询所有
      * @return
@@ -62,6 +64,16 @@ public class TTestTypeController {
     public AjaxResult findAllTTestType() {
         List<TTestType> list = itTestTypeService.findAll();
         return new AjaxResult(1,list);
+    }
+
+
+    @RequestMapping("/listTTestType")
+    @ResponseBody
+    public Map<String, Object> listTTestType(){
+        Map<String, Object> map = new HashMap<>();
+        List<TTestType> list = itTestTypeService.findAll();
+        map.put("data", list);
+        return map;
     }
 
 

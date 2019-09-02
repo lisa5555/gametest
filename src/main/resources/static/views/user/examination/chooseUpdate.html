@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	  <meta charset="utf-8">
+	  <title>layuiAdmin 网站用户</title>
+	  <meta name="renderer" content="webkit">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+	
+	  <script type="text/javascript" src="../../../layuiadmin/layui/layui.js"></script>
+	  </head>
+<body>
+<form class="layui-form" action="" lay-filter="example">
+    <div class="layui-form-item">
+        <label class="layui-form-label">题目</label>
+        <div class="layui-input-block">
+            <input type="text" name="coment" lay-verify="SpeakerName" placeholder="请输入题目" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">A选项</label>
+        <div class="layui-input-block">
+            <input type="text" name="Axuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">B选项</label>
+        <div class="layui-input-block">
+            <input type="text" name="Bxuanxiang" lay-verify="headImgUrl" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">C选项</label>
+        <div class="layui-input-block">
+            <input type="text" name="Cxuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+	<div class="layui-form-item">
+	    <label class="layui-form-label">D选项</label>
+	    <div class="layui-input-block">
+	        <input type="text" name="Dxuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
+	    </div>
+	</div>
+	<div class="layui-form-item">
+	        <label class="layui-form-label">正确选项</label>
+	        <div class="layui-input-block">
+	        <select name="right" id="" class="" lay-verify="required">
+	            <option value="">请选择...</option>
+				<option value="A">A</option>
+				<option value="B">B</option>
+				<option value="C">C</option>
+				<option value="D">D</option>
+	        </select>
+	        </div>
+	</div>
+	
+	<div class="layui-form-item">
+	    <label class="layui-form-label">分值</label>
+	    <div class="layui-input-block">
+	        <input type="text" name="score" lay-verify="speakerJob" placeholder="请输入分值" autocomplete="off" class="layui-input">
+	    </div>
+	</div>
+	<div class="layui-form-item">
+	        <label class="layui-form-label">关联课程</label>
+	        <div class="layui-input-block">
+	        <select name="tid" id="clazzNameHide" class="clazzName" lay-verify="required">
+	            <option value="">请选择课程...</option>
+	        </select>
+	        </div>
+	    </div>
+		
+	<div class="layui-form-item layui-form-text">
+	        <label class="layui-form-label">答案解析</label>
+	        <div class="layui-input-block">
+	            <textarea placeholder="请输入解析" class="layui-textarea" name="dec" type=""></textarea>
+	        </div>
+	    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="updateOne">立即添加</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+    layui.use(['form','layedit','laydate'],function () {
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+
+       $.ajax({
+           type:"get",
+           url:"findAllTTestType",
+           dataType:"json",
+           success:function(data){
+               if(data.code == 1){
+                   var infos = data.info
+                   $(infos).each(function () {
+                       var html = '<option value="' + this.tid + '">' + this.typeName + '</option>'
+                       $("#clazzNameHide").append($(html))
+       
+                   })
+                   form.render()
+               }else{
+                   layer.msg("获取数据异常");
+               }
+           }
+       })
+
+		$.ajax({
+		    type:"get",
+		    url:"findTChoose"+window.location.search,
+		    dataType:"json",
+		    success:function (data) {
+		        if (data.code == 1) {
+		            form.val('example',data.info); 
+		        } else {
+		            alert(data.info);
+		        }
+		    }
+		 })
+		 
+		 
+         form.on('submit(updateOne)',function (data) {
+              $.ajax({
+                  type:"post",
+                  url:"updateTChoose",
+                  data: data.field,
+                  dataType: "json",
+                  success: function (data) {
+                      if (data.code == 1) {
+                          layer.msg("修改成功!", {
+                              icon: 6,
+                              time: 500
+                          }, function () {
+                              var t = parent.layui.table;
+                              t.reload('transferTable');// 重新加载页面,demo 表示父窗体table标签的id值
+                              var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                              parent.layer.close(index); //再执行关闭
+                          });
+                      } else {
+                          layer.msg(data.info);
+                      }
+                  }
+              });
+              return false;
+         });
+
+    })
+</script>
+</body>
