@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTChooseVo">
-        select cid, coment, Axuanxiang, Bxuanxiang, Cxuanxiang, Dxuanxiang, right, score, tid, dec from t_choose
+    select a.* t.* from t_choose a inner join t_test_type t on a.tid = t.tid
     </sql>
 
     <select id="selectTChooseList" parameterType="TChoose" resultMap="TChooseResult">
@@ -36,14 +36,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectTChooseById" parameterType="Long" resultMap="TChooseResult">
+    <select id="selectTChooseById" parameterType="Long" resultMap="myChoose">
         <include refid="selectTChooseVo"/>
         where cid = #{cid}
     </select>
 
 
-    <select id="selectBySearch" parameterType="map" resultMap="TChooseResult">
-        select * from t_choose t
+    <select id="selectBySearch" parameterType="map" resultMap="myChoose">
+        <include refid="selectTChooseVo"/>
         where 1 = 1
         <if test="tid != null">
             and t.tid = #{tid}

@@ -13,10 +13,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTAnswerVo">
-        select aid, coment, tid, dec, score from t_answer
+        select a.* t.* from t_answer a inner join t_test_type t on a.tid = t.tid
     </sql>
 
-    <select id="selectTAnswerList" parameterType="TAnswer" resultMap="TAnswerResult">
+    <select id="selectTAnswerList" parameterType="TAnswer" resultMap="myAnswer">
         <include refid="selectTAnswerVo"/>
         <where>  
             <if test="coment != null  and coment != ''"> and coment = #{coment}</if>
@@ -26,13 +26,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectTAnswerById" parameterType="Long" resultMap="TAnswerResult">
+    <select id="selectTAnswerById" parameterType="Long" resultMap="myAnswer">
         <include refid="selectTAnswerVo"/>
         where aid = #{aid}
     </select>
 
-    <select id="selectBySearch" parameterType="map" resultMap="TAnswerResult">
-        select * from t_answer t
+    <select id="selectBySearch" parameterType="map" resultMap="myAnswer">
+        <include refid="selectTAnswerVo"/>
         where 1 = 1
         <if test="tid != null">
             and t.tid = #{tid}
