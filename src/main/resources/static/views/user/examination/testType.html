@@ -8,9 +8,11 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
 
-	  <script type="text/javascript" src="../../../layuiadmin/layui/layui.js"></script>
+		<script type="text/javascript" src="../../../layuiadmin/layui/jquery-1.12.2.min.js" ></script>
+
+		<script type="text/javascript" src="../../../layuiadmin/layui/layui.js"></script>
 	</head>
-	<body>
+
 		    <style type="text/css">
 		        #content{
 		            margin:20px;
@@ -73,59 +75,24 @@
 		    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 		    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		</script>
+		</body>
 		<script>
 		    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
 		        var laydate = layui.laydate //日期
 		            ,laypage = layui.laypage //分页
 		            ,layer = layui.layer //弹层
 		            ,table = layui.table //表格
+						,$ = layui.$
 		            ,element = layui.element //元素操作
 		            ,form=layui.form;
-		
-		        $.ajax({
-		            type:"get",
-		            url:"speaker/query.do",
-		            dataType:"json",
-		            success:function(data){
-		                if(data.code == 0){
-		                    var infos = data.info
-		                    $(infos).each(function () {
-		                        var html = '<option value="' + this.speakerName + '">' + this.speakerName + '</option>'
-		                        $("#sid").append($(html))
-		
-		                    })
-		                    form.render()
-		                }else{
-		                    layer.msg("获取数据异常");
-		                }
-		            }
-		        })
-		        $.ajax({
-		            type:"get",
-		            url:"course/query.do",
-		            dataType:"json",
-		            success:function(data){
-		                if(data.code == 0){
-		                    var infos = data.info
-		                    $(infos).each(function () {
-		                        var html = '<option value="' + this.courseTitle+ '">' + this.courseTitle + '</option>'
-		                        $("#cid").append($(html))
-		
-		                    })
-		                    form.render()
-		                }else{
-		                    layer.msg("获取数据异常");
-		                }
-		            }
-		        })
-		
+
 		        //执行一个 table 实例
 		        table.render({
 		            elem: '#demo'
 		            ,id:"transferTable"
 		            ,height: 'full'
 		            ,width: 'full'
-		            ,url: 'video/query.do' //数据接口
+		            ,url: 'TTestType/findAllTTestType' //数据接口
 		            ,title: '视频表'
 		            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
 		                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
@@ -142,15 +109,10 @@
 		                //,{field: 'id', title: 'id',hide:true }
 		                ,{field: 'title', title: '名称', width:150}
 		                ,{field: 'detail', title: '介绍', width:200, sort: true}
-		                ,{field: 'speakerName', title: '讲师', width:80}
-		                ,{field: 'time', title: '时长', width:80}
-		                ,{field: 'playNum', title: '播放次数', width:120}
 		                ,{fixed: 'right',title: '操作', width: 165, align:'center', toolbar: '#barDemo'}
 		
 		            ]]
-		
-		
-		
+
 		        });
 		
 		
@@ -258,5 +220,5 @@
 		    }
 		
 		</script>
-		</body>
+
 </html>

@@ -7,10 +7,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="TJudge" id="TJudgeResult">
         <result property="jid"    column="jid"    />
         <result property="coment"    column="coment"    />
-        <result property="right"    column="right"    />
+        <result property="correct"    column="correct"    />
         <result property="score"    column="score"    />
         <result property="tid"    column="tid"    />
-        <result property="dec"    column="dec"    />
+        <result property="decs"    column="decs"    />
     </resultMap>
 
     <select id="selectTJudgeById" parameterType="Long" resultMap="TJudgeResult">
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectBySearch" parameterType="map" resultType="MyJudge">
-        select t.* ty.* from t_judge t
+        select t.* ty.typeName from t_judge t
         inner join t_test_type ty
         on t.tid = ty.tid
         where 1 = 1
@@ -36,15 +36,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <insert id="insertSomeJudge" parameterType="java.util.List" useGeneratedKeys="true">
         insert into t_answer
-        (coment, right, score, tid, dec)
+        (coment, correct, score, tid, decs)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             (
             #{item.coment},
-            #{item.right},
+            #{item.correct},
             #{item.score},
             #{item.tid},
-            #{item.dec}
+            #{item.decs}
             )
         </foreach>
     </insert>
@@ -53,17 +53,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into t_judge
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="coment != null  and coment != ''">coment,</if>
-            <if test="right != null  and right != ''">right,</if>
+            <if test="correct != null  and correct != ''">correct,</if>
             <if test="score != null  and score != ''">score,</if>
             <if test="tid != null ">tid,</if>
-            <if test="dec != null  and dec != ''">dec,</if>
+            <if test="decs != null  and decs != ''">decs,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="coment != null  and coment != ''">#{coment},</if>
-            <if test="right != null  and right != ''">#{right},</if>
+            <if test="correct != null  and correct != ''">#{correct},</if>
             <if test="score != null  and score != ''">#{score},</if>
             <if test="tid != null ">#{tid},</if>
-            <if test="dec != null  and dec != ''">#{dec},</if>
+            <if test="decs != null  and decs != ''">#{decs},</if>
          </trim>
     </insert>
 
@@ -71,10 +71,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update t_judge
         <trim prefix="SET" suffixOverrides=",">
             <if test="coment != null  and coment != ''">coment = #{coment},</if>
-            <if test="right != null  and right != ''">right = #{right},</if>
+            <if test="correct != null  and correct != ''">correct = #{correct},</if>
             <if test="score != null  and score != ''">score = #{score},</if>
             <if test="tid != null ">tid = #{tid},</if>
-            <if test="dec != null  and dec != ''">dec = #{dec},</if>
+            <if test="decs != null  and decs != ''">decs = #{decs},</if>
         </trim>
         where jid = #{jid}
     </update>

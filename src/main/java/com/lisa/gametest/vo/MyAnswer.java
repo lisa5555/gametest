@@ -9,11 +9,11 @@ public class MyAnswer {
 
     private Integer tid;
 
-    private String dec;
+    private String decs;
 
     private Integer score;
 
-    private TTestType tTestType;
+    private String typeName;
 
     public Integer getAid() {
         return aid;
@@ -39,12 +39,12 @@ public class MyAnswer {
         this.tid = tid;
     }
 
-    public String getDec() {
-        return dec;
+    public String getDecs() {
+        return decs;
     }
 
-    public void setDec(String dec) {
-        this.dec = dec;
+    public void setDecs(String decs) {
+        this.decs = decs;
     }
 
     public Integer getScore() {
@@ -55,11 +55,11 @@ public class MyAnswer {
         this.score = score;
     }
 
-    public TTestType gettTestType() {
-        return tTestType;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void settTestType(TTestType tTestType) {
-        this.tTestType = tTestType;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

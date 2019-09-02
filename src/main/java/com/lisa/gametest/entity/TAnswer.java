@@ -7,7 +7,7 @@ public class TAnswer {
 
     private Integer tid;
 
-    private String dec;
+    private String decs;
 
     private Integer score;
 
@@ -35,12 +35,12 @@ public class TAnswer {
         this.tid = tid;
     }
 
-    public String getDec() {
-        return dec;
+    public String getDecs() {
+        return decs;
     }
 
-    public void setDec(String dec) {
-        this.dec = dec == null ? null : dec.trim();
+    public void setDecs(String decs) {
+        this.decs = decs;
     }
 
     public Integer getScore() {

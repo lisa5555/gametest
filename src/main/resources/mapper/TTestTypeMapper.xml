@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="TTestType" id="TTestTypeResult">
         <result property="tid"    column="tid"    />
-        <result property="typename"    column="typeName"    />
+        <result property="typeName"    column="typeName"    />
     </resultMap>
 
     <sql id="selectTTestTypeVo">

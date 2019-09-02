@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/TJudge")
 public class TJudgeController {
 
     @Autowired(required = false)

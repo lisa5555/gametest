@@ -15,15 +15,15 @@ public class MyChoose {
 
     private String dxuanxiang;
 
-    private String right;
+    private String correct;
 
     private Integer score;
 
     private Integer tid;
 
-    private String dec;
+    private String decs;
 
-    private TTestType tTestType;
+    private String typeName;
 
     public Integer getCid() {
         return cid;
@@ -73,13 +73,7 @@ public class MyChoose {
         this.dxuanxiang = dxuanxiang;
     }
 
-    public String getRight() {
-        return right;
-    }
 
-    public void setRight(String right) {
-        this.right = right;
-    }
 
     public Integer getScore() {
         return score;
@@ -97,19 +91,27 @@ public class MyChoose {
         this.tid = tid;
     }
 
-    public String getDec() {
-        return dec;
+    public String getDecs() {
+        return decs;
     }
 
-    public void setDec(String dec) {
-        this.dec = dec;
+    public void setDecs(String decs) {
+        this.decs = decs;
     }
 
-    public TTestType gettTestType() {
-        return tTestType;
+    public String getCorrect() {
+        return correct;
     }
 
-    public void settTestType(TTestType tTestType) {
-        this.tTestType = tTestType;
+    public void setCorrect(String correct) {
+        this.correct = correct;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

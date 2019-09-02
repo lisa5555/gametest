@@ -3,7 +3,7 @@ package com.lisa.gametest.entity;
 public class TTestType {
     private Integer tid;
 
-    private String typename;
+    private String typeName;
 
     public Integer getTid() {
         return tid;
@@ -13,11 +13,12 @@ public class TTestType {
         this.tid = tid;
     }
 
-    public String getTypename() {
-        return typename;
+
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setTypename(String typename) {
-        this.typename = typename == null ? null : typename.trim();
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

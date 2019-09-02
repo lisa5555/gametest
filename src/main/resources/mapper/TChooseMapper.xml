@@ -11,10 +11,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="bxuanxiang"    column="Bxuanxiang"    />
         <result property="cxuanxiang"    column="Cxuanxiang"    />
         <result property="dxuanxiang"    column="Dxuanxiang"    />
-        <result property="right"    column="right"    />
+        <result property="correct"    column="correct"    />
         <result property="score"    column="score"    />
         <result property="tid"    column="tid"    />
-        <result property="dec"    column="dec"    />
+        <result property="decs"    column="decs"    />
     </resultMap>
     
     <select id="selectTChooseById" parameterType="Long" resultMap="TChooseResult">
@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <select id="selectBySearch" parameterType="map" resultType="MyChoose">
-        select t.* ty.* from t_choose t
+        select t.* ty.typeName from t_choose t
         inner join t_test_type ty
         on t.tid = ty.tid
         where 1 = 1
@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <insert id="insertSomeChoose" parameterType="java.util.List" useGeneratedKeys="true">
         insert into t_choose
-        (coment, Axuanxiang, Bxuanxiang, Cxuanxiang, Dxuanxiang, right, score, tid, dec)
+        (coment, Axuanxiang, Bxuanxiang, Cxuanxiang, Dxuanxiang, correct, score, tid, decs)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             (
@@ -50,10 +50,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{item.Bxuanxiang},
             #{item.Cxuanxiang},
             #{item.Dxuanxiang},
-            #{item.right},
+            #{item.correct},
             #{item.score},
             #{item.tid},
-            #{item.dec}
+            #{item.decs}
             )
         </foreach>
     </insert>
@@ -66,10 +66,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="bxuanxiang != null  and bxuanxiang != ''">Bxuanxiang,</if>
             <if test="cxuanxiang != null  and cxuanxiang != ''">Cxuanxiang,</if>
             <if test="dxuanxiang != null  and dxuanxiang != ''">Dxuanxiang,</if>
-            <if test="right != null  and right != ''">right,</if>
+            <if test="correct != null  and correct != ''">correct,</if>
             <if test="score != null ">score,</if>
             <if test="tid != null ">tid,</if>
-            <if test="dec != null  and dec != ''">dec,</if>
+            <if test="decs != null  and decs != ''">decs,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="coment != null  and coment != ''">#{coment},</if>
@@ -77,10 +77,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="bxuanxiang != null  and bxuanxiang != ''">#{bxuanxiang},</if>
             <if test="cxuanxiang != null  and cxuanxiang != ''">#{cxuanxiang},</if>
             <if test="dxuanxiang != null  and dxuanxiang != ''">#{dxuanxiang},</if>
-            <if test="right != null  and right != ''">#{right},</if>
+            <if test="correct != null  and correct != ''">#{correct},</if>
             <if test="score != null ">#{score},</if>
             <if test="tid != null ">#{tid},</if>
-            <if test="dec != null  and dec != ''">#{dec},</if>
+            <if test="decs != null  and decs != ''">#{decs},</if>
          </trim>
     </insert>
 
@@ -92,10 +92,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="bxuanxiang != null  and bxuanxiang != ''">Bxuanxiang = #{bxuanxiang},</if>
             <if test="cxuanxiang != null  and cxuanxiang != ''">Cxuanxiang = #{cxuanxiang},</if>
             <if test="dxuanxiang != null  and dxuanxiang != ''">Dxuanxiang = #{dxuanxiang},</if>
-            <if test="right != null  and right != ''">right = #{right},</if>
+            <if test="correct != null  and correct != ''">correct = #{correct},</if>
             <if test="score != null ">score = #{score},</if>
             <if test="tid != null ">tid = #{tid},</if>
-            <if test="dec != null  and dec != ''">dec = #{dec},</if>
+            <if test="decs != null  and decs != ''">decs = #{decs},</if>
         </trim>
         where cid = #{cid}
     </update>

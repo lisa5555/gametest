@@ -7,15 +7,15 @@ public class MyJudge {
 
     private String coment;
 
-    private String right;
+    private String correct;
 
     private String score;
 
     private Integer tid;
 
-    private String dec;
+    private String decs;
 
-    private TTestType tTestType;
+    private String typeName;
 
     public Integer getJid() {
         return jid;
@@ -33,13 +33,7 @@ public class MyJudge {
         this.coment = coment;
     }
 
-    public String getRight() {
-        return right;
-    }
 
-    public void setRight(String right) {
-        this.right = right;
-    }
 
     public String getScore() {
         return score;
@@ -57,19 +51,27 @@ public class MyJudge {
         this.tid = tid;
     }
 
-    public String getDec() {
-        return dec;
+    public String getCorrect() {
+        return correct;
     }
 
-    public void setDec(String dec) {
-        this.dec = dec;
+    public void setCorrect(String correct) {
+        this.correct = correct;
     }
 
-    public TTestType gettTestType() {
-        return tTestType;
+    public String getDecs() {
+        return decs;
     }
 
-    public void settTestType(TTestType tTestType) {
-        this.tTestType = tTestType;
+    public void setDecs(String decs) {
+        this.decs = decs;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

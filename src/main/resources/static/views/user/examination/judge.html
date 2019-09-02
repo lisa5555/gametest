@@ -5,7 +5,9 @@
     <title></title>
     <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" />
     <script type="text/javascript" src="../../../layuiadmin/layui/layui.js" ></script>
-   
+    <script type="text/javascript" src="../../../layuiadmin/layui/jquery-1.12.2.min.js" ></script>
+
+
     <style type="text/css">
         #content{
             margin:20px;
@@ -74,14 +76,15 @@
 
             <button type="button" class="layui-btn" data-type="reload">搜索</button>
         </div>
+        <div id="content" ><button type="button" class="layui-btn" onclick="add()">添加</button></div>
 
     </div>
 </div>
 
 <hr>
+
 <table class="layui-hide layui-l" id="demo" lay-filter="test"></table>
 <hr>
-<div id="content" ><button type="button" class="layui-btn" onclick="add()">添加</button></div>
 
 <script type="text/html" id="barDemo">
 
@@ -96,29 +99,28 @@
             ,laypage = layui.laypage //分页
             ,layer = layui.layer //弹层
             ,table = layui.table //表格
+            ,$ = layui.$
             ,element = layui.element //元素操作
             ,form=layui.form;
-		
-		
-		
-		$.ajax({
-		    type:"get",
-		    url:"findAllTTestType",
-		    dataType:"json",
-		    success:function(data){
-		        if(data.code == 1){
-		            var infos = data.info
-		            $(infos).each(function () {
-		                var html = '<option value="' + this.tid + '">' + this.typeName + '</option>'
-		                $("#TTestTypeName").append($(html))
-		
-		            })
-		            form.render()
-		        }else{
-		            layer.msg("获取数据异常");
-		        }
-		    }
-		})
+
+
+
+        $.ajax({
+            type:"get",
+            url:"/dianjing/TTestType/findAllTTestType",
+            dataType:"json",
+            success:function(data){
+                if(data.code == 1){
+                    var infos = data.info;
+                    $(infos).each(function () {
+                        $("#TTestTypeName").append('<option value="' + this.tid + '">' + this.typeName + '</option>')
+                    });
+                    form.render()
+                }else{
+                    layer.msg("获取数据异常");
+                }
+            }
+        })
     
         //执行一个 table 实例
         table.render({
@@ -126,7 +128,7 @@
             ,id:"transferTable"
             ,height: 'full'
             ,width: 'full'
-            ,url: 'listTJudge' //数据接口
+            ,url: 'TJudge/listTJudge' //数据接口
             ,title: '判断题表'
             ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
@@ -141,10 +143,10 @@
                 {type: 'checkbox', fixed: 'left', filter:"test"}
                 ,{field: 'coment', title: '题目', templet:'#xuhao', width:80, sort: true, fixed: 'left'}
                 //,{field: 'id', title: 'id',hide:true }
-                ,{field: 'right', title: '答案', width:50}
-                ,{field: 'dec', title: '解析', width:200, sort: true}
+                ,{field: 'correct', title: '答案', width:50}
+                ,{field: 'decs', title: '解析', width:200, sort: true}
                 ,{field: 'score', title: '分值', width:80},
-                ,{field:'tTestType',title:'所属课程',width:80,templet:'<div>{{d.tTestType.typeName}}</div>',align:"center"}
+                ,{field:'typeName',title:'所属课程',width:80,align:"center"}
                 ,{fixed: 'right',title: '操作', width: 165, align:'center', toolbar: '#barDemo'}
 
             ]]
@@ -161,12 +163,17 @@
                     //向服务端发送删除指令
                     $.ajax({
                         type:"get",
-                        url:"deleteTJudge?id=" + data.id,
+                        url:"TJudge/deleteTJudge?id=" + data.id,
                         dataType:"json",
-                        success:function(data){
-                            if(data.code == 0){
-                                table.reload('demo');
-                            }else{
+                        success:function(data) {
+                            if (data.code == 1) {
+                                layer.msg("删除成功!", {
+                                    icon: 6,
+                                    time: 500
+                                }, function () {
+                                    table.reload('transferTable');// 重新加载页面,demo 表示父窗体table标签的id值
+                                });
+                            } else {
                                 alert(data.info);
                             }
                         }
@@ -178,7 +185,7 @@
                     type: 2 //此处以iframe举例
                     , title: '修改员工'
                     , area: ['650px', '600px']
-                    , content: 'judgeUpdate?id=' + data.id
+                    , content: 'TJudge/judgeUpdate?id=' + data.id
                 })
             }
         });
@@ -223,10 +230,10 @@
         layer.confirm('确认删除吗？' + ids, function (index) {
             $.ajax({
                 type: "post",
-                url: "deleteSomeTJudge",
+                url: "TJudge/deleteSomeTJudge",
                 data: {"ids": ids},
                 success: function (data) {
-                    alert("Data Saved:" + msg);
+                    alert("Data Saved:");
 
                 }
             });

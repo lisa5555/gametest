@@ -13,13 +13,13 @@ public class TChoose {
 
     private String dxuanxiang;
 
-    private String right;
+    private String correct;
 
     private Integer score;
 
     private Integer tid;
 
-    private String dec;
+    private String decs;
 
     public Integer getCid() {
         return cid;
@@ -69,13 +69,6 @@ public class TChoose {
         this.dxuanxiang = dxuanxiang == null ? null : dxuanxiang.trim();
     }
 
-    public String getRight() {
-        return right;
-    }
-
-    public void setRight(String right) {
-        this.right = right == null ? null : right.trim();
-    }
 
     public Integer getScore() {
         return score;
@@ -93,11 +86,19 @@ public class TChoose {
         this.tid = tid;
     }
 
-    public String getDec() {
-        return dec;
+    public String getCorrect() {
+        return correct;
     }
 
-    public void setDec(String dec) {
-        this.dec = dec == null ? null : dec.trim();
+    public void setCorrect(String correct) {
+        this.correct = correct;
+    }
+
+    public String getDecs() {
+        return decs;
+    }
+
+    public void setDecs(String decs) {
+        this.decs = decs;
     }
 }

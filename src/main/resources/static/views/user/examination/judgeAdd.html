@@ -9,7 +9,9 @@
 	  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
 	
 	  <script type="text/javascript" src="../../../layuiadmin/layui/layui.js"></script>
-	  </head>
+		<script type="text/javascript" src="../../../layuiadmin/layui/jquery-1.12.2.min.js" ></script>
+
+	</head>
 <body>
 <form class="layui-form" action="" lay-filter="example">
     <div class="layui-form-item">
@@ -23,7 +25,7 @@
 	<div class="layui-form-item">
 	        <label class="layui-form-label">正确选项</label>
 	        <div class="layui-input-block">
-	        <select name="right" id="" class="" lay-verify="required">
+	        <select name="correct" id="" class="" lay-verify="required">
 	            <option value="">请选择...</option>
 				<option value="T">正确</option>
 				<option value="F">错误</option>
@@ -40,7 +42,7 @@
 	<div class="layui-form-item">
 	        <label class="layui-form-label">关联课程</label>
 	        <div class="layui-input-block">
-	        <select name="tid" id="clazzNameHide" class="clazzName" lay-verify="required">
+	        <select name="tid" id="TTestTypeName" class="clazzName" lay-verify="required">
 	            <option value="">请选择课程...</option>
 	        </select>
 	        </div>
@@ -49,7 +51,7 @@
 	<div class="layui-form-item layui-form-text">
 	        <label class="layui-form-label">答案解析</label>
 	        <div class="layui-input-block">
-	            <textarea placeholder="请输入解析" class="layui-textarea" name="dec" type=""></textarea>
+	            <textarea placeholder="请输入解析" class="layui-textarea" name="decs" type=""></textarea>
 	        </div>
 	</div>
 	
@@ -65,32 +67,31 @@
         var form = layui.form
             ,layer = layui.layer
             ,layedit = layui.layedit
+			,$ = layui.$
             ,laydate = layui.laydate;
 
 
-       $.ajax({
-           type:"get",
-           url:"findAllTTestType",
-           dataType:"json",
-           success:function(data){
-               if(data.code == 1){
-                   var infos = data.info
-                   $(infos).each(function () {
-                       var html = '<option value="' + this.tid + '">' + this.typeName + '</option>'
-                       $("#clazzNameHide").append($(html))
-       
-                   })
-                   form.render()
-               }else{
-                   layer.msg("获取数据异常");
-               }
-           }
-       })
+		$.ajax({
+			type:"get",
+			url:"/dianjing/TTestType/findAllTTestType",
+			dataType:"json",
+			success:function(data){
+				if(data.code == 1){
+					var infos = data.info;
+					$(infos).each(function () {
+						$("#TTestTypeName").append('<option value="' + this.tid + '">' + this.typeName + '</option>')
+					});
+					form.render()
+				}else{
+					layer.msg("获取数据异常");
+				}
+			}
+		})
 
         form.on('submit(addOne)',function (data) {
             $.ajax({
                 type:"post",
-                url:"addJudge",
+                url:"TJudge/addJudge",
                 data:data.field,
                 dataType:"json",
                 success:function (data) {

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/TTestType")
 public class TTestTypeController {
 
     @Autowired
@@ -26,7 +27,7 @@ public class TTestTypeController {
     @RequestMapping("/addTTestType")
     @ResponseBody
     public AjaxResult addTTestType(TTestType tTestType) {
-        TTestType testType = itTestTypeService.findByName(tTestType.getTypename());
+        TTestType testType = itTestTypeService.findByName(tTestType.getTypeName());
         if (testType != null) {
             try {
                 itTestTypeService.insertTTestType(tTestType);
@@ -63,11 +64,11 @@ public class TTestTypeController {
     @ResponseBody
     public AjaxResult findAllTTestType() {
         List<TTestType> list = itTestTypeService.findAll();
-        return new AjaxResult(1,list);
+        return new AjaxResult(1, list);
     }
 
 
-    @RequestMapping("/listTTestType")
+    @RequestMapping("/listMyTTestType")
     @ResponseBody
     public Map<String, Object> listTTestType(){
         Map<String, Object> map = new HashMap<>();

@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="aid"    column="aid"    />
         <result property="coment"    column="coment"    />
         <result property="tid"    column="tid"    />
-        <result property="dec"    column="dec"    />
+        <result property="decs"    column="decs"    />
         <result property="score"    column="score"    />
     </resultMap>
 
@@ -19,9 +19,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectBySearch" parameterType="map" resultType="MyAnswer">
-        select ty.* t.* from t_answer t
-        inner join t_test_type ty
-        on t.tid = ty.tid
+        select t.*, te.typeName from t_answer t
+        inner join t_test_type te
+        on t.tid = te.tid
         where 1 = 1
         <if test="tid != null">
             and t.tid = #{tid}
@@ -36,32 +36,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <insert id="insertSomeAnswer" parameterType="java.util.List" useGeneratedKeys="true">
         insert into t_answer
-        (coment, tid, dec, score)
+        (coment, tid, decs, score)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             (
             #{item.coment},
             #{item.tid},
             #{item.score},
-            #{item.dec}
+            #{item.decs})
             )
         </foreach>
     </insert>
-        
-    <insert id="insertTAnswer" parameterType="TAnswer" useGeneratedKeys="true" keyProperty="aid">
+
+    <insert id="insert" parameterType="TAnswer">
         insert into t_answer
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="coment != null  and coment != ''">coment,</if>
-            <if test="tid != null ">tid,</if>
-            <if test="dec != null  and dec != ''">dec,</if>
-            <if test="score != null ">score,</if>
-         </trim>
+            <if test="coment != null">
+                coment,
+            </if>
+            <if test="tid != null">
+                tid,
+            </if>
+            <if test="decs != null">
+                decs,
+            </if>
+            <if test="score != null">
+                score
+            </if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="coment != null  and coment != ''">#{coment},</if>
-            <if test="tid != null ">#{tid},</if>
-            <if test="dec != null  and dec != ''">#{dec},</if>
-            <if test="score != null ">#{score},</if>
-         </trim>
+            <if test="coment != null">
+                #{coment},
+            </if>
+            <if test="tid != null">
+                #{tid},
+            </if>
+            <if test="decs != null">
+                #{decs},
+            </if>
+            <if test="score != null">
+                #{score}
+            </if>
+        </trim>
     </insert>
 
     <update id="updateTAnswer" parameterType="TAnswer">
@@ -69,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="coment != null  and coment != ''">coment = #{coment},</if>
             <if test="tid != null ">tid = #{tid},</if>
-            <if test="dec != null  and dec != ''">dec = #{dec},</if>
+            <if test="decs != null  and dec != ''">decs = #{decs},</if>
             <if test="score != null ">score = #{score},</if>
         </trim>
         where aid = #{aid}

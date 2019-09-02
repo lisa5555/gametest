@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	  <meta charset="utf-8">
-	  <title>layuiAdmin 网站用户</title>
-	  <meta name="renderer" content="webkit">
-	  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	  <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
+	    <meta charset="utf-8">
+	    <title>layuiAdmin 网站用户</title>
+	    <meta name="renderer" content="webkit">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
 	
-	  <script type="text/javascript" src="../../../layuiadmin/layui/layui.js"></script>
-	  </head>
+	    <script type="text/javascript" src="../../../layuiadmin/layui/layui.js"></script>
+		<script type="text/javascript" src="../../../layuiadmin/layui/jquery.min.js" ></script>
+
+	</head>
 <body>
 <form class="layui-form" action="" lay-filter="example">
     <div class="layui-form-item">
@@ -19,8 +21,6 @@
         </div>
     </div>
 
-   
-	
 	<div class="layui-form-item">
 	    <label class="layui-form-label">分值</label>
 	    <div class="layui-input-block">
@@ -30,7 +30,7 @@
 	<div class="layui-form-item">
 	        <label class="layui-form-label">关联课程</label>
 	        <div class="layui-input-block">
-	        <select name="tid" id="clazzNameHide" class="clazzName" lay-verify="required">
+	        <select name="tid" id="TTestTypeName" class="clazzName" lay-verify="required">
 	            <option value="">请选择课程...</option>
 	        </select>
 	        </div>
@@ -39,7 +39,7 @@
 	<div class="layui-form-item layui-form-text">
 	        <label class="layui-form-label">答案解析</label>
 	        <div class="layui-input-block">
-	            <textarea placeholder="请输入解析" class="layui-textarea" name="dec" type=""></textarea>
+	            <textarea placeholder="请输入解析" class="layui-textarea" name="decs" type=""></textarea>
 	        </div>
 	</div>
 	
@@ -55,31 +55,30 @@
         var form = layui.form
             ,layer = layui.layer
             ,layedit = layui.layedit
+		    ,$ = layui.$
             ,laydate = layui.laydate;
 
 
-       $.ajax({
-           type:"get",
-           url:"findAllTTestType",
-           dataType:"json",
-           success:function(data){
-               if(data.code == 1){
-                   var infos = data.info
-                   $(infos).each(function () {
-                       var html = '<option value="' + this.tid + '">' + this.typeName + '</option>'
-                       $("#sid").append($(html))
-       
-                   })
-                   form.render()
-               }else{
-                   layer.msg("获取数据异常");
-               }
-           }
-       })
+		$.ajax({
+			type:"get",
+			url:"/dianjing/TTestType/findAllTTestType",
+			dataType:"json",
+			success:function(data){
+				if(data.code == 1){
+					var infos = data.info;
+					$(infos).each(function () {
+						$("#TTestTypeName").append('<option value="' + this.tid + '">' + this.typeName + '</option>')
+					});
+					form.render()
+				}else{
+					layer.msg("获取数据异常");
+				}
+			}
+		})
 
 		$.ajax({
 		    type:"get",
-		    url:"findTAnswer" + window.location.search,
+		    url:"/dianjing/TAnswer/findTAnswer"+window.location.search,
 		    dataType:"json",
 		    success:function (data) {
 		        if (data.code == 1) {
@@ -94,7 +93,7 @@
          form.on('submit(updateOne)',function (data) {
               $.ajax({
                   type:"post",
-                  url:"updateTAnswer",
+                  url:"/dianjing/TAnswer/updateTAnswer",
                   data: data.field,
                   dataType: "json",
                   success: function (data) {

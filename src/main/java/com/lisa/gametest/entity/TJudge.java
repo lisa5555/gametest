@@ -5,13 +5,13 @@ public class TJudge {
 
     private String coment;
 
-    private String right;
+    private String correct;
 
     private String score;
 
     private Integer tid;
 
-    private String dec;
+    private String decs;
 
     public Integer getJid() {
         return jid;
@@ -29,13 +29,7 @@ public class TJudge {
         this.coment = coment == null ? null : coment.trim();
     }
 
-    public String getRight() {
-        return right;
-    }
 
-    public void setRight(String right) {
-        this.right = right == null ? null : right.trim();
-    }
 
     public String getScore() {
         return score;
@@ -53,11 +47,19 @@ public class TJudge {
         this.tid = tid;
     }
 
-    public String getDec() {
-        return dec;
+    public String getCorrect() {
+        return correct;
     }
 
-    public void setDec(String dec) {
-        this.dec = dec == null ? null : dec.trim();
+    public void setCorrect(String correct) {
+        this.correct = correct;
+    }
+
+    public String getDecs() {
+        return decs;
+    }
+
+    public void setDecs(String decs) {
+        this.decs = decs;
     }
 }
