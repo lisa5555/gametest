@@ -1,16 +1,16 @@
 package com.lisa.gametest.OverPaperVo;
 
 public class QuestionJosn {
-    private Integer questionId;
+    private String questionId;
     private String questionTitle;
     private String questionItems;
     private String questionAnswer;
 
-    public Integer getQuestionId() {
+    public String getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(Integer questionId) {
+    public void setQuestionId(String questionId) {
         this.questionId = questionId;
     }
 
