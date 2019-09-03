@@ -2,8 +2,10 @@ package com.lisa.gametest.service.impl;
 
 
 
+import com.github.pagehelper.PageHelper;
 import com.lisa.gametest.dao.TTestNumberMapper;
 import com.lisa.gametest.entity.TTestNumber;
+import com.lisa.gametest.entity.TTestType;
 import com.lisa.gametest.service.ITTestNumberService;
 
 import com.lisa.gametest.vo.KsnInfo;
@@ -20,14 +22,15 @@ public class TTestNumberServiceImpl implements ITTestNumberService {
     private TTestNumberMapper tn;
 
     @Override
-    public List<KsnInfo> findAll() {
-        List<KsnInfo> list = tn.findAll();
+    public List<KsnInfo> findAll(String title, String typeName) {
+        List<KsnInfo> list = tn.findAll(title,typeName);
         return list;
     }
 
+
     @Override
-    public void deleteById(int id) {
-        tn.deleteById(id);
+    public void deleteById(int kid) {
+        tn.deleteById(kid);
 
     }
 
@@ -41,4 +44,11 @@ public class TTestNumberServiceImpl implements ITTestNumberService {
         tn.add(t);
     }
 
+    @Override
+    public List<TTestType> findName() {
+        return tn.findName();
+    }
+
+
 }
+
