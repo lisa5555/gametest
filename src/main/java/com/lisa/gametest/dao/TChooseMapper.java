@@ -21,6 +21,8 @@ public interface TChooseMapper {
 
     TChoose selectTChooseById(Integer cid);
 
+    List<Integer> createTChooseExams(@Param("tid") Integer tid, @Param("cNum") Integer cNum);
+
     List<MyChoose> selectBySearch(@Param("tid") Integer tid, @Param("searchName") String searchName, @Param("score") Integer score);
 
 }

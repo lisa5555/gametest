@@ -4,6 +4,7 @@ package com.lisa.gametest.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.lisa.gametest.common.ChangeListToArray;
 import com.lisa.gametest.dao.TAnswerMapper;
 import com.lisa.gametest.entity.TAnswer;
 import com.lisa.gametest.entity.TJudge;
@@ -51,6 +52,12 @@ public class TAnswerServiceImpl implements ITAnswerService {
     @Override
     public int updateTAnswer(TAnswer tAnswer) {
         return tAnswerMapper.updateTAnswer(tAnswer);
+    }
+
+    @Override
+    public String createTAnswerExams(Integer tid, Integer aNum) {
+        List<Integer> list = tAnswerMapper.createTAnswerExams(tid, aNum);
+        return ChangeListToArray.create(list);
     }
 
     @Override

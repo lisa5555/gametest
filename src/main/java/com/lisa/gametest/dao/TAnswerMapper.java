@@ -17,6 +17,8 @@ public interface TAnswerMapper {
 
     int insertSomeAnswer(List<TAnswer> list);
 
+    List<Integer> createTAnswerExams(@Param("tid") Integer tid, @Param("aNum") Integer aNum);
+
     TAnswer selectTAnswerById(Integer aid);
 
     List<MyAnswer> selectBySearch(@Param("tid") Integer tid, @Param("searchName") String searchName, @Param("score") Integer score);

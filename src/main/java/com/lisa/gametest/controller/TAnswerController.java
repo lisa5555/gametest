@@ -122,6 +122,7 @@ public class TAnswerController {
     @RequestMapping("/listTAnswer")
     @ResponseBody
     public Map<String, Object> selectSomeTAnswer(Integer tid,String searchName,Integer score,Integer page, Integer limit){
+
         Map<String, Object> map = itAnswerService.selectBySearch(page, limit, tid, searchName, score);
         return map;
     }

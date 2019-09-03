@@ -20,6 +20,8 @@ public interface ITAnswerService {
 
      public int updateTAnswer(TAnswer tAnswer);
 
+     public String createTAnswerExams(Integer tid, Integer aNum);
+
      public Map<String,Object> selectBySearch(Integer page, Integer limit,Integer tid, String searchName, Integer score);
 
 

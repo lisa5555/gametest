@@ -6,8 +6,10 @@ import com.lisa.gametest.entity.TPaper;
 
 import java.util.List;
 
-public interface ITPaperService
-{
+public interface ITPaperService {
 
-public List<QuestionJosn> showquestions(Integer qid);
+    public List<QuestionJosn> showquestions(Integer qid);
+
+    public int insertTPaper(TPaper paper);
+
 }

@@ -48,6 +48,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </insert>
 
+    <select id="createTAnswerExams" parameterType="Map" resultType="Integer">
+        select aid from t_answer WHERE tid = #{tid} order by rand() limit #{aNum};
+    </select>
+
     <insert id="insert" parameterType="TAnswer">
         insert into t_answer
         <trim prefix="(" suffix=")" suffixOverrides=",">

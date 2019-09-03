@@ -24,6 +24,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from t_test_type
     </select>
 
+
+
     <select id="selectBySearch" parameterType="map" resultMap="TTestTypeResult">
     select * from t_test_type t
     where 1 = 1
@@ -41,7 +43,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTTestTypeVo"/>
         where typeName = #{typeName}
     </select>
-        
+
+
+    <select id="findTypeExamInfo" resultType="MyTypeProblems">
+
+    </select>
+
     <insert id="insertTTestType" parameterType="TTestType" useGeneratedKeys="true" keyProperty="tid">
         insert into t_test_type
         <trim prefix="(" suffix=")" suffixOverrides=",">

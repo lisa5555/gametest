@@ -23,6 +23,11 @@ public class TPaperServiceImpl implements ITPaperService
     private TPaperMapper paperMapper;
 
     @Override
+    public int insertTPaper(TPaper paper) {
+        return paperMapper.insertTPaper(paper);
+    }
+
+    @Override
     public List<QuestionJosn> showquestions(Integer qid) {
         TPaper paper = paperMapper.findPaperById(qid);
 
@@ -57,4 +62,6 @@ public class TPaperServiceImpl implements ITPaperService
         }
         return list;
     }
+
+
 }

@@ -18,6 +18,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where jid = #{jid}
     </select>
 
+
+    <select id="createTJudgeExams" parameterType="Map" resultType="Integer">
+        select jid from t_answer WHERE tid = #{tid} order by rand() limit #{jNum};
+    </select>
+
+
     <select id="selectBySearch" parameterType="map" resultType="MyJudge">
         select t.*,te.typeName from t_judge t
         inner join t_test_type te

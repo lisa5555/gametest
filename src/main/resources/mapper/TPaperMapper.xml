@@ -16,9 +16,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select n.kid,n.createTime,n.endTime,n.kaoshiTime,t.typeName
         from t_test_number n inner join t_test_type t
         on n.tid = t.tid
+        where 1 = 1
         <where>
             <if test="title != null and title  != ''">
-                title   like"%"#{title}"%"
+                and title   like"%"#{title}"%"
             </if>
             <if test="typeName != null and typeName != ''">
                 and typeName=#{typeName}
@@ -26,6 +27,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
 
+
+    <insert id="insertTPaper" parameterType="TJudge" useGeneratedKeys="true" keyProperty="jid">
+        insert into t_paper
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tid != null  and tid != ''">tid,</if>
+            <if test="choose != null  and choose != ''">choose,</if>
+            <if test="answer != null  and answer != ''">answer,</if>
+            <if test="judge != null  and judge != ''">judge,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tid != null  and tid != ''">#{tid},</if>
+            <if test="choose != null  and choose != ''">#{choose},</if>
+            <if test="answer != null  and answer != ''">#{answer},</if>
+            <if test="judge != null  and judge != ''">#{judge},</if>
+        </trim>
+    </insert>
 
     <delete id="deleteById" parameterType="int">
             delete from t_test_number where kid=#{kid}
