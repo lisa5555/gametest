@@ -7,11 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             select n.kid,n.createTime,n.endTime,n.kaoshiTime,t.typeName
             from t_test_number n inner join t_test_type t
             on n.tid = t.tid
-            where 1 = 1
             <where>
-                <if test="title != null and title  != ''">
-                    title   like"%"#{title}"%"
-                </if>
                 <if test="typeName != null and typeName != ''">
                     and typeName=#{typeName}
                 </if>

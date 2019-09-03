@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
     <script type="text/javascript" src="../../layuiadmin/layui/layui.js" ></script>
     <script type="text/javascript" src="../../layuiadmin/layui/jquery.3.2.1.min.js" ></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
@@ -15,22 +16,34 @@
 
 
 <form class="layui-form" action="">
-    <div class="layui-form-item">
+<!--    <div class="layui-form-item">-->
+<!--        <label class="layui-form-label">开始时间</label>-->
+<!--        <div class="layui-input-block">-->
+<!--            <input type="datetime-local" name="createTime" lay-verify="title" autocomplete="off" placeholder="考试开始时间" class="layui-input">-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="layui-form-item">-->
+<!--        <label class="layui-form-label">结束时间</label>-->
+<!--        <div class="layui-input-block">-->
+<!--            <input type="datetime-local" name="endTime" lay-verify="title" autocomplete="off" placeholder="考试结束时间" class="layui-input">-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="layui-inline">
         <label class="layui-form-label">开始时间</label>
-        <div class="layui-input-block">
-            <input type="date" name="createTime" lay-verify="title" autocomplete="off" placeholder="考试开始时间" class="layui-input">
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" id="begin" name="createTime" placeholder="开始时间">
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-inline">
         <label class="layui-form-label">结束时间</label>
-        <div class="layui-input-block">
-            <input type="date" name="endTime" lay-verify="title" autocomplete="off" placeholder="考试结束时间" class="layui-input">
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" id="end" name="endTime" placeholder="结束时间">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">考试时长</label>
         <div class="layui-input-block">
-            <input type="date" name="kaishiTime" lay-verify="title" autocomplete="off" placeholder="考试时长" class="layui-input">
+            <input type="text" name="kaoshiTime" lay-verify="title" autocomplete="off" placeholder="考试时长" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -50,12 +63,20 @@
         </div>
     </div>
 </form>
-
 <script>
-    layui.use(['element','layer', 'form'], function(){
+    layui.use(['element','layer', 'form','laydate'], function(){
         var element = layui.element;
         var layer = layui.layer
             ,form = layui.form;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#begin'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#end'
+            ,type: 'datetime'
+        });
 
 
         $.ajax({
@@ -66,7 +87,7 @@
                 if(data.code == 0){
                     var infos = data.info
                     $(infos).each(function () {
-                        var html = '<option value="' + this.tid + '">' + this.typename + '</option>'
+                        var html = '<option value="' + this.tid + '">' + this.typeName + '</option>'
                         $("#tid").append($(html))
                     })
                     form.render()

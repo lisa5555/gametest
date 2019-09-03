@@ -22,8 +22,8 @@ public class TTestNumberServiceImpl implements ITTestNumberService {
     private TTestNumberMapper tn;
 
     @Override
-    public List<KsnInfo> findAll(String title, String typeName) {
-        List<KsnInfo> list = tn.findAll(title,typeName);
+    public List<KsnInfo> findAll(String typeName) {
+        List<KsnInfo> list = tn.findAll(typeName);
         return list;
     }
 

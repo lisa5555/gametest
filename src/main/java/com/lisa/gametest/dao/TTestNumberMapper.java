@@ -9,8 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface TTestNumberMapper {
-    public List<KsnInfo> findAll(@Param("title") String title,
-                                 @Param("typeName") String typeName
+    public List<KsnInfo> findAll(@Param("typeName") String typeName
                                 );
     public void deleteById(int kid);
     public void update(TTestNumber t);

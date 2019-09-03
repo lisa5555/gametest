@@ -11,8 +11,8 @@ import java.util.List;
 
 public interface ITTestNumberService {
     public List<KsnInfo> findAll(
-                                 String title,
-                                 String typeName);
+                                 String typeName
+                                 );
     public void deleteById(int kid);
     public void update(TTestNumber t);
     public void add(TTestNumber t);

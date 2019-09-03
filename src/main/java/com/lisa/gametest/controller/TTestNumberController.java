@@ -26,9 +26,9 @@ public class TTestNumberController {
     private ITTestNumberService ns;
     @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     @RequestMapping("/list.do")
-    public Map<String,Object>  show(Integer page,Integer limit,String title,String typeName) {
+    public Map<String,Object>  show(Integer page,Integer limit,String typeName) {
         PageHelper.startPage(page,limit);
-        List<KsnInfo> list = ns.findAll(title, typeName);
+        List<KsnInfo> list = ns.findAll(typeName);
         long total = ((Page) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);
