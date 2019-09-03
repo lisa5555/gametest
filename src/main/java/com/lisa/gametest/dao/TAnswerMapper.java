@@ -11,7 +11,7 @@ public interface TAnswerMapper {
 
     int deleteByTAnswerId(Integer aid);
 
-    int deleteTAnswerByIds(String[] arr);
+    int deleteTAnswerByIds(String[] aid);
 
     int insert(TAnswer tAnswer);
 

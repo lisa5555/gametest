@@ -20,7 +20,7 @@
             <input type="text" name="coment" lay-verify="SpeakerName" placeholder="请输入题目" autocomplete="off" class="layui-input">
         </div>
     </div>
-
+	<input type="hidden" name="aid" lay-verify="id" class="layui-input">
 	<div class="layui-form-item">
 	    <label class="layui-form-label">分值</label>
 	    <div class="layui-input-block">
@@ -76,18 +76,24 @@
 			}
 		})
 
-		$.ajax({
-		    type:"get",
-		    url:"/dianjing/TAnswer/findTAnswer"+window.location.search,
-		    dataType:"json",
-		    success:function (data) {
-		        if (data.code == 1) {
-		            form.val('example',data.info); 
-		        } else {
-		            alert(data.info);
-		        }
-		    }
-		 })
+
+		findTAnswer();
+
+		function findTAnswer() {
+			$.ajax({
+				type:"get",
+				url:"/dianjing/TAnswer/findTAnswer"+window.location.search,
+				dataType:"json",
+				success:function (data) {
+					if (data.code == 1) {
+						form.val('example',data.info);
+					} else {
+						alert(data.info);
+					}
+				}
+			})
+		}
+
 		 
 		 
          form.on('submit(updateOne)',function (data) {
