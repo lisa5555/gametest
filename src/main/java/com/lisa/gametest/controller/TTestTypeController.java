@@ -74,6 +74,7 @@ public class TTestTypeController {
         Map<String, Object> map = new HashMap<>();
         List<TTestType> list = itTestTypeService.findAll();
         map.put("data", list);
+        map.put("code", 0);
         return map;
     }
 

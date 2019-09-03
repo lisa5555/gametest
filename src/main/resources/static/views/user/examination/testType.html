@@ -92,7 +92,7 @@
 		            ,id:"transferTable"
 		            ,height: 'full'
 		            ,width: 'full'
-		            ,url: 'TTestType/findAllTTestType' //数据接口
+		            ,url: '/diangjing/TTestType/findAllTTestType' //数据接口
 		            ,title: '视频表'
 		            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
 		                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
@@ -126,7 +126,7 @@
 		                    //向服务端发送删除指令
 		                    $.ajax({
 		                        type:"get",
-		                        url:"video/delete.do?id=" + data.id,
+		                        url:"/dianjing/TTestType/deleteTTestType?id=" + data.id,
 		                        dataType:"json",
 		                        success:function(data){
 		                            if(data.code == 0){
@@ -187,7 +187,7 @@
 		        layer.confirm('确认删除吗？' + ids, function (index) {
 		            $.ajax({
 		                type: "post",
-		                url: "video/deleteAll.do",
+		                url: "/dianjing/TTestType/deleteTTestType",
 		                data: {"ids": ids},
 		                success: function (data) {
 		                    alert("Data Saved:" + msg);
@@ -213,9 +213,9 @@
 		    function add(){
 		        layer.open({
 		            type: 2 //此处以iframe举例
-		            , title: '添加员工'
+		            , title: '添加课程'
 		            , area: ['650px', '600px']
-		            , content: 'add.html'
+		            , content: 'testTypeAdd.html'
 		        })
 		    }
 		

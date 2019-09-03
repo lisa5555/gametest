@@ -42,8 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             (
             #{item.coment},
             #{item.tid},
-            #{item.score},
-            #{item.decs})
+            #{item.decs},
+            #{item.score}
             )
         </foreach>
     </insert>

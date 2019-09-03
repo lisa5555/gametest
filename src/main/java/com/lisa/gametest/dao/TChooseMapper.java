@@ -13,7 +13,7 @@ public interface TChooseMapper {
 
     int deleteTChooseByIds(String[] array);
 
-    int insert(TChoose tChoose);
+    int insertTChoose(TChoose tChoose);
 
     int insertSomeChoose(List<TChoose> list);
 

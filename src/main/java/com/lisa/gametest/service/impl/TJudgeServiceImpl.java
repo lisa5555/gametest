@@ -9,12 +9,14 @@ import com.lisa.gametest.entity.TJudge;
 import com.lisa.gametest.service.ITJudgeService;
 import com.lisa.gametest.vo.MyJudge;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
+@Service
 public class TJudgeServiceImpl implements ITJudgeService {
 
     @Autowired(required = false)
