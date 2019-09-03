@@ -48,8 +48,6 @@
         </button>
 
         <div class="layui-inline">
-           
-            
             <div class="layui-inline">
                 <div class="layui-input-inline">
                     <select name="TTestTypeName" lay-verify="required" id="TTestTypeName">
@@ -60,33 +58,27 @@
             
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <select name="score" lay-verify="required" id="scoreValue">
-                        <option value="">按照分值查询</option>
-                    </select>
+                    <input type="text" name="score" id="scoreValue" lay-verify="text" placeholder="按照分值查找" autocomplete="off" class="layui-input">
                 </div>
             </div>
-            
             
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <input type="text" name="title" id="searchName" lay-verify="text" placeholder="请输入" autocomplete="off" class="layui-input">
+                    <input type="text" name="searchName" id="searchName" lay-verify="text" placeholder="请输入" autocomplete="off" class="layui-input">
                 </div>
             </div>
-            
-
-
             <button type="button" class="layui-btn" data-type="reload">搜索</button>
+
         </div>
+        <div id="content" ><button type="button" class="layui-btn" onclick="add()">添加</button></div>
 
     </div>
 </div>
 
 <hr>
-<div id="content" ><button type="button" class="layui-btn" onclick="add()">添加</button></div>
 
 <table class="layui-hide layui-l" id="demo" lay-filter="test"></table>
 <hr>
-
 <script type="text/html" id="barDemo">
 
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -128,7 +120,7 @@
             ,id:"transferTable"
             ,height: 'full'
             ,width: 'full'
-            ,url: 'TChoose/listTChoose' //数据接口
+            ,url: '/dianjing/TChoose/listTChoose' //数据接口
             ,title: '视频表'
             ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
@@ -141,16 +133,16 @@
             } //开启分页
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left', filter:"test"}
-                ,{field: 'coment', title: '序号', templet:'#xuhao', width:80, sort: true, fixed: 'left'}
-                ,{field: 'cid', title: 'cid', hide:true }
-                ,{field: 'Axuanxiang', title: 'A选项', width:80, sort: true}
-                ,{field: 'Bxuanxiang', title: 'B选项', width:80, sort: true}
-                ,{field: 'Cxuanxiang', title: 'C选项', width:80, sort: true}
-                ,{field: 'Dxuanxiang', title: 'D选项', width:80, sort: true}	
-				,{field: 'correct', title: '正确选项', width:50}
-				,{field: 'decs', title: '解析', width:200, sort: true}
-				,{field: 'score', title: '分值', width:80},
-				,{field:'tTestType',title:'所属课程',width:80,templet:'<div>{{d.tTestType.typeName}}</div>',align:"center"}
+                ,{field: 'coment', title: '题目', width:200, align:'center', sort: true}
+                ,{field: 'cid', title: 'cid', hide: true }
+                ,{field: 'axuanxiang', title: 'A选项', width:100, align:'center', sort: true}
+                ,{field: 'bxuanxiang', title: 'B选项', width:100, align:'center', sort: true}
+                ,{field: 'cxuanxiang', title: 'C选项', width:100, align:'center', sort: true}
+                ,{field: 'dxuanxiang', title: 'D选项', width:100, align:'center', sort: true}
+                ,{field:'typeName',title:'所属课程',width:120, align:"center"}
+                ,{field: 'correct', title: '正确选项',align:'center', width:100}
+                ,{field: 'decs', title: '解析', width:200, align:'center', sort: true}
+                ,{field: 'score', title: '分值', width:80},
 				,{fixed: 'right',title: '操作', width: 165, align:'center', toolbar: '#barDemo'}
             ]]
         });
@@ -166,7 +158,7 @@
                     //向服务端发送删除指令
                     $.ajax({
                         type:"get",
-                        url:"TChoose/deleteTChoose?id=" + data.id,
+                        url:"/dianjing/TChoose/deleteTChoose?id=" + data.cid,
                         dataType:"json",
                         success:function(data){
                             if(data.code == 1){
@@ -187,8 +179,8 @@
                 layer.open({
                     type: 2 //此处以iframe举例
                     , title: '修改选择题'
-                    , area: ['650px', '600px']
-                    , content: 'chooseUpdate?id=' + data.id
+                    , area: ['700px', '600px']
+                    , content: 'chooseUpdate.html?id='+data.cid
                 })
             }
         });
@@ -226,29 +218,34 @@
         var ids = "";
         if (data.length > 0) {
             for (var i = 0; i < data.length; i++) {
-                ids += data[i].id + ",";
+                ids += data[i].cid + ",";
             }
 			ids = ids.substring(0, ids.length - 1);
         }
         layer.confirm('确认删除吗？' + ids, function (index) {
             $.ajax({
                 type: "post",
-                url: "TChoose/deleteSomeTChoose",
+                url: "/dianjing/TChoose/deleteSomeTChoose",
                 data: {"ids": ids},
                 success: function (data) {
-                    alert("Data Saved:");
+                    if (data.code == 1) {
+                        layer.msg("删除成功!", {
+                            icon: 6,
+                            time: 500
+                        }, function () {
+                            table.reload('transferTable');// 重新加载页面,demo 表示父窗体table标签的id值
+                            layer.close(index);
+                        });
+                    } else {
+                        layer.msg("删除失败");
+                    }
                 }
-            });
-            table.reload('transferTable');
-            layer.msg('删除成功!', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
-        })
-        table.reload('transferTable');
+            })
 
-    });
+        });
 
-    });
-
+    })
+    })
 </script>
 <script type="text/html" id="xuhao">
     {{d.LAY_TABLE_INDEX+1}}
@@ -259,7 +256,7 @@
         layer.open({
             type: 2 //此处以iframe举例
             , title: '添加选择题'
-            , area: ['650px', '600px']
+            , area: ['700px', '600px']
             , content: 'chooseAdd.html'
         })
     }

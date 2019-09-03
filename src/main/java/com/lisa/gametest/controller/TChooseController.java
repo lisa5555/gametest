@@ -81,14 +81,14 @@ public class TChooseController {
 
     /**
      * 根据Tchoose的id删除
-     * @param cid
+     * @param id
      * @return
      */
     @RequestMapping("/deleteTChoose")
     @ResponseBody
-    public AjaxResult deleteTChoose(Integer cid) {
+    public AjaxResult deleteTChoose(Integer id) {
         try {
-            itChooseService.deleteByTChooseId(cid);
+            itChooseService.deleteByTChooseId(id);
             return new AjaxResult(1,null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,14 +98,14 @@ public class TChooseController {
 
     /**
      * 批量删除
-     * @param string
+     * @param ids
      * @return
      */
     @RequestMapping("/deleteSomeTChoose")
     @ResponseBody
-    public AjaxResult deleteSomeTChoose(String string) {
+    public AjaxResult deleteSomeTChoose(String ids) {
         //根据传入的字符串进行切割，得到字符串数组
-        String[] arr = string.split(",");
+        String[] arr = ids.split(",");
 
         try {
             itChooseService.deleteTChooseByIds(arr);

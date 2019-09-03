@@ -24,9 +24,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <select id="selectBySearch" parameterType="map" resultType="MyChoose">
-        select t.* ty.typeName from t_choose t
-        inner join t_test_type ty
-        on t.tid = ty.tid
+        select t.*,te.typeName from t_choose t
+        inner join t_test_type te
+        on t.tid = te.tid
         where 1 = 1
         <if test="tid != null">
             and t.tid = #{tid}
@@ -46,10 +46,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <foreach collection="list" item="item" index="index" separator=",">
             (
             #{item.coment},
-            #{item.Axuanxiang},
-            #{item.Bxuanxiang},
-            #{item.Cxuanxiang},
-            #{item.Dxuanxiang},
+            #{item.axuanxiang},
+            #{item.bxuanxiang},
+            #{item.cxuanxiang},
+            #{item.dxuanxiang},
             #{item.correct},
             #{item.score},
             #{item.tid},

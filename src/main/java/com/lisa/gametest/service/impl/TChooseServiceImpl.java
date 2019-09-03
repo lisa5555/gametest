@@ -31,12 +31,12 @@ public class TChooseServiceImpl implements ITChooseService
 
     @Override
     public int deleteTChooseByIds(String[] array) {
-        return deleteTChooseByIds(array);
+        return tChooseMapper.deleteTChooseByIds(array);
     }
 
     @Override
     public int insert(TChoose tChoose) {
-        return tChooseMapper.insert(tChoose);
+        return tChooseMapper.insertTChoose(tChoose);
     }
 
     @Override

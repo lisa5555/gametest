@@ -20,9 +20,9 @@
 				    <div class="layui-card-header">项目进展</div>
 				    <div class="layui-card-body">
 				      <div class="layui-tab-content">
-				        <div class="layui-tab-item layui-show">
+
 				          <table class="layui-hide layui-l" id="demo" lay-filter="test"></table>
-				        </div>
+
 				      </div>
 				    </div>
 				  </div>
@@ -34,17 +34,13 @@
 			  	<div class="layui-col-sm10 layui-col-md5">
 			  	  <div class="layui-card">
 			  	    <div class="layui-card-header">
-			  	      访问量
-			  	      <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
+			  	      关联课程请看左边
+			  	      <span class="layui-badge layui-bg-blue layuiadmin-badge">上传选择题</span>
 			  	    </div>
 			  	    <div class="layui-card-body layuiadmin-card-list">
-			  	      <p class="layuiadmin-big-font">9,999,666</p>
 			  	      <p>
-			  	        总计访问量  总计访问量  总计访问量  总计访问量  总计访问量  总计访问量 
-						 总计访问量  总计访问量  总计访问量  总计访问量  总计访问量  总计访问量  总计访问量  总计访问量 
-						 
-						 
-						  总计访问量  总计访问量  总计访问量  总计访问量  总计访问量 
+			  	        coment axuanxiang bxuanxiang cxuanxiang dxuanxiang correct score  tid   decs <br/>
+						题目    A选项       B选项      C选项      D选项     正确选项  分值 所属课程  解析
 			  	        <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
 			  	      </p>
 					  <div class="layui-upload">
@@ -59,13 +55,13 @@
 			  	<div class="layui-col-sm10 layui-col-md5">
 			  	  <div class="layui-card">
 			  	    <div class="layui-card-header">
-			  	      访问量
-			  	      <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
+						关联课程请看左边
+			  	      <span class="layui-badge layui-bg-blue layuiadmin-badge">判断题</span>
 			  	    </div>
 			  	    <div class="layui-card-body layuiadmin-card-list">
-			  	      <p class="layuiadmin-big-font">9,999,666</p>
 			  	      <p>
-			  	        总计访问量 
+			  	        coment correct  score   tid      decs<br/>
+					    题目 A/B(对/错)  分值  所属课程id   解析
 			  	        <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
 			  	      </p>
 					  <div class="layui-upload">
@@ -80,13 +76,13 @@
 			  	<div class="ayui-col-sm10 layui-col-md5">
 			  	  <div class="layui-card">
 			  	    <div class="layui-card-header">
-			  	      访问量
-			  	      <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
+						关联课程请看左边
+			  	      <span class="layui-badge layui-bg-blue layuiadmin-badge">简答题</span>
 			  	    </div>
 			  	    <div class="layui-card-body layuiadmin-card-list">
-			  	      <p class="layuiadmin-big-font">9,999,666</p>
 			  	      <p>
-			  	        总计访问量 
+			  	        coment decs  score  tid<br/>
+						  题目 解析  分值  所属课程id
 			  	        <span class="layuiadmin-span-color">88万 <i class="layui-inline layui-icon layui-icon-flag"></i></span>
 			  	      </p>
 					  <div class="layui-upload">
@@ -100,85 +96,95 @@
 		</div>
 	</body>
 	<script>
-		
-		layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function() {
-			var laydate = layui.laydate //日期
-					, laypage = layui.laypage //分页
-					, layer = layui.layer //弹层
-					, table = layui.table //表格
-					, element = layui.element //元素操作
-					, form = layui.form
-					, $ = layui.jquery
-					, upload = layui.upload;
+	layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function() {
+		var laydate = layui.laydate //日期
+				, laypage = layui.laypage //分页
+				, layer = layui.layer //弹层
+				, table = layui.table //表格
+				, element = layui.element //元素操作
+				, form = layui.form
+				, $ = layui.$
+				, upload = layui.upload;
 
 
-			//执行一个 table 实例
-			table.render({
-				elem: '#demo'
-				, id: "transferTable"
-				, height: 'full'
-				, width: 'full'
-				, url: 'listMyTTestType' //数据接口
-				, title: '课程表'
-				, cols: [[ //表头
-					{field: 'tid', title: '课程号', width: 80, sort: true, fixed: 'left'}
-					, {field: 'typeName', title: '课程名', width: 80, sort: true}
-				]]
-			});
+		//执行一个 table 实例
+		table.render({
+			elem: '#demo'
+			, id: "transferTable"
+			, height: 'full'
+			, width: 'full'
+			, url: '/dianjing/TTestType/listMyTTestType' //数据接口
 
-			//选完文件后不自动上传
-			upload.render({
-				elem: '#answer1'
-				, url: 'importAnswer'
-				, auto: false
-				, method: 'post'
-				, enctype: "multipart/form-data"
-				//,multiple: true
-				, bindAction: '#answer2'
-				, done: function (data) {
-					if (data.code == 1) {
-						layer.msg("导入成功!", {icon: 6, time: 500});
-					} else {
-						layui.alert(data.info);
-					}
+			, title: ''
+			 //开启分页
+			, cols: [[ //表头
+				{field: 'tid', title: '课程号', width: 100, sort: true, align: 'center'}
+				, {field: 'typeName', title: '课程名', width: 100, sort: true, align: 'center'}
+			]]
+		});
+
+
+
+		//选完文件后不自动上传
+		upload.render({
+			elem: '#answer1'
+			, url: '/dianjing/TAnswer/importAnswer'
+			, auto: false
+			, method: 'post'
+			, accept: 'file'
+			, field: 'upfile'
+			, exts: 'xls|xlsx'
+			, enctype: "multipart/form-data"
+			// , multiple: true
+			, bindAction: '#answer2'
+			, done: function (data) {
+				if (data.code == 1) {
+					layer.msg("导入成功!", {icon: 6, time: 500});
+				} else {
+					layui.alert(data.info);
 				}
-			});
+			}
+		});
 
-			upload.render({
-				elem: '#choose1'
-				, url: 'importTChoose'
-				, auto: false
-				, method: 'post'
-				, enctype: "multipart/form-data"
-				//,multiple: true
-				, bindAction: '#choose2'
-				, done: function (data) {
-					if (data.code == 1) {
-						layer.msg("导入成功!", {icon: 6, time: 500});
-					} else {
-						layui.alert(data.info);
-					}
+		upload.render({
+			elem: '#choose1'
+			, url: '/dianjing/TChoose/importTChoose'
+			, auto: false
+			, method: 'post'
+			, enctype: "multipart/form-data"
+			, accept: 'file'
+			, field: 'upfile'
+			, exts: 'xls|xlsx'
+			, bindAction: '#choose2'
+			, done: function (data) {
+				if (data.code == 1) {
+					layer.msg("导入成功!", {icon: 6, time: 500});
+				} else {
+					layui.alert(data.info);
 				}
-			});
+			}
+		});
 
-			upload.render({
-				elem: '#judge1'
-				, url: 'importTJudge'
-				, auto: false
-				, method: 'post'
-				, enctype: "multipart/form-data"
-				//,multiple: true
-				, bindAction: '#judge2'
-				, done: function (data) {
-					if (data.code == 1) {
-						layer.msg("导入成功!", {icon: 6, time: 500});
-					} else {
-						layui.alert(data.info);
-					}
+		upload.render({
+			elem: '#judge1'
+			, url: '/dianjing/TJudge/importTJudge'
+			, auto: false
+			, method: 'post'
+			, enctype: "multipart/form-data"
+			, accept: 'file'
+			, field: 'upfile'
+			, exts: 'xls|xlsx'
+			, bindAction: '#judge2'
+			, done: function (data) {
+				if (data.code == 1) {
+					layer.msg("导入成功!", {icon: 6, time: 500});
+				} else {
+					layui.alert(data.info);
 				}
-			})
-
+			}
 		})
+
+	})
 
 
 
