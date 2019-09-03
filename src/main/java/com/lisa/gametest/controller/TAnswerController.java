@@ -85,13 +85,13 @@ public class TAnswerController {
 
     /**
      * 批量删除
-     * @param string
+     * @param ids
      * @return
      */
     @RequestMapping("/deleteSomeTAnswer")
     @ResponseBody
-    public AjaxResult deleteSomeTAnswer(String string) {
-        String[] array = string.split(",");
+    public AjaxResult deleteSomeTAnswer(String ids) {
+        String[] array = ids.split(",");
         try{
             itAnswerService.deleteTAnswerByIds(array);
             return new AjaxResult(1,null);
@@ -103,13 +103,13 @@ public class TAnswerController {
 
     /**
      * 根据id查找
-     * @param aid
+     * @param id
      * @return
      */
     @RequestMapping("/findTAnswer")
     @ResponseBody
-    public AjaxResult queryTAnswer(Integer aid) {
-        TAnswer tAnswer = itAnswerService.selectTAnswerById(aid);
+    public AjaxResult queryTAnswer(Integer id) {
+        TAnswer tAnswer = itAnswerService.selectTAnswerById(id);
         return new AjaxResult(1,tAnswer);
     }
 

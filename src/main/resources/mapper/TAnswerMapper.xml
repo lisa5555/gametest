@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     
-    <select id="selectTAnswerById" parameterType="Long" resultMap="TAnswerResult">
+    <select id="selectTAnswerById" parameterType="int" resultMap="TAnswerResult">
         select * from t_answer
         where aid = #{aid}
     </select>
@@ -85,13 +85,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="coment != null  and coment != ''">coment = #{coment},</if>
             <if test="tid != null ">tid = #{tid},</if>
-            <if test="decs != null  and dec != ''">decs = #{decs},</if>
+            <if test="decs != null  and decs != ''">decs = #{decs},</if>
             <if test="score != null ">score = #{score},</if>
         </trim>
         where aid = #{aid}
     </update>
 
-    <delete id="deleteTAnswerById" parameterType="Long">
+    <delete id="deleteByTAnswerId" parameterType="int">
         delete from t_answer where aid = #{aid}
     </delete>
 

@@ -142,7 +142,7 @@
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left', filter:"test"}
                 ,{field: 'coment', title: '题目', templet:'#xuhao', width:80, sort: true, fixed: 'left'}
-                //,{field: 'id', title: 'id',hide:true }
+                ,{field: 'jid', title: 'jid', hide:true }
                 ,{field: 'correct', title: '答案', width:50}
                 ,{field: 'decs', title: '解析', width:200, sort: true}
                 ,{field: 'score', title: '分值', width:80},
@@ -163,7 +163,7 @@
                     //向服务端发送删除指令
                     $.ajax({
                         type:"get",
-                        url:"TJudge/deleteTJudge?id=" + data.id,
+                        url:"TJudge/deleteTJudge?id=" + data.jid,
                         dataType:"json",
                         success:function(data) {
                             if (data.code == 1) {

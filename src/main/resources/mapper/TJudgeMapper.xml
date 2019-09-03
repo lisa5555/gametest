@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="decs"    column="decs"    />
     </resultMap>
 
-    <select id="selectTJudgeById" parameterType="Long" resultMap="TJudgeResult">
+    <select id="selectTJudgeById" parameterType="int" resultMap="TJudgeResult">
         select * from t_judge
         where jid = #{jid}
     </select>
@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where jid = #{jid}
     </update>
 
-    <delete id="deleteByTJudgeId" parameterType="Long">
+    <delete id="deleteByTJudgeId" parameterType="int">
         delete from t_judge where jid = #{jid}
     </delete>
 

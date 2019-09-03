@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="decs"    column="decs"    />
     </resultMap>
     
-    <select id="selectTChooseById" parameterType="Long" resultMap="TChooseResult">
+    <select id="selectTChooseById" parameterType="int" resultMap="TChooseResult">
         select * from t_choose
         where cid = #{cid}
     </select>
@@ -100,7 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where cid = #{cid}
     </update>
 
-    <delete id="deleteByTChooseId" parameterType="Long">
+    <delete id="deleteByTChooseId" parameterType="int">
         delete from t_choose where cid = #{cid}
     </delete>
 

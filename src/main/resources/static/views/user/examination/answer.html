@@ -84,154 +84,168 @@
 
 
 <script>
-    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function() {
         var laydate = layui.laydate //日期
-            ,laypage = layui.laypage //分页
-            ,layer = layui.layer //弹层
-            ,table = layui.table //表格
-            ,$ = layui.jquery
-            ,element = layui.element //元素操作
-            ,form=layui.form;
+            , laypage = layui.laypage //分页
+            , layer = layui.layer //弹层
+            , table = layui.table //表格
+            , $ = layui.jquery
+            , element = layui.element //元素操作
+            , form = layui.form;
 
-		
-		
-		$.ajax({
-		    type:"get",
-		    url:"/dianjing/TTestType/findAllTTestType",
-		    dataType:"json",
-		    success:function(data){
-		        if(data.code == 1){
-		            var infos = data.info;
-		            $(infos).each(function () {
+
+        $.ajax({
+            type: "get",
+            url: "/dianjing/TTestType/findAllTTestType",
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 1) {
+                    var infos = data.info;
+                    $(infos).each(function () {
                         $("#TTestTypeName").append('<option value="' + this.tid + '">' + this.typeName + '</option>')
-		            });
-		            form.render()
-		        }else{
-		            layer.msg("获取数据异常");
-		        }
-		    }
-		})
-    
+                    });
+                    form.render()
+                } else {
+                    layer.msg("获取数据异常");
+                }
+            }
+        })
+
         //执行一个 table 实例
         table.render({
             elem: '#demo'
-            ,id:"transferTable"
-            ,height: 'full'
-            ,width: 'full'
-            ,url: '/dianjing/TAnswer/listTAnswer' //数据接口
-            ,title: '判断题表'
-            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+            , id: "transferTable"
+            , height: 'full'
+            , width: 'full'
+            , url: '/dianjing/TAnswer/listTAnswer' //数据接口
+            , title: '判断题表'
+            , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
                 //,curr: 5 //设定初始在第 5 页
                 //,groups: 1 //只显示 1 个连续页码
-                ,first: false //不显示首页
-                ,last: false //不显示尾页
-                ,limits:[5,10]
+                , first: false //不显示首页
+                , last: false //不显示尾页
+                , limits: [5, 10]
 
             } //开启分页
-            ,cols: [[ //表头
-                {type: 'checkbox', fixed: 'left', filter:"test"}
-                ,{field: 'coment', title: '题目', align:"center" ,templet:'#xuhao', width:80, sort: true, fixed: 'left'}
-                ,{field: 'decs', title: '解析', width:200,align:"center",sort: true}
-                ,{field: 'score', title: '分值', width:80, align:"center"}
-				,{field:'typeName',title:'所属课程',width:120, align:"center"}
-                ,{fixed: 'right',title: '操作', width: 165, align:'center', toolbar: '#barDemo'}
+            , cols: [[ //表头
+                {type: 'checkbox', fixed: 'left', filter: "test"}
+                , {field:'id',title:'序号',width:80,align:"center", fixed:'left'}
+                , {field: 'aid', title: 'aid', hide: true}
+                , {
+                    field: 'coment',
+                    title: '题目',
+                    align: "center",
+                    width: 160,
+                    sort: true,
+                }
+                , {field: 'decs', title: '解析', width: 200, align: "center", sort: true}
+                , {field: 'score', title: '分值', width: 80, align: "center"}
+                , {field: 'typeName', title: '所属课程', width: 120, align: "center"}
+                , {fixed: 'right', title: '操作', width: 165, align: 'center', toolbar: '#barDemo'}
             ]]
         });
 
 
-        table.on('tool(test)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        table.on('tool(test)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
-                ,layEvent = obj.event; //获得 lay-event 对应的值
-            if(layEvent === 'del'){
-                layer.confirm('真的删除行么', function(index){
+                , layEvent = obj.event; //获得 lay-event 对应的值
+            if (layEvent === 'del') {
+                layer.confirm('真的删除行么', function (index) {
                     obj.del(); //删除对应行（tr）的DOM结构
                     layer.close(index);
                     //向服务端发送删除指令
                     $.ajax({
-                        type:"get",
-                        url:"/dianjing/TAnswer/deleteTAnswer?id=" + data.id,
-                        dataType:"json",
-                        success:function(data){
-                            if(data.code == 1){
+                        type: "get",
+                        url: "/dianjing/TAnswer/deleteTAnswer?aid=" + data.aid,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 1) {
                                 layer.msg("删除成功!", {
                                     icon: 6,
                                     time: 500
                                 }, function () {
                                     table.reload('transferTable');// 重新加载页面,demo 表示父窗体table标签的id值
                                 });
-                            }else{
+                            } else {
                                 alert(data.info);
                             }
                         }
                     })
                 });
-            } else if(layEvent === 'edit'){
+            } else if (layEvent === 'edit') {
                 //layer.msg('编辑操作');
                 layer.open({
                     type: 2 //此处以iframe举例
                     , title: '修改题目'
                     , area: ['650px', '600px']
-                    , content: 'answerUpdate.html?id=' + data.id
+                    , content: 'answerUpdate.html?id=' + data.aid
                 })
             }
         });
         var active = {
-            reload: function(){
+            reload: function () {
                 //执行重载
                 table.reload('transferTable', {
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
-                    ,where: { // 额外需要提交的参数
-                        tid:$("#TTestTypeName option:selected").val(),
-                        score:$("#scoreValue").val(),
-                        searchName:$("#searchName").val(),
+                    , where: { // 额外需要提交的参数
+                        tid: $("#TTestTypeName option:selected").val(),
+                        score: $("#scoreValue").val(),
+                        searchName: $("#searchName").val(),
                     }
                 });
             }
         };
 
-        $('.searchDiv .layui-btn').on('click', function(){
+        $('.searchDiv .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
 
 
+        $('#btn').click(function () {
+            var checkStatus = table.checkStatus('transferTable'),
+                data = checkStatus.data;
 
-    $('#btn').click(function () {
-        var checkStatus = table.checkStatus('transferTable'),
-            data = checkStatus.data;
-
-        if (data == "") {
-            layer.msg('至少选择一个', {icon: 2});
-            return;
-        }
-        var ids = "";
-        if (data.length > 0) {
-            for (var i = 0; i < data.length; i++) {
-                ids += data[i].id + ",";
+            if (data == "") {
+                layer.msg('至少选择一个', {icon: 2});
+                return;
             }
-			ids = ids.substring(0, ids.length - 1);
-        }
-        layer.confirm('确认删除吗？' + ids, function (index) {
-            $.ajax({
-                type: "post",
-                url: "/dianjing/TAnswer/deleteSomeTAnswer",
-                data: {"ids": ids},
-                success: function (data) {
-                    alert("Data Saved:");
+            var ids = "";
+            if (data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    ids += data[i].aid + ",";
                 }
+                ids = ids.substring(0, ids.length - 1);
+            }
+
+            layer.confirm('确认删除吗？' + ids, function (index) {
+                $.ajax({
+                    type: "post",
+                    url: "/dianjing/TAnswer/deleteSomeTAnswer",
+                    data: {"ids": ids},
+                    success: function (data) {
+                        if (data.code == 1) {
+                            layer.msg("删除成功!", {
+                                icon: 6,
+                                time: 500
+                            }, function () {
+                                table.reload('transferTable');// 重新加载页面,demo 表示父窗体table标签的id值
+                                layer.close(index);
+                            });
+                        } else {
+                            layer.msg("删除失败");
+                        }
+                    }
+                })
+
             });
-            table.reload('transferTable');
-            layer.msg('删除成功!', {icon: 1});
-            $(".layui-form-checked").not('.header').parents('tr').remove();
+
         })
-        table.reload('transferTable');
+    })
 
-    });
-
-    });
 
 </script>
 <script type="text/html" id="xuhao">
