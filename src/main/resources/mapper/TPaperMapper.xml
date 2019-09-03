@@ -46,4 +46,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="findPaperById" parameterType="int" resultMap="TPaperResult">
         select choose,judge from t_paper where qid=#{qid}
     </select>
+
+
+    <select id="findchooseById" parameterType="int" resultType="TChoose">
+        select * from t_choose where cid=#{cid}
+    </select>
+    <select id="findjudgeById" parameterType="int" resultType="TJudge">
+        select * from t_judge where jid=#{jid}
+    </select>
 </mapper>

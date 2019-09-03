@@ -1,6 +1,8 @@
 package com.lisa.gametest.dao;
 
 
+import com.lisa.gametest.entity.TChoose;
+import com.lisa.gametest.entity.TJudge;
 import com.lisa.gametest.entity.TPaper;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +31,7 @@ public interface TPaperMapper {
 
     int updateByPrimaryKey(TPaper record);
     public TPaper findPaperById(Integer qid);
+    public TChoose findchooseById(Integer id);
+    public TJudge findjudgeById(Integer id);
+
 }
