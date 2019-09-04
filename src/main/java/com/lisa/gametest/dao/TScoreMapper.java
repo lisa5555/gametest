@@ -1,31 +1,20 @@
 package com.lisa.gametest.dao;
 
 
-import com.lisa.gametest.entity.TScore;
+import com.lisa.gametest.vo.voScore;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface TScoreMapper {
-    int countByExample(TScore example);
 
-    int deleteByExample(TScore example);
+    public List<voScore> findAllScore(@Param("typeName") String typeName,
+                                      @Param("name") String name);
 
-    int deleteByPrimaryKey(Integer sid);
+    public void deleteById(Integer sid);
 
-    int insert(TScore record);
+    public List<voScore> findAllTypeName(String typeName);
 
-    int insertSelective(TScore record);
+    public Integer deleteAll(int[] sidArr);
 
-    List<TScore> selectByExample(TScore example);
-
-    TScore selectByPrimaryKey(Integer sid);
-
-    int updateByExampleSelective(@Param("record") TScore record, @Param("example") TScore example);
-
-    int updateByExample(@Param("record") TScore record, @Param("example") TScore example);
-
-    int updateByPrimaryKeySelective(TScore record);
-
-    int updateByPrimaryKey(TScore record);
 }

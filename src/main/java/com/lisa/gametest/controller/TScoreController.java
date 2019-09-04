@@ -2,28 +2,28 @@ package com.lisa.gametest.controller;
 
 import com.github.pagehelper.Page;
 import com.lisa.gametest.common.AjaxResult;
-import com.lisa.gametest.entity.TOverPaper;
 import com.lisa.gametest.entity.TTestType;
 import com.lisa.gametest.entity.TUser;
-import com.lisa.gametest.service.ITOverPaperService;
+import com.lisa.gametest.service.ITScoreService;
 import com.lisa.gametest.service.ITTestTypeService;
 import com.lisa.gametest.service.ITUserService;
-import com.lisa.gametest.vo.overPaperInfo;
+import com.lisa.gametest.vo.voScore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/overPaper")
-public class overPaperController {
+@RequestMapping("/total")
+public class TScoreController {
 
     @Autowired
-    private ITOverPaperService itOverPaperService;
+    private ITScoreService itScoreService;
 
     @Autowired
     private ITTestTypeService itTestTypeService;
@@ -33,27 +33,27 @@ public class overPaperController {
 
 
     /**
-     *  查询所有方法
-     * @param typeName 学科
-     * @param name     学生姓名
+     * 查询所有
+     * @param typeName
+     * @param name
      * @param page
      * @param limit
-     * @return          返回JSON格式数据
+     * @return
      */
-    @ResponseBody
-    @RequestMapping("/query.do")
-    public Map<String,Object> findAllTOverPaper(String typeName,String name,Integer page, Integer limit) {
-        List<overPaperInfo> list = itOverPaperService.findAllTOverPaper(typeName,name,page, limit);
-        long total = ((Page) list).getTotal();
+   @ResponseBody
+   @RequestMapping("/query.do")
+   public Map<String,Object> findAllScore(String typeName,String name,Integer page, Integer limit){
+       List<voScore> list = itScoreService.findAllScore(typeName, name, page, limit);
 
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("code", 0);
-        map.put("msg", "");
-        map.put("count", total);
-        map.put("data", list);
+       long total = ((Page) list).getTotal();
+       HashMap<String, Object> map = new HashMap<>();
+       map.put("code", 0);
+       map.put("msg", "");
+       map.put("count", total);
+       map.put("data", list);
 
-        return map;
-    }
+       return map;
+   }
 
     /**
      * 查询所有
@@ -90,32 +90,18 @@ public class overPaperController {
         return ajaxResult;
     }
 
-
-    @ResponseBody
-    @RequestMapping("/findByState.do")
-    public AjaxResult findByState(Integer oid){
-        AjaxResult result = new AjaxResult();
-
-        try {
-            List<overPaperInfo> list = itOverPaperService.findByState(oid);
-            result.setCode(1);
-            result.setInfo(list);
-        } catch (Exception e) {
-            result.setCode(0);
-            result.setInfo(e.getMessage());
-            e.printStackTrace();
-        }
-        return result;
-    }
-
-
+    /**
+     * 根据ID删除对象
+     * @param sid
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/deleteById.do")
-    public AjaxResult deleteById(Integer oid) {
+    private AjaxResult deleteById(Integer sid) {
         AjaxResult result = new AjaxResult();
 
         try {
-            itOverPaperService.deleteById(oid);
+            itScoreService.deleteById(sid);
             result.setCode(1);
             result.setInfo(null);
         } catch (Exception e) {
@@ -126,23 +112,39 @@ public class overPaperController {
         return result;
     }
 
+    @ResponseBody
+    @RequestMapping("/findByTypeName")
+    public Map<String,List> findByTypeName(String typeName) {
+        List<voScore> list = itScoreService.findAllTypeName(typeName);
+
+        List<String> TN = new ArrayList<>();
+        List<Integer> total = new ArrayList<>();
+
+        for (voScore voScore : list) {
+            TN.add(voScore.getTypeName());
+            total.add(voScore.getTotal());
+        }
+
+        Map<String, List> map = new HashMap<>();
+        map.put("TN",TN);
+        map.put("total",total);
+
+        return map;
+    }
 
     @ResponseBody
     @RequestMapping("/deleteAll.do")
     public AjaxResult deleteAll(String ids) {
 
-        AjaxResult result = new AjaxResult();
-
-        String[] oidArr = ids.split(",");
-        int[] id = new int[oidArr.length];
-        for (int i = 0; i <oidArr.length;i++ ){
-            id[i] = Integer.parseInt(oidArr[i]);
+        String[] sidArr = ids.split(",");
+        int[] id = new int[sidArr.length];
+        for (int i = 0; i <sidArr.length;i++ ){
+            id[i] = Integer.parseInt(sidArr[i]);
         }
 
-        itOverPaperService.deleteAll(id);
+        itScoreService.deleteAll(id);
 
         return new AjaxResult(1, null);
 
     }
-
 }

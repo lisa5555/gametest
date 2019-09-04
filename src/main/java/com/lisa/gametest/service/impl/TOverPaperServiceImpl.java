@@ -23,10 +23,26 @@ public class TOverPaperServiceImpl implements ITOverPaperService {
     private TOverPaperMapper tOverPaperMapper;
 
     @Override
-    public List<overPaperInfo> findAllTOverPaper(String typeName,Integer page, Integer limit) {
+    public List<overPaperInfo> findAllTOverPaper(String typeName,String name,Integer page, Integer limit) {
         PageHelper.startPage(page,limit);
-        List<overPaperInfo> list = tOverPaperMapper.findAllTP(typeName);
+        List<overPaperInfo> list = tOverPaperMapper.findAllTP(typeName,name);
         return list;
+    }
+
+    @Override
+    public List<overPaperInfo> findByState(Integer oid) {
+        List<overPaperInfo> list = tOverPaperMapper.findByState(oid);
+        return list;
+    }
+
+    @Override
+    public void deleteById(Integer oid) {
+        tOverPaperMapper.deleteById(oid);
+    }
+
+    @Override
+    public Integer deleteAll(int[] oidArr) {
+        return tOverPaperMapper.deleteAll(oidArr);
     }
 
 

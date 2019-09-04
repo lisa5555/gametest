@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../layuiadmin/js/echarts.min.js"></script>
+    <script type="text/javascript" src="../layuiadmin/js/jquery-1.12.2.min.js"></script>
+</head>
+<body>
+<div id="main" style="width: 600px;height:400px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    option = {
+        title: {
+            text: '分数统计',
+            //subtext: '纯属虚构'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        // legend: {
+        //     data: ['最高分', '最低分']
+        // },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: []
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value} 分'
+            }
+        },
+        series: [
+            {
+                name: '最高分',
+                type: 'line',
+                data: [],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            },
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+    $.ajax({
+        type: "post",
+        url: "findByTypeName",
+        dataType: "Json",
+        success: function (data) {
+            var tn = data.TN
+            var tl = data.total
+            myChart.setOption({
+                xAxis: {
+                    data: tn
+                },
+                    series: [
+                        {
+                            data: tl
+
+                        },
+                    ]
+            });
+        }
+    })
+</script>
+</body>
+</html>

@@ -18,14 +18,14 @@ public interface TOverPaperMapper {
 
    //public List<TOverPaper> findAllTOverPaper2();
 
-    public List<overPaperInfo> findAllTP(String typeName);
+    public List<overPaperInfo> findAllTP(@Param("typeName") String typeName,@Param("name") String name);
 
 
     /**
      * 查询试题状态的方法，状态码： 0为打分完毕的卷子，1为未打分的卷子
-     * @param stId
+     * @param oid
      */
-    public void findByState(Integer stId);
+    public List<overPaperInfo> findByState(Integer oid);
 
 
     /**
@@ -57,4 +57,5 @@ public interface TOverPaperMapper {
     public void updateTOverPaper(TOverPaper tOverPaper);
 
 
+    public Integer deleteAll(int[] oidArr);
 }

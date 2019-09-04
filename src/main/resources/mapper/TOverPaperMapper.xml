@@ -16,18 +16,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <select id="findAllTP" parameterType="map" resultType="com.lisa.gametest.vo.overPaperInfo">
-        select * from t_score ts
-        inner join t_over_paper top
-        on ts.oid=top.oid
+        select top.*,tu.name, ty.typeName from t_over_paper top
+        inner join t_user tu
+        on tu.uid=top.uid
         inner join t_paper tp
-        on tp.tid=top.qid
+        on tp.qid=top.qid
         inner join t_test_type ty
-        on ts.uid=ts.uid
+        on ty.tid=tp.tid
         <where>
             <if test="typeName != null and typeName != ''">
-                and typeName=#{typeName}
+                and ty.typeName=#{typeName}
+            </if>
+            <if test="name != null and name  != ''">
+                name like concat ('%',concat(#{name}),'%')
             </if>
         </where>
     </select>
+
+    <select id="findByState" parameterType="int" resultType="com.lisa.gametest.vo.overPaperInfo">
+        select t_over_paper.state from t_over_paper
+        where t_over_paper.oid=#{oid}
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        delete from t_over_paper where oid=#{oid}
+    </delete>
+
+    <delete id="deleteAll" parameterType="int">
+        delete from t_over_paper where oid in
+        <foreach collection="array" item="oid" open="(" close=")" separator=",">
+            #{oid}
+        </foreach>
+    </delete>
     
 </mapper>

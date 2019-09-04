@@ -12,7 +12,13 @@ public interface ITOverPaperService {
     //public List<TOverPaper> findAllTOverPaper();
 
     //public List<> findAllTOverPaper(String username, String typeName ,Integer page, Integer limit);
-    public List<overPaperInfo> findAllTOverPaper(String typeName,Integer page, Integer limit);
+    public List<overPaperInfo> findAllTOverPaper(String typeName, String name, Integer page, Integer limit);
 
+
+    public List<overPaperInfo> findByState(Integer oid);
+
+    public void deleteById(Integer oid);
+
+    public Integer deleteAll(int[] oidArr);
 
 }

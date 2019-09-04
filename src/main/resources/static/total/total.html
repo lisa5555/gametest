@@ -42,7 +42,7 @@
 
 
         <button id="btn" class="layui-btn" type="button">
-            批量删除 <span class="badge"></span>
+            批量删除 <span class="badge" id="delNum"></span>
         </button>
 
         <div class="layui-inline">
@@ -62,13 +62,13 @@
 <!--        </div>-->
 
 
-            <div class="layui-inline">
-                <div class="layui-input-inline">
-                    <select name="state" lay-verify="required" id="sid">
-                        <option value="">是否修改</option>
-                    </select>
-                </div>
-            </div>
+<!--            <div class="layui-inline">-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <select name="state" lay-verify="required" id="sid">-->
+<!--                        <option value="">是否修改</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
             <div class="layui-inline">
@@ -126,14 +126,14 @@
             url:"findAllTTestType",
             dataType:"json",
             success:function(data){
-                if(data.code == 1){
-                    var infos = data.info
-                    $(infos).each(function () {
-                        var html = '<option value="' + this.typeName+ '">' + this.typeName + '</option>'
-                        $("#nid").append($(html))
+                        if(data.code == 1){
+                            var infos = data.info
+                            $(infos).each(function () {
+                                var html = '<option value="' + this.typeName+ '">' + this.typeName + '</option>'
+                                $("#nid").append($(html))
 
-                    })
-                    form.render()
+                            })
+                            form.render()
                 }else{
                     layer.msg("获取数据异常");
                 }
@@ -160,15 +160,15 @@
             } //开启分页
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left', filter:"test",width:80}
-                ,{field: 'oid', title: '序号', templet:'#xuhao', width:80, sort: true, fixed: 'left'}
+                ,{field: 'sid', title: '序号', templet:'#xuhao', width:80, sort: true, fixed: 'left'}
                 //,{field: 'oid', title: 'id',hide:true }
                 ,{field: 'typeName', title: '学科', width:150}
                 ,{field: 'name', title: '学生', width:150}
                 // ,{field: 'commitChoose', title: '选择题', width:80}
                 // ,{field: 'commitJudge', title: '判断题', width:80}
                 // ,{field: 'commitAnswer', title: '简答题', width:120}
-                 ,{field: 'state', title: '是否判卷', width:150}
-                 ,{field: 'score', title: '总分', width:150}
+                //,{field: 'state', title: '是否判卷', width:150}
+                 ,{field: 'total', title: '总分', width:150}
                 ,{fixed: 'right',title: '操作', width: 150, align:'center', toolbar: '#barDemo'}
 
             ]]
@@ -185,7 +185,7 @@
                     //向服务端发送删除指令
                     $.ajax({
                         type:"get",
-                        url:"deleteById.do?oid=" + data.oid,
+                        url:"deleteById.do?sid=" + data.sid,
                         dataType:"json",
                         success:function(data){
                             if(data.code == 1){
@@ -221,14 +221,13 @@
                     }
                 });
             }
-        }
+        };
 
         $('.searchDiv .layui-btn').on('click', function(){
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
 
-        //批量删除
         $('#btn').click(function () {
             var checkStatus = table.checkStatus('transferTable'),
                 data = checkStatus.data;
@@ -240,7 +239,7 @@
             var ids = "";
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
-                    ids += data[i].oid + ",";
+                    ids += data[i].sid + ",";
                 }
             }
             layer.confirm('确认删除吗？' + ids, function (index) {
@@ -250,6 +249,7 @@
                     data: {"ids": ids},
                     success: function (data) {
                         alert("Data Saved:" + msg);
+
                     }
                 });
                 table.reload('transferTable');
@@ -260,7 +260,7 @@
 
         });
 
-    });
+    })
 </script>
 <script type="text/html" id="xuhao">
     {{d.LAY_TABLE_INDEX+1}}

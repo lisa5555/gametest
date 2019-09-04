@@ -24,10 +24,12 @@ public class overPaperInfo {
 
     private String username;
 
+    private String name;
+
     public overPaperInfo() {
     }
 
-    public overPaperInfo(Integer oid, Integer pid, Integer uid, Integer tid, String commitchoose, String commitjudge, String commitanswer, Integer score, Integer state, String typeName, String username) {
+    public overPaperInfo(Integer oid, Integer pid, Integer uid, Integer tid, String commitchoose, String commitjudge, String commitanswer, Integer score, Integer state, String typeName, String username, String name) {
         this.oid = oid;
         this.pid = pid;
         this.uid = uid;
@@ -39,6 +41,15 @@ public class overPaperInfo {
         this.state = state;
         this.typeName = typeName;
         this.username = username;
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getTid() {
