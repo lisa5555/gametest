@@ -29,14 +29,15 @@ public class TTestTypeController {
     @ResponseBody
     public AjaxResult addTTestType(String typeName) {
 
-        TTestType testType = itTestTypeService.findByName(typeName);
-        if (testType == null) {
+        TTestType testType1 = itTestTypeService.findByName(typeName);
+        if (testType1 == null) {
             try {
                 itTestTypeService.insertTTestType(typeName);
+                return new AjaxResult(1,null);
             } catch (Exception e) {
+                e.printStackTrace();
                 return new AjaxResult(0,"添加失败");
             }
-            return new AjaxResult(1,null);
         } else {
             return new AjaxResult(2,"该课程已存在");
         }
@@ -134,13 +135,13 @@ public class TTestTypeController {
 
     /**
      * 批量删除
-     * @param string
+     * @param ids
      * @return
      */
     @RequestMapping("/deleteSomeTTestType")
     @ResponseBody
-    public AjaxResult deleteSomeTTestType(String string){
-        String[] array = string.split(",");
+    public AjaxResult deleteSomeTTestType(String ids){
+        String[] array = ids.split(",");
 
         try {
             itTestTypeService.deleteTTestTypeByIds(array);

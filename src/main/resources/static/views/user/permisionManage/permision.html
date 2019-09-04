@@ -44,7 +44,7 @@
 </head>
 <body class="layui-layout-body">
 <div>
-    <h2>课程管理</h2>
+    <h2>权限管理</h2>
     <div class="layui-form searchDiv" id="id2">
 
 
@@ -60,7 +60,7 @@
             </div>
             <button type="button" class="layui-btn" data-type="reload">搜索</button>
         </div>
-        <div id="content" ><button type="button" class="layui-btn" onclick="add()">添加</button></div>
+        <div class="layui-inline" id="content" ><button type="button" class="layui-btn" onclick="add()">添加</button></div>
 
     </div>
 </div>
@@ -74,7 +74,7 @@
 
     <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-    <a class="layui-btn layui-btn-xs" lay-event="create">生成试卷</a>
+    <a class="layui-btn layui-btn-xs" lay-event="create">管理子权限</a>
 </script>
 
 
@@ -95,7 +95,7 @@
             ,id:"transferTable"
             ,height: 'full'
             ,width: 'full'
-            ,url: '/dianjing/TTestType/findBySearch' //数据接口
+            ,url: '/dianjing/menu/findFirstTPermision' //数据接口
             ,title: ''
             ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
@@ -109,9 +109,9 @@
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left', filter:"test"}
                 ,{field: '', title: '序号', templet:'#xuhao', align:'center', width:80, sort: true, fixed: 'left'}
-                ,{field: 'tid', title: '课程编号', width:120, align:'center', sort: true}
-                //,{field: 'tid', title: 'id',hide:true }
-                ,{field: 'typeName', title: '课程名称',align:'center', width:150}
+                ,{field: 'resourceName', title: '权限名称', width:120, align:'center', sort: true}
+                ,{field: 'pid', title: 'pid',hide:true }
+                ,{field: 'resourceType', title: '资源类别',align:'center', width:150}
                 ,{fixed: 'right',title: '操作', width: 200, align:'center', toolbar: '#barDemo'}
 
             ]]
@@ -129,7 +129,7 @@
                     //向服务端发送删除指令
                     $.ajax({
                         type:"get",
-                        url:"/dianjing/TTestType/deleteTTestType?tid=" + data.tid,
+                        url:"/dianjing/menu/deleteTPermision?pid=" + data.pid,
                         dataType:"json",
                         success:function(data){
                             if(data.code == 1){
@@ -149,17 +149,12 @@
                 //layer.msg('编辑操作');
                 layer.open({
                     type: 2 //此处以iframe举例
-                    , title: '修改课程名称'
-                    , area: ['600px', '300px']
-                    , content: 'testTypeUpdate.html?tid='+data.tid
+                    , title: '修改权限信息'
+                    , area: ['650px', '650px']
+                    , content: 'permisionUpdate.html?pid='+data.pid
                 })
             } else if (layEvent === 'create') {
-                layer.open({
-                    type: 2 //此处以iframe举例
-                    , title: '生成试卷'
-                    , area: ['700px', '550px']
-                    , content: 'testTypeCreate.html?tid='+data.tid
-                })
+					window.location.href = 'permisionChildren.html?pid='+data.pid
             }
         });
         var active = {
@@ -194,14 +189,14 @@
             var ids = "";
             if (data.length > 0) {
                 for (var i = 0; i < data.length; i++) {
-                    ids += data[i].tid + ",";
+                    ids += data[i].pid + ",";
                 }
                 ids = ids.substring(0, ids.length - 1);
             }
             layer.confirm('确认删除吗？' + ids, function (index) {
                 $.ajax({
                     type: "post",
-                    url: "/dianjing/TTestType/deleteSomeTTestType",
+                    url: "/dianjing/menu/deleteSomeTPermision",
                     data: {"ids": ids},
                     success: function (data) {
                         if (data.code == 1) {
@@ -231,9 +226,9 @@
     function add(){
         layer.open({
             type: 2 //此处以iframe举例
-            , title: '添加课程'
-            , area: ['600px', '300px']
-            , content: 'testTypeAdd.html'
+            , title: '添加权限'
+            , area: ['600px', '600px']
+            , content: 'permisionAdd.html'
         })
     }
 

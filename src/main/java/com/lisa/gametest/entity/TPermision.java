@@ -14,6 +14,7 @@ public class TPermision {
     private String resourceType;
 
     private String url;
+
     private List<TPermision> tPermisionlist;
 
     public List<TPermision> gettPermisionlist() {
