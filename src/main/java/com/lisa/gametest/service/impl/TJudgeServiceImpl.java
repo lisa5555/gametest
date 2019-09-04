@@ -4,17 +4,20 @@ package com.lisa.gametest.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.lisa.gametest.common.ChangeListToArray;
 import com.lisa.gametest.dao.TJudgeMapper;
 import com.lisa.gametest.entity.TJudge;
 import com.lisa.gametest.service.ITJudgeService;
 import com.lisa.gametest.vo.MyJudge;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
+@Service
 public class TJudgeServiceImpl implements ITJudgeService {
 
     @Autowired(required = false)
@@ -48,6 +51,17 @@ public class TJudgeServiceImpl implements ITJudgeService {
     @Override
     public int updateTJudge(TJudge tJudge) {
         return tJudgeMapper.updateTJudge(tJudge);
+    }
+
+    @Override
+    public String createTJudgeExams(Integer tid, Integer jNum) {
+        List<Integer> list = tJudgeMapper.createTJudgeExams(tid, jNum);
+        return ChangeListToArray.create(list);
+    }
+
+    @Override
+    public int findTJudgeCount(Integer tid) {
+        return tJudgeMapper.findTJudgeCount(tid);
     }
 
     @Override

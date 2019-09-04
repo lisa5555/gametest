@@ -1,19 +1,21 @@
 package com.lisa.gametest.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class TTestNumber {
     private Integer kid;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
 
-    private Date createtime;
-
-    private Date endtime;
-
-    private String kaoshitime;
+    private String kaoshiTime;
 
     private Integer tid;
 
-    private Integer qid;
 
     public Integer getKid() {
         return kid;
@@ -23,28 +25,28 @@ public class TTestNumber {
         this.kid = kid;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    public Date getEndtime() {
-        return endtime;
+    public Date getEndTime() {
+        return endTime;
     }
 
-    public void setEndtime(Date endtime) {
-        this.endtime = endtime;
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
-    public String getKaoshitime() {
-        return kaoshitime;
+    public String getKaoshiTime() {
+        return kaoshiTime;
     }
 
-    public void setKaoshitime(String kaoshitime) {
-        this.kaoshitime = kaoshitime == null ? null : kaoshitime.trim();
+    public void setKaoshiTime(String kaoshiTime) {
+        this.kaoshiTime = kaoshiTime;
     }
 
     public Integer getTid() {
@@ -55,11 +57,14 @@ public class TTestNumber {
         this.tid = tid;
     }
 
-    public Integer getQid() {
-        return qid;
-    }
-
-    public void setQid(Integer qid) {
-        this.qid = qid;
+    @Override
+    public String toString() {
+        return "TTestNumber{" +
+                "kid=" + kid +
+                ", createTime=" + createTime +
+                ", endTime=" + endTime +
+                ", kaoshiTime='" + kaoshiTime + '\'' +
+                ", tid=" + tid +
+                '}';
     }
 }

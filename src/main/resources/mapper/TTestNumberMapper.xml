@@ -3,20 +3,33 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lisa.gametest.dao.TTestNumberMapper">
-    
-    <resultMap type="TTestNumber" id="TTestNumberResult">
-        <result property="kid"    column="kid"    />
-        <result property="createtime"    column="createTime"    />
-        <result property="endtime"    column="endTime"    />
-        <result property="kaoshitime"    column="kaoshiTime"    />
-        <result property="tid"    column="tid"    />
-        <result property="qid"    column="qid"    />
-    </resultMap>
+    <select id="findAll" resultType="com.lisa.gametest.vo.KsnInfo">
+            select n.kid,n.createTime,n.endTime,n.kaoshiTime,t.typeName
+            from t_test_number n inner join t_test_type t
+            on n.tid = t.tid
+            <where>
+                <if test="typeName != null and typeName != ''">
+                    and typeName=#{typeName}
+                </if>
+            </where>
+    </select>
 
 
+    <delete id="deleteById" parameterType="int">
+            delete from t_test_number where kid=#{kid}
+    </delete>
 
+    <update id="update" parameterType="TTestNumber">
+         update t_test_number set createTime=#{createTime},endTime=#{endTime},
+         kaoshiTime=#{kaoshiTime},tid=#{tid} where kid=#{kid}
+    </update>
 
-    
+    <insert id="add" parameterType="TTestNumber">
+        insert into t_test_number(createTime,endTime,kaoshiTime,tid)
+        values (#{createTime},#{endTime},#{kaoshiTime},#{tid})
+    </insert>
 
-
+    <select id="findName" resultType="TTestType">
+        select * from t_test_type
+    </select>
 </mapper>

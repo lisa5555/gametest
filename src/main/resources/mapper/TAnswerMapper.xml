@@ -42,11 +42,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             (
             #{item.coment},
             #{item.tid},
-            #{item.score},
-            #{item.decs})
+            #{item.decs},
+            #{item.score}
             )
         </foreach>
     </insert>
+
+
+    <select id="findTAnswerCount" parameterType="int" resultType="Integer" >
+        select count(1) from t_answer where tid = #{tid}
+    </select>
+
+    <select id="createTAnswerExams" parameterType="Map" resultType="Integer">
+        select aid from t_answer WHERE tid = #{tid} order by rand() limit #{aNum};
+    </select>
 
     <insert id="insert" parameterType="TAnswer">
         insert into t_answer

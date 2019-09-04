@@ -41,24 +41,21 @@
     <div class="layui-form searchDiv" id="id2">
 
 
-        <button id="btn" class="layui-btn" type="button">
-            批量删除 <span class="badge"></span>
-        </button>
 
         <div class="layui-inline">
             <div class="layui-input-inline">
-                <select name="courseTitle" lay-verify="required" id="cid">
-                    <option value="">按照科目查询</option>
+                <select name="tid" lay-verify="required" id="cid">
+                    <option value="" selected>按照科目查询</option>
                 </select>
             </div>
 
 
 
-            <div class="layui-inline">
-                <div class="layui-input-inline">
-                    <input type="text" name="title" id="tid" lay-verify="text" placeholder="请输入" autocomplete="off" class="layui-input">
-                </div>
-            </div>
+<!--            <div class="layui-inline">-->
+<!--                <div class="layui-input-inline">-->
+<!--                    <input type="text" name="typeName" id="tid" lay-verify="text" placeholder="请输入" autocomplete="off" class="layui-input">-->
+<!--                </div>-->
+<!--            </div>-->
 
 
             <button type="button" class="layui-btn" data-type="reload">搜索</button>
@@ -86,33 +83,16 @@
             ,element = layui.element //元素操作
             ,form=layui.form;
 
-        $.ajax({
-            type:"get",
-            url:"speaker/query.do",
-            dataType:"json",
-            success:function(data){
-                if(data.code == 0){
-                    var infos = data.info
-                    $(infos).each(function () {
-                        var html = '<option value="' + this.speakerName + '">' + this.speakerName + '</option>'
-                        $("#sid").append($(html))
 
-                    })
-                    form.render()
-                }else{
-                    layer.msg("获取数据异常");
-                }
-            }
-        })
         $.ajax({
             type:"get",
-            url:"course/query.do",
+            url:"/dianjing/number/query.do",
             dataType:"json",
             success:function(data){
                 if(data.code == 0){
                     var infos = data.info
                     $(infos).each(function () {
-                        var html = '<option value="' + this.courseTitle+ '">' + this.courseTitle + '</option>'
+                        var html = '<option value="' + this.typeName+ '">' + this.typeName + '</option>'
                         $("#cid").append($(html))
 
                     })
@@ -129,7 +109,7 @@
             ,id:"transferTable"
             ,height: 'full'
             ,width: 'full'
-            ,url: 'number/list.do' //数据接口
+            ,url: '/dianjing/number/list.do' //数据接口
             ,title: '场次表'
             ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
@@ -142,15 +122,13 @@
             } //开启分页
             ,cols: [[ //表头
                  {field: 'kid', title: '场次号', width:80, sort: true, fixed: 'left'}
-                ,{field: 'createTime', title: '开始时间', width:150}
-                ,{field: 'endTime', title: '结束时间', width:200, sort: true}
-                ,{field: 'kaoshiTime', title: '考试时长', width:80}
+                ,{field: 'createtime', title: '开始时间', width:150}
+                ,{field: 'endtime', title: '结束时间', width:200, sort: true}
+                ,{field: 'kaoshitime', title: '考试时长', width:80}
                 ,{field: 'typeName', title: '科目', width:80}
                 ,{fixed: 'right',title: '操作', width: 165, align:'center', toolbar: '#barDemo'}
 
             ]]
-
-
 
         });
 
@@ -165,7 +143,7 @@
                     //向服务端发送删除指令
                     $.ajax({
                         type:"get",
-                        url:"video/delete.do?id=" + data.id,
+                        url:"/dianjing/number/delete.do?kid=" + data.kid,
                         dataType:"json",
                         success:function(data){
                             if(data.code == 0){
@@ -194,9 +172,7 @@
                         curr: 1 //重新从第 1 页开始
                     }
                     ,where: { // 额外需要提交的参数
-                        title:$("#tid").val(),
-                        speakerName:$("#sid").val(),
-                        courseTitle:$("#cid").val(),
+                        typeName:$("#cid").val(),
                     }
                 });
             }
@@ -207,39 +183,6 @@
             active[type] ? active[type].call(this) : '';
         });
 
-
-
-        $('#btn').click(function () {
-            var checkStatus = table.checkStatus('transferTable'),
-                data = checkStatus.data;
-
-            if (data == "") {
-                layer.msg('至少选择一个', {icon: 2});
-                return;
-            }
-            var ids = "";
-            if (data.length > 0) {
-                for (var i = 0; i < data.length; i++) {
-                    ids += data[i].id + ",";
-                }
-            }
-            layer.confirm('确认删除吗？' + ids, function (index) {
-                $.ajax({
-                    type: "post",
-                    url: "video/deleteAll.do",
-                    data: {"ids": ids},
-                    success: function (data) {
-                        alert("Data Saved:" + msg);
-
-                    }
-                });
-                table.reload('transferTable');
-                layer.msg('删除成功!', {icon: 1});
-                $(".layui-form-checked").not('.header').parents('tr').remove();
-            })
-            table.reload('transferTable');
-
-        });
 
     });
 
@@ -252,7 +195,7 @@
     function add(){
         layer.open({
             type: 2 //此处以iframe举例
-            , title: '添加员工'
+            , title: '添加考试场次'
             , area: ['650px', '600px']
             , content: 'add.html'
         })

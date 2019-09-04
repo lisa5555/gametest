@@ -22,7 +22,7 @@ import java.util.Map;
 @RequestMapping("/TJudge")
 public class TJudgeController {
 
-    @Autowired(required = false)
+    @Autowired
     private ITJudgeService itJudgeService;
 
     /**
@@ -35,11 +35,11 @@ public class TJudgeController {
     public AjaxResult addJudge(TJudge tJudge){
         try {
             itJudgeService.insertTJudge(tJudge);
+            return new AjaxResult(1,null);
         }catch (Exception e) {
             e.printStackTrace();
             return new AjaxResult(0,"添加失败");
         }
-        return new AjaxResult(1,null);
     }
 
     /**
@@ -73,14 +73,14 @@ public class TJudgeController {
 
     /**
      * 根据id删除
-     * @param jid
+     * @param id
      * @return
      */
     @RequestMapping("/deleteTJudge")
     @ResponseBody
-    public AjaxResult deleteTJudge(Integer jid) {
+    public AjaxResult deleteTJudge(Integer id) {
         try {
-            itJudgeService.deleteByTJudgeId(jid);
+            itJudgeService.deleteByTJudgeId(id);
             return new AjaxResult(1, null);
         } catch (Exception e) {
             return new AjaxResult(0,"更新失败");
@@ -90,13 +90,13 @@ public class TJudgeController {
 
     /**
      * 批量删除
-     * @param string
+     * @param ids
      * @return
      */
-    @RequestMapping("/deleteTSomeJudge")
+    @RequestMapping("/deleteSomeTJudge")
     @ResponseBody
-    public AjaxResult deleteSomeTJudge(String string) {
-        String[] array = string.split(",");
+    public AjaxResult deleteSomeTJudge(String ids) {
+        String[] array = ids.split(",");
 
         try {
             itJudgeService.deleteTJudgeByIds(array);
@@ -110,13 +110,13 @@ public class TJudgeController {
 
     /**
      * 根据id查找
-     * @param jid
+     * @param id
      * @return
      */
     @RequestMapping("/findTJudge")
     @ResponseBody
-    public AjaxResult queryTJudge(Integer jid) {
-        TJudge tJudge = itJudgeService.selectTJudgeById(jid);
+    public AjaxResult queryTJudge(Integer id) {
+        TJudge tJudge = itJudgeService.selectTJudgeById(id);
         return new AjaxResult(1, tJudge);
     }
 
@@ -148,7 +148,7 @@ public class TJudgeController {
      */
     @RequestMapping("/listTJudge")
     @ResponseBody
-    public Map<String, Object> queryByTid(Integer page, Integer limit, String searchName, Integer score, Integer tid){
+    public Map<String, Object> listJudge(Integer page, Integer limit, String searchName, Integer score, Integer tid){
         Map<String, Object> map = itJudgeService.selectBySearch(page, limit, tid, searchName, score);
         return map;
 

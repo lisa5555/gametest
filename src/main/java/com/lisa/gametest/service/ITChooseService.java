@@ -22,6 +22,11 @@ public interface ITChooseService {
 
     public TChoose selectTChooseById(Integer cid);
 
+    public  int findTChooseCount(Integer tid);
+
+
+    public String createTChooseExams(Integer tid, Integer cNum);
+
     public Map<String,Object> selectBySearch(Integer page, Integer limit,Integer tid, String searchName, Integer score);
 
 }

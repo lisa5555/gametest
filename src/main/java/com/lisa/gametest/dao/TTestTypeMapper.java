@@ -10,7 +10,7 @@ public interface TTestTypeMapper {
 
     List<TTestType> findAll();
 
-    int insertTTestType(TTestType tTestType);
+    int insertTTestType(String typeName);
 
     TTestType findByName(String typeName);
 

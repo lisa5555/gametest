@@ -4,6 +4,7 @@ package com.lisa.gametest.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.lisa.gametest.common.ChangeListToArray;
 import com.lisa.gametest.dao.TChooseMapper;
 import com.lisa.gametest.entity.TChoose;
 import com.lisa.gametest.entity.TJudge;
@@ -31,12 +32,12 @@ public class TChooseServiceImpl implements ITChooseService
 
     @Override
     public int deleteTChooseByIds(String[] array) {
-        return deleteTChooseByIds(array);
+        return tChooseMapper.deleteTChooseByIds(array);
     }
 
     @Override
     public int insert(TChoose tChoose) {
-        return tChooseMapper.insert(tChoose);
+        return tChooseMapper.insertTChoose(tChoose);
     }
 
     @Override
@@ -52,6 +53,17 @@ public class TChooseServiceImpl implements ITChooseService
     @Override
     public TChoose selectTChooseById(Integer cid) {
         return tChooseMapper.selectTChooseById(cid);
+    }
+
+    @Override
+    public int findTChooseCount(Integer tid) {
+        return tChooseMapper.findTChooseCount(tid);
+    }
+
+    @Override
+    public String createTChooseExams(Integer tid, Integer cNum) {
+        List<Integer> list = tChooseMapper.createTChooseExams(tid, cNum);
+        return ChangeListToArray.create(list);
     }
 
     @Override

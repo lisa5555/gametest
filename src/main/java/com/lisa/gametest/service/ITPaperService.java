@@ -1,9 +1,15 @@
 package com.lisa.gametest.service;
 
 
+import com.lisa.gametest.OverPaperVo.QuestionJosn;
 import com.lisa.gametest.entity.TPaper;
 
-public interface ITPaperService
-{
-public TPaper findPaperById(Integer id);
+import java.util.List;
+
+public interface ITPaperService {
+
+    public List<QuestionJosn> showquestions(Integer qid);
+
+    public int insertTPaper(TPaper paper);
+
 }

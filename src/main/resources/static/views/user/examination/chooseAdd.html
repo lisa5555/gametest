@@ -9,7 +9,7 @@
 	    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
 
 	    <script type="text/javascript" src="../../../layuiadmin/layui/layui.js"></script>
-		<script type="text/javascript" src="../../../layuiadmin/layui/jquery-1.12.2.min.js" ></script>
+		<script type="text/javascript" src="../../../layuiadmin/layui/jquery.min.js" ></script>
 
 	</head>
 <body>
@@ -24,26 +24,26 @@
     <div class="layui-form-item">
         <label class="layui-form-label">A选项</label>
         <div class="layui-input-block">
-            <input type="text" name="Axuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="axuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">B选项</label>
         <div class="layui-input-block">
-            <input type="text" name="Bxuanxiang" lay-verify="headImgUrl" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="bxuanxiang" lay-verify="headImgUrl" placeholder="请输入" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">C选项</label>
         <div class="layui-input-block">
-            <input type="text" name="Cxuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="cxuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
         </div>
     </div>
 	<div class="layui-form-item">
 	    <label class="layui-form-label">D选项</label>
 	    <div class="layui-input-block">
-	        <input type="text" name="Dxuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
+	        <input type="text" name="dxuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
 	    </div>
 	</div>
 	<div class="layui-form-item">
@@ -116,7 +116,7 @@
         form.on('submit(addOne)',function (data) {
             $.ajax({
                 type:"post",
-                url:"TChoose/addTChoose",
+                url:"/dianjing/TChoose/addTChoose",
                 data:data.field,
                 dataType:"json",
                 success:function (data) {

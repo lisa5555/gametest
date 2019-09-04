@@ -7,7 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
-	<script type="text/javascript" src="../../../layuiadmin/layui/jquery-1.12.2.min.js" ></script>
+	<script type="text/javascript" src="../../../layuiadmin/layui/jquery.min.js" ></script>
 
 	<script type="text/javascript" src="../../../layuiadmin/layui/layui.js"></script>
 </head>
@@ -21,13 +21,16 @@
 	</div>
 
 
+	<input type="hidden" name="jid" lay-verify="id" class="layui-input">
+
+
 	<div class="layui-form-item">
 		<label class="layui-form-label">正确选项</label>
 		<div class="layui-input-block">
 			<select name="correct" id="" class="" lay-verify="required">
 				<option value="">请选择...</option>
-				<option value="T">正确</option>
-				<option value="F">错误</option>
+				<option value="A">正确</option>
+				<option value="B">错误</option>
 			</select>
 		</div>
 	</div>
@@ -72,6 +75,7 @@
 
 		$.ajax({
 			type:"get",
+			async:false,
 			url:"/dianjing/TTestType/findAllTTestType",
 			dataType:"json",
 			success:function(data){
@@ -87,15 +91,32 @@
 			}
 		})
 
+
+
+		$.ajax({
+			type:"get",
+			async:false,
+			url:"/dianjing/TJudge/findTJudge"+window.location.search,
+			dataType:"json",
+			success:function (data) {
+				if (data.code == 1) {
+					form.val('example',data.info);
+				} else {
+					alert(data.info);
+				}
+			}
+		})
+
+
 		form.on('submit(updateOne)',function (data) {
 			$.ajax({
 				type:"post",
-				url:"TJudge/updateTJudge",
+				url:"/dianjing/TJudge/updateTJudge",
 				data:data.field,
 				dataType:"json",
 				success:function (data) {
 					if (data.code == 1) {
-						layer.msg("添加成功!", {
+						layer.msg("修改成功!", {
 							icon: 6,
 							time: 500
 						}, function () {

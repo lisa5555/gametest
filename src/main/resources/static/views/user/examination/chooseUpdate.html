@@ -9,7 +9,7 @@
 	    <link rel="stylesheet" href="../../../layuiadmin/layui/css/layui.css" media="all">
 
 	    <script type="text/javascript" src="../../../layuiadmin/layui/layui.js"></script>
-		<script type="text/javascript" src="../../../layuiadmin/layui/jquery-1.12.2.min.js" ></script>
+		<script type="text/javascript" src="../../../layuiadmin/layui/jquery.min.js" ></script>
 
 	</head>
 <body>
@@ -21,29 +21,32 @@
         </div>
     </div>
 
-    <div class="layui-form-item">
+	<input type="hidden" name="cid" lay-verify="id" class="layui-input">
+
+
+	<div class="layui-form-item">
         <label class="layui-form-label">A选项</label>
         <div class="layui-input-block">
-            <input type="text" name="Axuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="axuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">B选项</label>
         <div class="layui-input-block">
-            <input type="text" name="Bxuanxiang" lay-verify="headImgUrl" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="bxuanxiang" lay-verify="headImgUrl" placeholder="请输入" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">C选项</label>
         <div class="layui-input-block">
-            <input type="text" name="Cxuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="cxuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
         </div>
     </div>
 	<div class="layui-form-item">
 	    <label class="layui-form-label">D选项</label>
 	    <div class="layui-input-block">
-	        <input type="text" name="Dxuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
+	        <input type="text" name="dxuanxiang" lay-verify="speakerJob" placeholder="请输入" autocomplete="off" class="layui-input">
 	    </div>
 	</div>
 	<div class="layui-form-item">
@@ -82,7 +85,7 @@
 	    </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" lay-filter="updateOne">立即添加</button>
+            <button class="layui-btn" lay-submit="" lay-filter="updateOne">立即修改</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -98,6 +101,7 @@
 
 		$.ajax({
 			type:"get",
+			async:false,
 			url:"/dianjing/TTestType/findAllTTestType",
 			dataType:"json",
 			success:function(data){
@@ -115,7 +119,8 @@
 
 		$.ajax({
 		    type:"get",
-		    url:"TChoose/findTChoose" + window.location.search,
+			async:false,
+		    url:"/dianjing/TChoose/findTChoose"+window.location.search,
 		    dataType:"json",
 		    success:function (data) {
 		        if (data.code == 1) {
@@ -130,7 +135,7 @@
          form.on('submit(updateOne)',function (data) {
               $.ajax({
                   type:"post",
-                  url:"TChoose/updateTChoose",
+                  url:"/dianjing/TChoose/updateTChoose",
                   data: data.field,
                   dataType: "json",
                   success: function (data) {

@@ -13,13 +13,17 @@ public interface TChooseMapper {
 
     int deleteTChooseByIds(String[] array);
 
-    int insert(TChoose tChoose);
+    int insertTChoose(TChoose tChoose);
 
     int insertSomeChoose(List<TChoose> list);
 
     int updateTChoose(TChoose tChoose);
 
+    int findTChooseCount(Integer tid);
+
     TChoose selectTChooseById(Integer cid);
+
+    List<Integer> createTChooseExams(@Param("tid") Integer tid, @Param("cNum") Integer cNum);
 
     List<MyChoose> selectBySearch(@Param("tid") Integer tid, @Param("searchName") String searchName, @Param("score") Integer score);
 
