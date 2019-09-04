@@ -32,4 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="findName" resultType="TTestType">
         select * from t_test_type
     </select>
+
+    <select id="findById" parameterType="int"  resultType="TTestNumber">
+        select * from t_test_number where kid=#{kid}
+    </select>
 </mapper>

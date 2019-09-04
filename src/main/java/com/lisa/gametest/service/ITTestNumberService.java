@@ -13,8 +13,9 @@ public interface ITTestNumberService {
     public List<KsnInfo> findAll(
                                  String typeName
                                  );
-    public void deleteById(int kid);
+    public void deleteById(Integer kid);
     public void update(TTestNumber t);
     public void add(TTestNumber t);
     public List<TTestType> findName();
+    public TTestNumber findById(Integer kid);
 }

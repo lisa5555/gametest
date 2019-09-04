@@ -15,4 +15,6 @@ public interface TTestNumberMapper {
     public void update(TTestNumber t);
     public void add(TTestNumber t);
     public List<TTestType> findName();
+    public TTestNumber findById(int kid);
+
 }

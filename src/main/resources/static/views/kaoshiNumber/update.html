@@ -6,68 +6,44 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="layui/css/layui.css" />
-    <script type="text/javascript" src="layui/layui.js" ></script>
-    <script type="text/javascript" src="js/jquery-1.12.2.min.js" ></script>
+    <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
+    <script type="text/javascript" src="../../layuiadmin/layui/layui.js"></script>
+    <script type="text/javascript" src="../../layuiadmin/layui/jquery.3.2.1.min.js"></script>
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
 
 
 <form class="layui-form" action="" lay-filter="example" onsubmit="return false;">
-    <div class="layui-form-item">
-        <label class="layui-form-label">名称</label>
-        <div class="layui-input-block">
-            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="视频名称" class="layui-input">
+
+    <div class="layui-inline">
+        <label class="layui-form-label">开始时间</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" id="begin" name="createTime" placeholder="开始时间">
+        </div>
+    </div>
+    <div class="layui-inline">
+        <label class="layui-form-label">结束时间</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" id="end" name="endTime" placeholder="结束时间">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">教师名字</label>
+        <label class="layui-form-label">考试时长</label>
         <div class="layui-input-block">
-            <select name="spearkerId" lay-filter="aihao" id="sid">
-                <option value="" selected="">下拉框</option>
+            <input type="text" name="kaoshiTime" lay-verify="title" autocomplete="off" placeholder="考试时长"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">科目</label>
+        <div class="layui-input-block">
+            <select name="tid" lay-filter="aihao" id="type">
+                <option value="">请选择课程...</option>
             </select>
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">所属课程</label>
-        <div class="layui-input-block">
-            <select name="courseId" lay-filter="aihao" id="cid">
-                <option value="" selected="">下拉框</option>
-            </select>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">时长</label>
-        <div class="layui-input-block">
-            <input type="number" name="time" lay-verify="title" autocomplete="off" placeholder="精确到毫秒（正整数）" class="layui-input">
-        </div>
-    </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">封面图面地址</label>
-        <div class="layui-input-block">
-            <input type="text" name="imageUrl" lay-verify="title" autocomplete="off" placeholder="具体的url" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">视频播放地址</label>
-        <div class="layui-input-block">
-            <input type="text" name="videoUrl" lay-verify="title" autocomplete="off" placeholder="具体的url" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">备注</label>
-        <div class="layui-input-block">
-            <textarea name="detail" placeholder="请输入内容" class="layui-textarea"></textarea>
-        </div>
-    </div>
-    <!--<div class="layui-form-item layui-form-text">
-      <label class="layui-form-label">编辑器</label>
-      <div class="layui-input-block">
-        <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
-      </div>
-    </div>-->
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
@@ -77,83 +53,76 @@
 </form>
 <script>
     //JavaScript代码区域
-    layui.use(['element','layer'], function(){
+    layui.use(['element','layer','laydate','form'], function(){
         var element = layui.element;
-        var layer = layui.layer;
+        var layer = layui.layer,
+            form = layui.form;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#begin'
+            ,type: 'datetime'
+        });
+        laydate.render({
+            elem: '#end'
+            ,type: 'datetime'
+        });
+
 
         $.ajax({
-            type:"get",
-            url:"speaker/query.do",
-            dataType:"json",
-            success:function(data){
-                if(data.code == 0){
+            type: "get",
+            async: false,
+            url: "/dianjing/number/query.do",
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
                     var infos = data.info
                     $(infos).each(function () {
-                        var html = '<option value="' + this.id + '">' + this.speakerName + '</option>'
-                        $("#sid").append($(html))
+                        var html = '<option value="' + this.tid + '">' + this.typeName + '</option>'
+                        $("#type").append($(html))
                     })
-                }else{
-                    layer.msg("获取数据异常");
-                }
-            }
-        })
-        $.ajax({
-            type:"get",
-            url:"course/query.do",
-            dataType:"json",
-            success:function(data){
-                if(data.code == 0){
-                    var infos = data.info
-                    $(infos).each(function () {
-                        var html = '<option value="' + this.id + '">' + this.courseTitle + '</option>'
-                        $("#cid").append($(html))
-                    })
-                }else{
+                    form.render()
+                } else {
                     layer.msg("获取数据异常");
                 }
             }
         })
 
-    });
-</script>
-<script>
-    layui.use(['layer', 'form'], function(){
-        var layer = layui.layer
-            ,form = layui.form;
+
+
+
 
         // $(function () {
-            $.ajax({
-                type:"get",
-                url:"video/queryById.do"+ window.location.search,
-                dataType:"json",
-                success:function(data){
-                    if(data.code == 0){
-                        //表单初始赋值
-                        form.val('example', data.info[0]);
-                        // $("#sid").val(data.info[0].speakerName);
-                        // $("#cid").val(data.info[0].courseTitle);
-                    }else{
-                        alert(data.info);
-                    }
+        $.ajax({
+            type: "get",
+            async: false,
+            url: "/dianjing/number/queryById.do" + window.location.search,
+            dataType: "json",
+            success: function (data) {
+                if (data.code == 0) {
+                    //表单初始赋值
+                    form.val('example', data.info);
+                } else {
+                    alert(data.info);
                 }
+            }
 
         });
 
         //监听提交
-        form.on('submit(demo1)', function(data){
+        form.on('submit(demo1)', function (data) {
 
             $.ajax({
-                type:"post",
-                url:"video/update.do"+ window.location.search,
-                data:data.field,
-                dataType:"json",
-                success:function(data){  //{code:1,info:....}
-                    if(data.code == 0){
+                type: "post",
+                url: "/dianjing/number/update.do" + window.location.search,
+                data: data.field,
+                dataType: "json",
+                success: function (data) {  //{code:1,info:....}
+                    if (data.code == 0) {
                         var t = parent.layui.table;
                         t.reload('transferTable');// 重新加载页面,demo 表示父窗体table标签的id值
                         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                         parent.layer.close(index); //再执行关闭
-                    }else{
+                    } else {
                         alert(data.info);
                     }
                 }
@@ -161,12 +130,7 @@
             return false;
         });
 
-
-
     });
 </script>
-
-
-
 </body>
 </html>

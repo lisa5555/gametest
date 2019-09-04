@@ -72,7 +72,6 @@ public AjaxResult update(TTestNumber t, HttpServletRequest request){
     String id = request.getParameter("id");
     AjaxResult jsonResult = new AjaxResult();
     try {
-        t.setKid(Integer.parseInt(id));
         ns.update(t);
         jsonResult.setCode(0);
         jsonResult.setInfo(null);
@@ -96,6 +95,23 @@ public AjaxResult update(TTestNumber t, HttpServletRequest request){
             result.setCode(1);
             result.setInfo(null);
         }
+        return result;
+    }
+
+
+    @RequestMapping("/queryById.do")
+    public AjaxResult findById(Integer kid){
+        AjaxResult result = new AjaxResult();
+        try {
+            TTestNumber byId = ns.findById(kid);
+            result.setCode(0);
+            result.setInfo(byId);
+        }catch (Exception e){
+            e.printStackTrace();
+            result.setCode(1);
+            result.setInfo(null);
+        }
+
         return result;
     }
 }

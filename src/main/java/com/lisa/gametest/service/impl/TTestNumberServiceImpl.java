@@ -29,7 +29,7 @@ public class TTestNumberServiceImpl implements ITTestNumberService {
 
 
     @Override
-    public void deleteById(int kid) {
+    public void deleteById(Integer kid) {
         tn.deleteById(kid);
 
     }
@@ -47,6 +47,11 @@ public class TTestNumberServiceImpl implements ITTestNumberService {
     @Override
     public List<TTestType> findName() {
         return tn.findName();
+    }
+
+    @Override
+    public TTestNumber findById(Integer kid) {
+        return tn.findById(kid);
     }
 
 
