@@ -61,6 +61,7 @@
 
 		$.ajax({
 			type:"get",
+			async:false,
 			url:"/dianjing/TTestType/findAllTTestType",
 			dataType:"json",
 			success:function(data){
@@ -77,24 +78,22 @@
 		})
 
 
-		findTAnswer();
 
-		function findTAnswer() {
-			$.ajax({
-				type:"get",
-				url:"/dianjing/TAnswer/findTAnswer"+window.location.search,
-				dataType:"json",
-				success:function (data) {
-					if (data.code == 1) {
-						form.val('example',data.info);
-					} else {
-						alert(data.info);
-					}
+		$.ajax({
+			type:"get",
+			async:false,
+			url:"/dianjing/TAnswer/findTAnswer"+window.location.search,
+			dataType:"json",
+			success:function (data) {
+				if (data.code == 1) {
+					form.val('example',data.info);
+				} else {
+					alert(data.info);
 				}
-			})
-		}
+			}
+		})
 
-		 
+
 		 
          form.on('submit(updateOne)',function (data) {
               $.ajax({

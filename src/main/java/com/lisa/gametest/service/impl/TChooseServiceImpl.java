@@ -56,6 +56,11 @@ public class TChooseServiceImpl implements ITChooseService
     }
 
     @Override
+    public int findTChooseCount(Integer tid) {
+        return tChooseMapper.findTChooseCount(tid);
+    }
+
+    @Override
     public String createTChooseExams(Integer tid, Integer cNum) {
         List<Integer> list = tChooseMapper.createTChooseExams(tid, cNum);
         return ChangeListToArray.create(list);

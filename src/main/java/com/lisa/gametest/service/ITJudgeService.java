@@ -24,6 +24,10 @@ public interface ITJudgeService
 
     public String createTJudgeExams(Integer tid, Integer jNum);
 
+
+    public  int findTJudgeCount(Integer tid);
+
+
     public Map<String,Object> selectBySearch(Integer page, Integer limit, Integer tid, String searchName, Integer score);
 
 

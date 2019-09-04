@@ -60,6 +60,11 @@ public class TJudgeServiceImpl implements ITJudgeService {
     }
 
     @Override
+    public int findTJudgeCount(Integer tid) {
+        return tJudgeMapper.findTJudgeCount(tid);
+    }
+
+    @Override
     public Map<String, Object> selectBySearch(Integer page, Integer limit, Integer tid, String searchName, Integer score) {
         PageHelper.startPage(page,limit);
         List<MyJudge> list = tJudgeMapper.selectBySearch(tid,searchName,score);

@@ -118,7 +118,7 @@
         table.render({
             elem: '#demo'
             ,id:"transferTable"
-            ,height: 'full'
+            ,height: 500
             ,width: 'full'
             ,url: '/dianjing/TChoose/listTChoose' //数据接口
             ,title: '视频表'
@@ -133,6 +133,7 @@
             } //开启分页
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left', filter:"test"}
+                ,{field: '', title: '序号', templet:'#xuhao', width:80, sort: true, fixed: 'left'}
                 ,{field: 'coment', title: '题目', width:200, align:'center', sort: true}
                 ,{field: 'cid', title: 'cid', hide: true }
                 ,{field: 'axuanxiang', title: 'A选项', width:100, align:'center', sort: true}

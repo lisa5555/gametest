@@ -55,6 +55,11 @@ public class TAnswerServiceImpl implements ITAnswerService {
     }
 
     @Override
+    public int findTAnswerCount(Integer tid) {
+        return tAnswerMapper.findTAnswerCount(tid);
+    }
+
+    @Override
     public String createTAnswerExams(Integer tid, Integer aNum) {
         List<Integer> list = tAnswerMapper.createTAnswerExams(tid, aNum);
         return ChangeListToArray.create(list);

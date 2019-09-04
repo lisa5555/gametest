@@ -19,6 +19,8 @@ public interface TChooseMapper {
 
     int updateTChoose(TChoose tChoose);
 
+    int findTChooseCount(Integer tid);
+
     TChoose selectTChooseById(Integer cid);
 
     List<Integer> createTChooseExams(@Param("tid") Integer tid, @Param("cNum") Integer cNum);

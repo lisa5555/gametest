@@ -3,6 +3,7 @@ package com.lisa.gametest.controller;
 import com.lisa.gametest.common.AjaxResult;
 import com.lisa.gametest.entity.TTestType;
 import com.lisa.gametest.service.ITTestTypeService;
+import com.lisa.gametest.vo.MyTypeProblems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,22 +22,23 @@ public class TTestTypeController {
 
     /**
      * 添加科目
-     * @param tTestType
+     * @param
      * @return
      */
     @RequestMapping("/addTTestType")
     @ResponseBody
-    public AjaxResult addTTestType(TTestType tTestType) {
-        TTestType testType = itTestTypeService.findByName(tTestType.getTypeName());
-        if (testType != null) {
+    public AjaxResult addTTestType(String typeName) {
+
+        TTestType testType = itTestTypeService.findByName(typeName);
+        if (testType == null) {
             try {
-                itTestTypeService.insertTTestType(tTestType);
+                itTestTypeService.insertTTestType(typeName);
             } catch (Exception e) {
                 return new AjaxResult(0,"添加失败");
             }
             return new AjaxResult(1,null);
         } else {
-            return new AjaxResult(0,"该课程已存在");
+            return new AjaxResult(2,"该课程已存在");
         }
     }
 
@@ -54,6 +56,19 @@ public class TTestTypeController {
     }
 
 
+    /**
+     * 前端展示
+     * @param page
+     * @param limit
+     * @param searchName
+     * @return
+     */
+    @RequestMapping("/findBySearch")
+    @ResponseBody
+    public Map<String,Object> findBySearch(Integer page, Integer limit, String searchName) {
+        Map<String, Object> map = itTestTypeService.selectBySearch(page, limit, searchName);
+        return map;
+    }
 
 
     /**
@@ -68,6 +83,10 @@ public class TTestTypeController {
     }
 
 
+    /**
+     * 导入试题展示页面
+     * @return
+     */
     @RequestMapping("/listMyTTestType")
     @ResponseBody
     public Map<String, Object> listTTestType(){
@@ -75,6 +94,23 @@ public class TTestTypeController {
         List<TTestType> list = itTestTypeService.findAll();
         map.put("data", list);
         map.put("code", 0);
+        return map;
+    }
+
+
+    /**
+     * 查询课程为tid的各种题目的数量
+     * @param tid
+     * @return
+     */
+    @RequestMapping("/findTypeProblems")
+    @ResponseBody
+    public Map<String, Object> findTypeProblems(Integer tid, Integer page, Integer limit) {
+        Map<String, Object> map = new HashMap<>();
+        List<MyTypeProblems> list = itTestTypeService.findTypeProblem(tid);
+        map.put("data", list);
+        map.put("code", 0);
+        map.put("msg", "");
         return map;
     }
 
@@ -139,13 +175,19 @@ public class TTestTypeController {
     @RequestMapping("/updateTTestType")
     @ResponseBody
     public AjaxResult updateTTestType(TTestType tTestType) {
-        try {
-            itTestTypeService.updateTTestType(tTestType);
-            return new AjaxResult(1,null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new AjaxResult(0,"更新失败");
+        TTestType testType = itTestTypeService.findByName(tTestType.getTypeName());
+        if (testType == null) {
+            try {
+                itTestTypeService.updateTTestType(tTestType);
+                return new AjaxResult(1,null);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new AjaxResult(0,"更新失败");
+            }
+        } else {
+            return new AjaxResult(2,"该课程已存在");
         }
+
     }
 
 }

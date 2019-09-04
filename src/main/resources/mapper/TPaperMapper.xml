@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
-    <insert id="insertTPaper" parameterType="TJudge" useGeneratedKeys="true" keyProperty="jid">
+    <insert id="insertTPaper" parameterType="TPaper" useGeneratedKeys="true" keyProperty="qid">
         insert into t_paper
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="tid != null  and tid != ''">tid,</if>

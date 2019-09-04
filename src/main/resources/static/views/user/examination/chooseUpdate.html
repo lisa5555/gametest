@@ -101,6 +101,7 @@
 
 		$.ajax({
 			type:"get",
+			async:false,
 			url:"/dianjing/TTestType/findAllTTestType",
 			dataType:"json",
 			success:function(data){
@@ -118,6 +119,7 @@
 
 		$.ajax({
 		    type:"get",
+			async:false,
 		    url:"/dianjing/TChoose/findTChoose"+window.location.search,
 		    dataType:"json",
 		    success:function (data) {

@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
     </select>
     
-    <select id="findById" parameterType="Long" resultMap="TTestTypeResult">
+    <select id="findById" parameterType="int" resultMap="TTestTypeResult">
         <include refid="selectTTestTypeVo"/>
         where tid = #{tid}
     </select>
@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </select>
 
-    <insert id="insertTTestType" parameterType="TTestType" useGeneratedKeys="true" keyProperty="tid">
+    <insert id="insertTTestType" parameterType="String" useGeneratedKeys="true" keyProperty="tid">
         insert into t_test_type
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="typename != null  and typename != ''">typeName,</if>
@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where tid = #{tid}
     </update>
 
-    <delete id="deleteTTestType" parameterType="Long">
+    <delete id="deleteTTestType" parameterType="int">
         delete from t_test_type where tid = #{tid}
     </delete>
 

@@ -17,6 +17,8 @@ public interface TAnswerMapper {
 
     int insertSomeAnswer(List<TAnswer> list);
 
+    int findTAnswerCount(Integer tid);
+
     List<Integer> createTAnswerExams(@Param("tid") Integer tid, @Param("aNum") Integer aNum);
 
     TAnswer selectTAnswerById(Integer aid);
