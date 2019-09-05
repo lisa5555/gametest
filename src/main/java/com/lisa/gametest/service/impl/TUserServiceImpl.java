@@ -54,4 +54,18 @@ public class TUserServiceImpl implements ITUserService
     public void deleteById(Integer id) {
         user.deleteById(id);
     }
+
+    @Override
+    public TUser login(String userName, String password) {
+        TUser userByName = user.findByName(userName);
+        if (userByName==null){
+           throw new RuntimeException("用户名不存在");
+        }
+        if (!userByName.getPassword().equals(password)){
+            throw new RuntimeException("密码错误");
+        }
+
+
+        return userByName;
+    }
 }

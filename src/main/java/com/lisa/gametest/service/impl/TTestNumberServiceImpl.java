@@ -27,6 +27,11 @@ public class TTestNumberServiceImpl implements ITTestNumberService {
         return list;
     }
 
+    @Override
+    public List<KsnInfo> findAll2(String username,String typeName) {
+        return tn.findAll2(username,typeName);
+    }
+
 
     @Override
     public void deleteById(Integer kid) {

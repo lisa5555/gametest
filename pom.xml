@@ -89,6 +89,7 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.17</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -100,6 +101,12 @@
             <version>2.9.5</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>cn.dsna</groupId>
+            <artifactId>ValidateCode</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

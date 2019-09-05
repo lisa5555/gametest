@@ -11,6 +11,7 @@ import java.util.List;
 public interface TTestNumberMapper {
     public List<KsnInfo> findAll(@Param("typeName") String typeName
                                 );
+    public List<KsnInfo> findAll2(@Param("userName")String userName,@Param("typeName") String typeName);
     public void deleteById(int kid);
     public void update(TTestNumber t);
     public void add(TTestNumber t);

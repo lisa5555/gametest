@@ -9,7 +9,9 @@ import com.lisa.gametest.entity.TTestType;
 import com.lisa.gametest.service.ITTestNumberService;
 import com.lisa.gametest.vo.KsnInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,7 +23,10 @@ import java.util.Map;
 @Controller
 @ResponseBody
 @RequestMapping("/number")
+@CrossOrigin
 public class TTestNumberController {
+    @Autowired
+    private StringRedisTemplate redisTemplate;
     @Autowired
     private ITTestNumberService ns;
     @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
@@ -37,6 +42,7 @@ public class TTestNumberController {
         map.put("data", list);
         return map;
     }
+
 @RequestMapping("/delete.do")
 public AjaxResult deleteById(Integer kid){
         AjaxResult result = new AjaxResult();

@@ -13,4 +13,5 @@ public interface ITUserService {
     public TUser queryById(Integer id);
     public void update(TUser tUser);
     public void deleteById(Integer id);
+    public TUser login(String userName,String password);
 }
