@@ -7,6 +7,7 @@ import com.lisa.gametest.entity.TUserRole;
 import com.lisa.gametest.service.ITRoleService;
 import com.lisa.gametest.service.ITUserRoleService;
 import com.lisa.gametest.service.ITUserService;
+import com.lisa.gametest.utils.MD5Utils;
 import com.lisa.gametest.vo.TUserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -137,6 +138,9 @@ public class userController {
 
     public AjaxResult add(TUser tUser){
         AjaxResult ajaxResult = new AjaxResult();
+        String password = tUser.getPassword();
+        String s = MD5Utils.md5(password);
+        tUser.setPassword(s);
         try {
             service.add(tUser);
             ajaxResult.setCode(0);
