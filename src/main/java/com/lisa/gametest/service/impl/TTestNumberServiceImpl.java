@@ -32,6 +32,11 @@ public class TTestNumberServiceImpl implements ITTestNumberService {
         return tn.findAll2(username,typeName);
     }
 
+    @Override
+    public List<KsnInfo> findAll3(String username, String typeName) {
+        return tn.findAll3(username,typeName);
+    }
+
 
     @Override
     public void deleteById(Integer kid) {
@@ -57,6 +62,12 @@ public class TTestNumberServiceImpl implements ITTestNumberService {
     @Override
     public TTestNumber findById(Integer kid) {
         return tn.findById(kid);
+    }
+
+    @Override
+    public int findQidBKid(Integer kid) {
+        int id = tn.findQidBKid(kid);
+        return id;
     }
 
 

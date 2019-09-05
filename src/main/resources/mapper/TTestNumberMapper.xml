@@ -36,9 +36,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             and typeName=#{typeName}
         </if>
     </select>
+    <select id="findAll3" parameterType="map" resultType="com.lisa.gametest.vo.KsnInfo">
+        select n.kid,n.createTime,n.endTime,n.kaoshiTime,t.typeName
+        from t_test_number n
+        inner join t_test_type t
+        on n.tid = t.tid
+        inner join t_kuinfo k
+        on n.kid = k.kid
+        INNER JOIN t_user u
+        on k.uid=u.uid
+        where UNIX_TIMESTAMP(n.endTime)>UNIX_TIMESTAMP(now())
+        and UNIX_TIMESTAMP(now()) > UNIX_TIMESTAMP(createTime)
+        and u.userName=#{userName}
+        <if test="typeName != null and typeName != ''">
+            and typeName=#{typeName}
+        </if>
+    </select>
 
-
-
+    <select id="findQidBKid" parameterType="int" resultType="int">
+        select n.qid from t_test_number n where kid=#{kid}
+    </select>
     <delete id="deleteById" parameterType="int">
             delete from t_test_number where kid=#{kid}
     </delete>

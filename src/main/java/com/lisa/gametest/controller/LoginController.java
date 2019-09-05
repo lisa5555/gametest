@@ -92,6 +92,19 @@ public class LoginController {
         map.put("data", list);
         return map;
     }
-
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
+    @RequestMapping("/list3.do")
+    public Map<String,Object>  show3(Integer page,Integer limit,String typeName) {
+        String username = redisTemplate.opsForValue().get("token");
+        PageHelper.startPage(page,limit);
+        List<KsnInfo> list = ns.findAll3(username,typeName);
+        long total = ((Page) list).getTotal();
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", total);
+        map.put("data", list);
+        return map;
+    }
 
 }

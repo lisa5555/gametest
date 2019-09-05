@@ -14,10 +14,11 @@ public interface ITTestNumberService {
                                  String typeName
                                  );
     public List<KsnInfo> findAll2(String username,String typeName);
-
+    public List<KsnInfo> findAll3(String username,String typeName);
     public void deleteById(Integer kid);
     public void update(TTestNumber t);
     public void add(TTestNumber t);
     public List<TTestType> findName();
     public TTestNumber findById(Integer kid);
+    public int findQidBKid(Integer kid);
 }

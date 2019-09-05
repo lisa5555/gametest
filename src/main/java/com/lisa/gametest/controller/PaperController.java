@@ -3,10 +3,7 @@ package com.lisa.gametest.controller;
 import com.lisa.gametest.OverPaperVo.QuestionJosn;
 import com.lisa.gametest.common.AjaxResult;
 import com.lisa.gametest.entity.TPaper;
-import com.lisa.gametest.service.ITAnswerService;
-import com.lisa.gametest.service.ITChooseService;
-import com.lisa.gametest.service.ITJudgeService;
-import com.lisa.gametest.service.ITPaperService;
+import com.lisa.gametest.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,13 +28,15 @@ public class PaperController {
 
     @Autowired
     private ITJudgeService itJudgeService;
-
+    @Autowired
+    private ITTestNumberService service;
 
     @RequestMapping("/query.do")
-    public AjaxResult findPaperById(){
+    public AjaxResult findPaperById(Integer kid){
         AjaxResult result = new AjaxResult();
         try {
-            List<QuestionJosn> list = paperService.showquestions(1);
+            int qid = service.findQidBKid(kid);
+            List<QuestionJosn> list = paperService.showquestions(qid);
             result.setCode(1);
             result.setInfo(list);
         } catch (Exception e) {
