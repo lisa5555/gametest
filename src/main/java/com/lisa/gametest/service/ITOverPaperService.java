@@ -23,6 +23,6 @@ public interface ITOverPaperService {
 
     public Integer deleteAll(int[] oidArr);
 
-    public void correctionPaper(Integer qid, Integer uid, List<PaperAnswerInfo> list, String answerString);
+    public void correctionPaper(Integer qid, Integer uid, List<PaperAnswerInfo> list,String answerString);
 
 }

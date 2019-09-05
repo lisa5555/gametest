@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @ResponseBody
@@ -65,20 +66,16 @@ public class TOverPaperController {
      * @return
      */
     @RequestMapping("/correctExam.do")
-    public AjaxResult correctExam(Integer kid, String info, AnswerExamList answerExamList){
+    public AjaxResult correctExam(Integer kid, String info, String answerList ){
 
         System.out.println(info);
         ObjectMapper mapper = new ObjectMapper();
         try {
-            List<AnswerExam> examList = answerExamList.getAnswerExamList();
-
-            String answerString = mapper.writeValueAsString(examList);
-
             TTestNumber testNumber = itestNumberService.findById(kid);
             List<PaperAnswerInfo> lendReco = mapper.readValue(info,new TypeReference<List<PaperAnswerInfo>>() { });
             String username = redisTemplate.opsForValue().get("token");
             TUser user = itUserService.findByName(username);
-            overPaperService.correctionPaper(testNumber.getQid(), user.getUid(), lendReco,answerString );
+            overPaperService.correctionPaper(testNumber.getQid(), user.getUid(), lendReco,answerList );
             return new AjaxResult(1,null);
 
         } catch (IOException e) {
@@ -87,6 +84,10 @@ public class TOverPaperController {
         }
 
     }
+
+
+
+
 
 
 
