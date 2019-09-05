@@ -9,6 +9,9 @@
 <body>
 <div id="main" style="width: 600px;height:400px;"></div>
 <script type="text/javascript">
+    var tl = new Array();
+    var tl1 = new Array();
+    var tn = new Array();
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
 
@@ -21,9 +24,9 @@
         tooltip: {
             trigger: 'axis'
         },
-        // legend: {
-        //     data: ['最高分', '最低分']
-        // },
+        legend: {
+            data: ['总分', '平均分']
+        },
         toolbox: {
             show: true,
             feature: {
@@ -36,6 +39,7 @@
                 saveAsImage: {}
             }
         },
+
         xAxis: {
             type: 'category',
             boundaryGap: false,
@@ -47,11 +51,41 @@
                 formatter: '{value} 分'
             }
         },
+        // series: [
+        //     {
+        //         name: '平均分',
+        //         type: 'line',
+        //         data: [],
+        //         markPoint: {
+        //             data: [
+        //                 {type: 'max', name: '最大值'},
+        //                 {type: 'min', name: '最小值'}
+        //             ]
+        //         },
+
+                // markLine: {
+                //     data: [
+                //         {type: 'average', name: '平均值'}
+                //     ]
+                // }
+
+
+        //     },
+        // ]
+
         series: [
             {
-                name: '最高分',
-                type: 'line',
-                data: [],
+                name:'总分',
+                type:'line',
+                itemStyle : {
+                    normal : {
+                        color:'#00AEAE',  //圈圈的颜色
+                        lineStyle:{
+                            color:'#FF0000'  //线的颜色
+                        }
+                    }
+                },
+                data:[],
                 markPoint: {
                     data: [
                         {type: 'max', name: '最大值'},
@@ -60,10 +94,49 @@
                 },
                 markLine: {
                     data: [
-                        {type: 'average', name: '平均值'}
+                        // {type: 'average', name: '平均值'}
                     ]
                 }
             },
+            {
+                name:'平均分',
+                type:'line',
+                itemStyle : {
+                    normal : {
+                        color:'#FF359A',  //圈圈的颜色
+                        lineStyle:{
+                            color:'#A8FF24'  //线的颜色
+                        }
+                    }
+                },
+                data:[],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        // {type: 'average', name: '平均值'},
+                        // [{
+                        //     symbol: 'none',
+                        //     x: '90%',
+                        //     yAxis: 'max'
+                        // }, {
+                        //     symbol: 'circle',
+                        //     label: {
+                        //         normal: {
+                        //             position: 'start',
+                        //             formatter: '最大值'
+                        //         }
+                        //     },
+                        //     type: 'max',
+                        //     name: '最高点'
+                        // }]
+                    ]
+                }
+            }
         ]
     };
 
@@ -75,18 +148,51 @@
         url: "findByTypeName",
         dataType: "Json",
         success: function (data) {
-            var tn = data.TN
-            var tl = data.total
+            for (var i = 0; i < data.total.length; i++) {
+                tl.push(data.total[i]);
+            }
+            for (var i = 0; i < data.TN.length; i++) {
+                tn.push(data.TN[i]);
+            }
+
             myChart.setOption({
                 xAxis: {
                     data: tn
                 },
                     series: [
                         {
+                            name:'平均分',
                             data: tl
 
                         },
                     ]
+            });
+        }
+    })
+
+
+    $.ajax({
+        type: "post",
+        url: "findByTypeNameSUM",
+        dataType: "Json",
+        success: function (data) {
+            for (var i = 0; i < data.total.length; i++) {
+                tl1.push(data.total[i]);
+            }
+            for (var i = 0; i < data.TN.length; i++) {
+                tn.push(data.TN[i]);
+            }
+            myChart.setOption({
+                // xAxis: {
+                //     data: tn
+                // },
+                series: [
+                    {
+                        name:'总分',
+                        data: tl1
+
+                    },
+                ]
             });
         }
     })

@@ -23,14 +23,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         on tp.qid=top.qid
         inner join t_test_type ty
         on ty.tid=tp.tid
-        <where>
+        where 1 = 1
+            <if test="name != null and name  != ''">
+                and tu.name like "%${name}%"
+            </if>
             <if test="typeName != null and typeName != ''">
                 and ty.typeName=#{typeName}
             </if>
-            <if test="name != null and name  != ''">
-                name like concat ('%',concat(#{name}),'%')
-            </if>
-        </where>
     </select>
 
     <select id="findByState" parameterType="int" resultType="com.lisa.gametest.vo.overPaperInfo">

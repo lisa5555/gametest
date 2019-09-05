@@ -12,7 +12,19 @@ public interface ITScoreService {
 
     public void deleteById(Integer sid);
 
+    /***
+     * 平均分
+     * @param typeName
+     * @return
+     */
     public List<voScore> findAllTypeName(String typeName);
+
+    /**
+     * 总分
+     * @param typeName
+     * @return
+     */
+    public List<voScore> findByTypeNameSUM(String typeName);
 
     public Integer deleteAll(int[] sidArr);
 }

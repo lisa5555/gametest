@@ -21,14 +21,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         on tp.qid=top.qid
         inner join t_test_type ty
         on ty.tid=tp.tid
-        <where>
+        where 1 = 1
             <if test="typeName != null and typeName != ''">
                 and ty.typeName=#{typeName}
             </if>
             <if test="name != null and name  != ''">
-                name like concat ('%',concat(#{name}),'%')
+                and tu.name like "%${name}%"
             </if>
-        </where>
+
     </select>
 
     <delete id="deleteById" parameterType="int">
@@ -37,13 +37,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
     <select id="findAllTypeName" parameterType="map" resultType="com.lisa.gametest.vo.voScore">
-        select ts.* , ty.typeName from t_score ts
+        select avg (total) total, ty.typeName from t_score ts
         inner join t_over_paper top
         on top.oid=ts.oid
         inner join t_paper tp
         on tp.qid=top.qid
         inner join t_test_type ty
         on ty.tid=tp.tid
+        group by ty.tid
+    </select>
+
+
+    <select id="findByTypeNameSUM" parameterType="map" resultType="com.lisa.gametest.vo.voScore">
+        select sum(total) total, ty.typeName from t_score ts
+        inner join t_over_paper top
+        on top.oid=ts.oid
+        inner join t_paper tp
+        on tp.qid=top.qid
+        inner join t_test_type ty
+        on ty.tid=tp.tid
+        group by ty.tid
     </select>
 
 

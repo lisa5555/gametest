@@ -112,10 +112,43 @@ public class TScoreController {
         return result;
     }
 
+    /**
+     * 平均分
+     * @param typeName
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/findByTypeName")
     public Map<String,List> findByTypeName(String typeName) {
+
         List<voScore> list = itScoreService.findAllTypeName(typeName);
+
+        List<String> TN = new ArrayList<>();
+        List<Integer> total = new ArrayList<>();
+
+        for (voScore voScore : list) {
+            TN.add(voScore.getTypeName());
+            total.add(voScore.getTotal());
+        }
+
+
+        Map<String, List> map = new HashMap<>();
+        map.put("TN",TN);
+        map.put("total",total);
+
+        return map;
+    }
+
+
+    /**
+     * 总分
+     * @param typeName
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/findByTypeNameSUM")
+    public Map<String,List> findByTypeNameSUM(String typeName) {
+        List<voScore> list = itScoreService.findByTypeNameSUM(typeName);
 
         List<String> TN = new ArrayList<>();
         List<Integer> total = new ArrayList<>();
@@ -131,6 +164,7 @@ public class TScoreController {
 
         return map;
     }
+
 
     @ResponseBody
     @RequestMapping("/deleteAll.do")

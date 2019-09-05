@@ -38,6 +38,12 @@ public class TScoreServiceImpl implements ITScoreService {
     }
 
     @Override
+    public List<voScore> findByTypeNameSUM(String typeName) {
+        List<voScore> list = tScoreMapper.findByTypeNameSUM(typeName);
+        return list;
+    }
+
+    @Override
     public Integer deleteAll(int[] sidArr) {
         return tScoreMapper.deleteAll(sidArr);
     }
