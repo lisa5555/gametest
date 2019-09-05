@@ -3,6 +3,7 @@ package com.lisa.gametest.service.impl;
 import java.util.List;
 
 import com.lisa.gametest.dao.TKuinfoMapper;
+import com.lisa.gametest.entity.TKuinfo;
 import com.lisa.gametest.service.ITKuinfoService;
 import com.lisa.gametest.vo.Studentinfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,10 @@ public class TKuinfoServiceImpl implements ITKuinfoService {
     @Override
     public void deleteById(Integer kinfoid) {
         tk.deleteById(kinfoid);
+    }
+
+    @Override
+    public int insertTKuinfo(TKuinfo tKuinfo) {
+        return tk.insertTKuinfo(tKuinfo);
     }
 }

@@ -24,4 +24,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="deleteById" parameterType="int">
         delete from t_kuinfo where kinfoid = #{kinfoid}
     </delete>
+
+    <insert id="insertTKuinfo" parameterType="TKuinfo" useGeneratedKeys="true">
+        insert into t_kuinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="kid != null  and kid != ''">kid,</if>
+            <if test="uid != null  and uid != ''">uid,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="kid != null  and kid != ''">#{kid},</if>
+            <if test="uid != null  and uid != ''">#{uid},</if>
+        </trim>
+    </insert>
+
 </mapper>

@@ -16,6 +16,15 @@ public class TTestNumber {
 
     private Integer tid;
 
+    private Integer qid;
+
+    public Integer getQid() {
+        return qid;
+    }
+
+    public void setQid(Integer qid) {
+        this.qid = qid;
+    }
 
     public Integer getKid() {
         return kid;

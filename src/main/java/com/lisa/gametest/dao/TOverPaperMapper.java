@@ -43,6 +43,15 @@ public interface TOverPaperMapper {
 
 
     /**
+     * 根据试卷qid和用户uid查询次学生的考试信息，用于生成选择判断的总分数
+     * @param uid
+     * @param qid
+     * @return
+     */
+    public TOverPaper findOid(@Param("uid") Integer uid, @Param("qid") Integer qid);
+
+
+    /**
      * 查询单个做完题目的方法
      * @param oid 参数为题目的id
      * @return 返回值是根据oid查询到的一个 TOverPaper 对象

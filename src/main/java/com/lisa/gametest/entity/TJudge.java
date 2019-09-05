@@ -7,7 +7,7 @@ public class TJudge {
 
     private String correct;
 
-    private String score;
+    private Integer score;
 
     private Integer tid;
 
@@ -26,25 +26,7 @@ public class TJudge {
     }
 
     public void setComent(String coment) {
-        this.coment = coment == null ? null : coment.trim();
-    }
-
-
-
-    public String getScore() {
-        return score;
-    }
-
-    public void setScore(String score) {
-        this.score = score == null ? null : score.trim();
-    }
-
-    public Integer getTid() {
-        return tid;
-    }
-
-    public void setTid(Integer tid) {
-        this.tid = tid;
+        this.coment = coment;
     }
 
     public String getCorrect() {
@@ -53,6 +35,22 @@ public class TJudge {
 
     public void setCorrect(String correct) {
         this.correct = correct;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getTid() {
+        return tid;
+    }
+
+    public void setTid(Integer tid) {
+        this.tid = tid;
     }
 
     public String getDecs() {
