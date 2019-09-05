@@ -61,8 +61,9 @@ public class TOverPaperController {
      * @param info
      * @return
      */
-    @RequestMapping("/correctExam")
+    @RequestMapping("/correctExam.do")
     public AjaxResult correctExam(Integer kid, String info){
+        System.out.println(info);
         ObjectMapper mapper = new ObjectMapper();
         try {
             TTestNumber testNumber = itestNumberService.findById(kid);

@@ -41,7 +41,7 @@ public class ShiroConfig {
 //        filterChainDefinitionMap.put("/assets/sass/**", "anon");
 //        filterChainDefinitionMap.put("/login.html", "anon");
         filterChainDefinitionMap.put("/user/login.*", "anon");
-        filterChainDefinitionMap.put("/overpaper/over.*", "anon");
+        filterChainDefinitionMap.put("/overpaper/*", "anon");
         filterChainDefinitionMap.put("/TAnswer/*", "anon");
         filterChainDefinitionMap.put("/TChoose/*", "anon");
         filterChainDefinitionMap.put("/TJudge/*", "anon");
@@ -49,8 +49,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/paper/*", "anon");
         filterChainDefinitionMap.put("/number/*", "anon");
         filterChainDefinitionMap.put("/api/*", "anon");
-        filterChainDefinitionMap.put("/menu/*", "anon");
-
 
         filterChainDefinitionMap.put("/admin/**", "authc");
         filterChainDefinitionMap.put("/user/**", "authc");

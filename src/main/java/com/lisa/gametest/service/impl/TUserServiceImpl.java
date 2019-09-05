@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.lisa.gametest.dao.TUserMapper;
 import com.lisa.gametest.entity.TUser;
 import com.lisa.gametest.service.ITUserService;
+import com.lisa.gametest.vo.TUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -118,7 +118,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         on rp.rid=ur.rid
         inner join t_user u
         on ur.uid=u.uid
-        where u.uid=${uid}
+        where u.uid=#{uid}
     </select>
     
 </mapper>
