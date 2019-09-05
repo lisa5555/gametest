@@ -60,7 +60,11 @@ public class TOverPaperServiceImpl implements ITOverPaperService {
     @Override
     public void correctionPaper(Integer qid, Integer uid, List<PaperAnswerInfo> list) {
 
-        TOverPaper OverPaper = tOverPaperMapper.findOid(uid, qid);
+        TOverPaper overPaper = new TOverPaper();
+        overPaper.setPid(qid);
+        overPaper.setUid(uid);
+        overPaper.setState(0);
+
         TPaper tPaper = tPaperMapper.findPaperById(qid);
         int chooseScore = 0;
         int judgeScore = 0;
@@ -94,10 +98,10 @@ public class TOverPaperServiceImpl implements ITOverPaperService {
         }
 
         chooseScore += judgeScore;
-        OverPaper.setScore(chooseScore);
+        overPaper.setScore(chooseScore);
 
         try {
-            tOverPaperMapper.updateTOverPaper(OverPaper);
+            tOverPaperMapper.addTOverPaper(overPaper);
         } catch (Exception e) {
             e.printStackTrace();
         }
