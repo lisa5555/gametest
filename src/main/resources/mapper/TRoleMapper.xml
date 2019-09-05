@@ -101,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <update id="updateUserRole" parameterType="TUserRole">
-         update t_user_role set rid=#{rid} where uid=#{uid}
+         update t_user_role set rid=#{rid} where uid=#{uid} and rid != 1
     </update>
 
     

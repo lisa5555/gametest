@@ -95,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         on ur.uid=u.uid
         inner join t_role r
         on r.rid=ur.rid
+        where u.uid > 1
     </select>
     
     <select id="add" parameterType="TUser">
@@ -122,7 +123,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from t_user
         <where>
             <if test="username != null and username  != ''">
-                username   like"%"#{username}"%"
+                and username   like"%"#{username}"%"
             </if>
             <if test="name != null and name != ''">
                 and name   like"%"#{name}"%"
