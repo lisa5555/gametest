@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface TChooseMapper {
+    List<TChoose> findTChooseByPid(Integer qid);
 
     int deleteByTChooseId(Integer cid);
 

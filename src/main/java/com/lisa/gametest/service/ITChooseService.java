@@ -8,6 +8,7 @@ import java.util.Map;
 
 
 public interface ITChooseService {
+    public List<TChoose> findTChooseByPid(Integer pid);
 
     public int deleteByTChooseId(Integer cid);
 

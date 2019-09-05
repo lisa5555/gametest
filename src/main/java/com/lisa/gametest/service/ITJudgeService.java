@@ -10,6 +10,8 @@ import java.util.Map;
 public interface ITJudgeService 
 {
 
+    public List<TJudge> findTJudgeByPid(Integer pid);
+
     public int insertSomeJudge(List<TJudge> list);
 
     public int deleteByTJudgeId(Integer jid);

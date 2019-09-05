@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface TAnswerMapper {
 
+    List<TAnswer> findTTAnswerByPid(Integer qid);
+
     int deleteByTAnswerId(Integer aid);
 
     int deleteTAnswerByIds(String[] aid);

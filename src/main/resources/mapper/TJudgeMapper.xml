@@ -43,6 +43,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
     </select>
 
+    <select id="findTJudgeByPid" parameterType="int" resultMap="TJudgeResult">
+        SELECT * FROM t_judge c WHERE
+        (SELECT FIND_IN_SET(c.cid, a.judge) from t_paper a where a.qid = #{qid});
+    </select>
+
     <insert id="insertSomeJudge" parameterType="java.util.List" useGeneratedKeys="true">
         insert into t_judge
         (coment, correct, score, tid, decs)

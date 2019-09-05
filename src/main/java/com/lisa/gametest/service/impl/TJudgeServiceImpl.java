@@ -24,6 +24,11 @@ public class TJudgeServiceImpl implements ITJudgeService {
     private TJudgeMapper tJudgeMapper;
 
     @Override
+    public List<TJudge> findTJudgeByPid(Integer pid) {
+        return tJudgeMapper.findTJudgeByPid(pid);
+    }
+
+    @Override
     public int insertSomeJudge(List<TJudge> list) {
         return tJudgeMapper.insertSomeJudge(list);
     }

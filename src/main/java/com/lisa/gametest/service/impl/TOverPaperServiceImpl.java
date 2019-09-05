@@ -60,42 +60,68 @@ public class TOverPaperServiceImpl implements ITOverPaperService {
     @Override
     public void correctionPaper(Integer qid, Integer uid, List<PaperAnswerInfo> list) {
 
+        int size = 0;
+
         TOverPaper overPaper = new TOverPaper();
         overPaper.setPid(qid);
         overPaper.setUid(uid);
         overPaper.setState(0);
 
-        TPaper tPaper = tPaperMapper.findPaperById(qid);
+
         int chooseScore = 0;
         int judgeScore = 0;
         int i,j;
-        String choose = tPaper.getChoose();
-        String judge = tPaper.getJudge();
 
-        String[] cArr = choose.split(",");
-        String[] aArr = judge.split(",");
-        try {
-            if (cArr.length != 0) {
-                for (i = 0; i <= cArr.length; i++) {
-                    TChoose tChoose = tChooseMapper.selectTChooseById(Integer.parseInt(cArr[i]));
-                    if (tChoose.getCorrect().equals(list.get(i).getAnswer())) {
+        List<TChoose> chooseList = tChooseMapper.findTChooseByPid(qid);
+        for (i = 0; i <= chooseList.size(); i++) {
+
+            PaperAnswerInfo paperAnswer = list.get(size);
+            TChoose tChoose = chooseList.get(i);
+
+            if (paperAnswer != null){
+                int id = paperAnswer.getId();
+                id--;
+
+                if (paperAnswer.getId() == 0) {
+                    if (paperAnswer.getAnswer().equals(tChoose.getCorrect())) {
                         chooseScore += tChoose.getScore();
                     }
-                }
-            }
-
-            if (aArr.length != 0) {
-                i = cArr.length + 1;
-                for (j = 0; j <= aArr.length; j++) {
-                    TJudge tJudge = tJudgeMapper.selectTJudgeById(Integer.parseInt(aArr[j]));
-                    if (tJudge.getCorrect().equals(list.get(i++).getAnswer())) {
-                        judgeScore += tJudge.getScore();
+                    size++;
+                } else if (id == i) {
+                    if (paperAnswer.getAnswer().equals(tChoose.getCorrect())) {
+                        chooseScore += tChoose.getScore();
                     }
+                    size++;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+        List<TJudge> judgeList = tJudgeMapper.findTJudgeByPid(qid);
+        int c = chooseList.size();
+
+        for (j = 0; j <= judgeList.size(); j++){
+            c += j;
+            PaperAnswerInfo paperAnswer = list.get(size);
+            TJudge tjudge = judgeList.get(j);
+            if (paperAnswer != null) {
+
+                int id = paperAnswer.getId();
+                id--;
+
+                if (paperAnswer.getId() == 0) {
+                    if (paperAnswer.getAnswer().equals(tjudge.getCorrect())) {
+                        judgeScore += tjudge.getScore();
+                    }
+                    size++;
+                } else if (c == id) {
+                    if (paperAnswer.getAnswer().equals(tjudge.getCorrect())) {
+                        judgeScore += tjudge.getScore();
+                    }
+                    size++;
+                }
+            }
+        }
+
 
         chooseScore += judgeScore;
         overPaper.setScore(chooseScore);
@@ -108,11 +134,5 @@ public class TOverPaperServiceImpl implements ITOverPaperService {
 
     }
 
-
-
-//    @Override
-//    public List<TOverPaper> findAllTOverPaper() {
-//        return tOverPaperMapper.findAllTOverPaper();
-//    }
 
 }

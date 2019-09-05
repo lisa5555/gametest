@@ -53,6 +53,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
+    <insert id="addTOverPaper" parameterType="TOverPaper" useGeneratedKeys="true" keyProperty="oid">
+        insert into t_over_paper
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="qid != null  and qid != ''">qid,</if>
+            <if test="uid != null  and uid != ''">uid ,</if>
+            <if test="commitChoose != null  and commitChoose != ''">commitChoose,</if>
+            <if test="commitJudge != null  and commitJudge != ''">commitJudge,</if>
+            <if test="commitAnswer != null  and commitAnswer != ''">commitAnswer,</if>
+            <if test="state != null  and state != ''">state,</if>
+            <if test="score != null and score != ''">score,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="qid != null  and qid != ''">#{qid},</if>
+            <if test="uid != null  and uid != ''">#{uid},</if>
+            <if test="commitChoose != null  and commitChoose != ''">#{commitChoose},</if>
+            <if test="commitJudge != null  and commitJudge != ''">#{commitJudge},</if>
+            <if test="commitAnswer != null  and commitAnswer != ''">#{commitAnswer},</if>
+            <if test="state != null  and state != ''">#{state},</if>
+            <if test="score != null and score != ''">#{score},</if>
+        </trim>
+    </insert>
+
 
     <update id="updateTOverPaper" parameterType="TOverPaper">
         update t_over_paper

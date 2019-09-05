@@ -26,6 +26,11 @@ public class TChooseServiceImpl implements ITChooseService
     private TChooseMapper tChooseMapper;
 
     @Override
+    public List<TChoose> findTChooseByPid(Integer pid) {
+        return tChooseMapper.findTChooseByPid(pid);
+    }
+
+    @Override
     public int deleteByTChooseId(Integer cid) {
         return tChooseMapper.deleteByTChooseId(cid);
     }

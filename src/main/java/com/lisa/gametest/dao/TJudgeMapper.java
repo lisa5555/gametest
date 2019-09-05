@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface TJudgeMapper {
 
+    List<TJudge> findTJudgeByPid(Integer qid);
+
     int deleteByTJudgeId(Integer jid);
 
     int deleteTJudgeByIds(String[] arr);

@@ -18,6 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where aid = #{aid}
     </select>
 
+    <select id="findTTAnswerByPid" parameterType="int" resultMap="TAnswerResult">
+        SELECT * FROM t_answer c WHERE
+        (SELECT FIND_IN_SET(c.cid, a.answer) from t_paper a where a.qid = #{qid});
+    </select>
+
     <select id="selectBySearch" parameterType="map" resultType="MyAnswer">
         select t.*, te.typeName from t_answer t
         inner join t_test_type te
