@@ -9,7 +9,7 @@ public class KsnInfo {
 
     private Date endtime;
 
-    private String kaoshitime;
+    private Integer kaoshitime;
 
     private String typeName;
 
@@ -39,11 +39,11 @@ public class KsnInfo {
         this.endtime = endtime;
     }
 
-    public String getKaoshitime() {
+    public Integer getKaoshitime() {
         return kaoshitime;
     }
 
-    public void setKaoshitime(String kaoshitime) {
+    public void setKaoshitime(Integer kaoshitime) {
         this.kaoshitime = kaoshitime;
     }
 

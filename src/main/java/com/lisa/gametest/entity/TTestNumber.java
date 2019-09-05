@@ -12,7 +12,7 @@ public class TTestNumber {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
-    private String kaoshiTime;
+    private Integer kaoshiTime;
 
     private Integer tid;
 
@@ -41,11 +41,11 @@ public class TTestNumber {
         this.endTime = endTime;
     }
 
-    public String getKaoshiTime() {
+    public Integer getKaoshiTime() {
         return kaoshiTime;
     }
 
-    public void setKaoshiTime(String kaoshiTime) {
+    public void setKaoshiTime(Integer kaoshiTime) {
         this.kaoshiTime = kaoshiTime;
     }
 

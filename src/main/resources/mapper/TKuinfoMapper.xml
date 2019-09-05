@@ -11,6 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         on i.kid=k.kid
         inner join t_test_type t
         on k.tid=t.tid
+        <where>
+            <if test="name != null and name  != ''">
+                name   like"%"#{name}"%"
+            </if>
+            <if test="typeName != null and typeName != ''">
+                and typeName=#{typeName}
+            </if>
+        </where>
     </select>
 
     <delete id="deleteById" parameterType="int">

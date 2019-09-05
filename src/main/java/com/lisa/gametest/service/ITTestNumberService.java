@@ -10,9 +10,7 @@ import java.util.List;
 
 
 public interface ITTestNumberService {
-    public List<KsnInfo> findAll(
-                                 String typeName
-                                 );
+    public List<KsnInfo> findAll(String typeName);
     public void deleteById(Integer kid);
     public void update(TTestNumber t);
     public void add(TTestNumber t);

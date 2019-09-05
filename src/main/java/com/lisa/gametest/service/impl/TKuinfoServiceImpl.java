@@ -15,8 +15,8 @@ public class TKuinfoServiceImpl implements ITKuinfoService {
     private TKuinfoMapper tk;
 
     @Override
-    public List<Studentinfo> findAll() {
-        return tk.findAll();
+    public List<Studentinfo> findAll(String name,String typeName) {
+        return tk.findAll(name,typeName);
     }
 
     @Override

@@ -37,7 +37,7 @@
 </head>
 <body class="layui-layout-body">
 <div>
-    <h2>考试场次管理</h2>
+    <h2>考生信息管理</h2>
     <div class="layui-form searchDiv" id="id2">
 
 
@@ -48,6 +48,12 @@
                     <option value="" selected>按照科目查询</option>
                 </select>
             </div>
+
+        <div class="layui-inline">
+             <div class="layui-input-inline">
+                 <input type="text" name="name" id="tid" lay-verify="text" placeholder="请输入要搜索的姓名" autocomplete="off" class="layui-input">
+             </div>
+        </div>
 
 
             <button type="button" class="layui-btn" data-type="reload">搜索</button>
@@ -168,6 +174,7 @@
                     }
                     ,where: { // 额外需要提交的参数
                         typeName:$("#cid").val(),
+                        name:$("#tid").val()
                     }
                 });
             }

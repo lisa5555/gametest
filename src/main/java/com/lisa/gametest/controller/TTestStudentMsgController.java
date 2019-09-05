@@ -22,9 +22,9 @@ public class TTestStudentMsgController {
     private ITKuinfoService ku;
 
     @RequestMapping("/list.do")
-    public Map<String,Object> show(Integer page, Integer limit) {
+    public Map<String,Object> show(Integer page, Integer limit,String name,String typeName) {
         PageHelper.startPage(page,limit);
-        List<Studentinfo> list = ku.findAll();
+        List<Studentinfo> list = ku.findAll(name,typeName);
         long total = ((Page) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);
