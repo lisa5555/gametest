@@ -9,7 +9,7 @@ public class TUser {
 
     private String name;
 
-    private char sex;
+    private String sex;
 
     private String phone;
 
@@ -23,11 +23,11 @@ public class TUser {
         this.name = name;
     }
 
-    public char getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(char sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 

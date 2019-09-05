@@ -8,7 +8,9 @@ import java.util.List;
 public interface ITUserService {
     public TUser findByName(String name);
     public List<TUser> findAll();
+    public List<TUser> findAll1(Integer page,Integer limit,String username,String name,String sex);
     public List<TUser> findAllByLimit(Integer page, Integer limit);
+    public List<TUserInfo> findAllByLimit2(Integer page, Integer limit);
     public void add(TUser tUser);
     public TUser queryById(Integer id);
     public void update(TUser tUser);

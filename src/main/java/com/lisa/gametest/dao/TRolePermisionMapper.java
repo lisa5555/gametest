@@ -2,6 +2,7 @@ package com.lisa.gametest.dao;
 
 import com.lisa.gametest.entity.TRolePermision;
 
+import com.lisa.gametest.vo.PersionInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +29,10 @@ public interface TRolePermisionMapper {
     int updateByPrimaryKeySelective(TRolePermision record);
 
     int updateByPrimaryKey(TRolePermision record);
+
+    public List<PersionInfo> findPersionById(Integer rid);
+
+    public void deleteById(Integer rid, Integer pid);
+
+    public void add(Integer rid, Integer pid);
 }

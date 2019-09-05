@@ -3,7 +3,11 @@ package com.lisa.gametest.controller;
 import com.github.pagehelper.Page;
 import com.lisa.gametest.common.AjaxResult;
 import com.lisa.gametest.entity.TUser;
+import com.lisa.gametest.entity.TUserRole;
+import com.lisa.gametest.service.ITRoleService;
+import com.lisa.gametest.service.ITUserRoleService;
 import com.lisa.gametest.service.ITUserService;
+import com.lisa.gametest.vo.TUserInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -25,6 +29,10 @@ import java.util.Map;
 public class userController {
     @Autowired
     private ITUserService service;
+    @Autowired
+    private ITRoleService urservice;
+    @Autowired
+    private ITRoleService roleservice;
     @RequestMapping("/login.do")
     public AjaxResult login(String username, String password, HttpSession session){
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
@@ -53,6 +61,7 @@ public class userController {
      *     成功返回 AjaxResult
      */
     @RequestMapping("query.do")
+
     public AjaxResult findAll() {
 
         AjaxResult ajaxResult = new AjaxResult();
@@ -69,6 +78,18 @@ public class userController {
         return ajaxResult;
     }
 
+    @RequestMapping("/query2.do")
+    public Map<String,Object> findByCondition(Integer page,Integer limit,String username,String name,String sex){
+        List<TUser> list = service.findAll1(page, limit, username, name, sex);
+        long total = ((Page) list).getTotal();
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", total);
+        map.put("data", list);
+        return map;
+    }
+
     /**
      *  分页查询所有数据
      * @param page
@@ -76,8 +97,28 @@ public class userController {
      * @return
      */
     @RequestMapping("/queryLimit.do")
+
     public Map<String,Object> findAllByLimit(Integer page, Integer limit){
         List<TUser> list = service.findAllByLimit(page, limit);
+        long total = ((Page) list).getTotal();
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", total);
+        map.put("data", list);
+        return map;
+    }
+
+    /**
+     *  分页查询所有数据
+     * @param page
+     * @param limit
+     * @return
+     */
+    @RequestMapping("/queryLimit2.do")
+
+    public Map<String,Object> findAllByLimit2(Integer page, Integer limit){
+        List<TUserInfo> list = service.findAllByLimit2(page, limit);
         long total = ((Page) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);
@@ -93,6 +134,7 @@ public class userController {
      * @return
      */
     @RequestMapping("/add.do")
+
     public AjaxResult add(TUser tUser){
         AjaxResult ajaxResult = new AjaxResult();
         try {
@@ -111,6 +153,7 @@ public class userController {
      *  查找指定id用户
      */
     @RequestMapping("/queryById.do")
+
     public AjaxResult queryById(HttpServletRequest request){
         String id = request.getParameter("id");
         AjaxResult asonResult = new AjaxResult();
@@ -129,17 +172,18 @@ public class userController {
 
     /**
      * 修改指定用户信息
-     * @param s
+     * @param tUser
      * @param request
      * @return
      */
     @RequestMapping("/update.do")
-    public AjaxResult update(TUser s, HttpServletRequest request){
+
+    public AjaxResult update(TUser tUser, HttpServletRequest request){
         String id = request.getParameter("id");
         AjaxResult asonResult = new AjaxResult();
         try {
-            s.setUid(Integer.parseInt(id));
-            service.update(s);
+            tUser.setUid(Integer.parseInt(id));
+            service.update(tUser);
             asonResult.setCode(0);
             asonResult.setInfo(null);
         } catch (Exception e) {
@@ -156,10 +200,34 @@ public class userController {
      * @return
      */
     @RequestMapping("/delete.do")
+
     public AjaxResult deleteById(Integer id){
         AjaxResult asonResult = new AjaxResult();
         try {
             service.deleteById(id);
+            asonResult.setCode(0);
+            asonResult.setInfo(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            asonResult.setCode(1);
+            asonResult.setInfo(e.getMessage());
+        }
+        return asonResult;
+    }
+
+
+    /**
+     * 审核指定id用户
+     * @param id
+     * @return
+     */
+    @RequestMapping("/check.do")
+
+    public AjaxResult checkById(Integer id){
+        AjaxResult asonResult = new AjaxResult();
+        try {
+            service.checkById(id);
+            urservice.addUserRole(id);
             asonResult.setCode(0);
             asonResult.setInfo(null);
         } catch (Exception e) {

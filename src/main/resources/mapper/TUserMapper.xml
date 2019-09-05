@@ -8,6 +8,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="uid"    column="uid"    />
         <result property="username"    column="username"    />
         <result property="password"    column="password"    />
+        <result property="name"    column="name"    />
+        <result property="sex"    column="sex"    />
+        <result property="phone"    column="phone"    />
+        <result property="state" column="state" />
+
     </resultMap>
 
     <sql id="selectTUserVo">
@@ -83,13 +88,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
 
+    <select id="findAllByLimit2"  resultType="com.lisa.gametest.vo.TUserInfo">
+        select u.uid, username, password, name, sex, phone, state, r.rolename
+        from t_user u
+        inner join t_user_role ur
+        on ur.uid=u.uid
+        inner join t_role r
+        on r.rid=ur.rid
+    </select>
+    
+    <select id="add" parameterType="TUser">
+        insert into t_user(username, password, name, sex, phone, state)
+        values (#{username}, #{password}, #{name}, #{sex}, #{phone}, 0)
+    </select>
+    
+    <delete id="deleteById" parameterType="int">
+        delete from t_user where uid=#{id}
+    </delete>
+    <delete id="checkById" parameterType="int">
+        update t_user set state=1 where uid=#{id} and uid!=1
+    </delete>
+
+    <select id="queryById" parameterType="int" resultType="TUser">
+        select * from t_user where uid=#{id}
+    </select>
+
+    <update id="update" parameterType="TUser">
+         update t_user set username=#{username},password=#{password},
+         name=#{name},sex=#{sex}, phone=#{phone} where uid=#{uid}
+    </update>
+
+    <select id="findAll1" parameterType="map"  resultType="TUser">
+        select * from t_user
+        <where>
+            <if test="username != null and username  != ''">
+                username   like"%"#{username}"%"
+            </if>
+            <if test="name != null and name != ''">
+                and name   like"%"#{name}"%"
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex  like"%"#{sex}"%"
+            </if>
+        </where>
+
+    </select>
     <select id="findAll" resultType="TUser">
         select * from t_user
     </select>
+    
 
-    <select id="findAllByLimit"  resultType="TUser">
-        select * from t_user
-    </select>
+
 
 
     

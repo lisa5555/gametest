@@ -53,5 +53,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{rid}
         </foreach>
     </delete>
+
+    <select id="addRole" parameterType="TRole">
+        insert into t_role(rolename)
+        values (#{rolename})
+    </select>
+
+    <select id="addUserRole" parameterType="int">
+        insert into t_user_role(rid,uid)
+        values (3,#{id})
+    </select>
+
+    <select id="findAll" resultType="TRole">
+        select * from t_role
+    </select>
+
+    <select id="findAllByLimit"  resultType="TRole">
+        select * from t_role
+    </select>
+<!--    <select id="findAllRoleByLimit"  resultType="com.lisa.gametest.vo.RoleInfo">-->
+<!--        select u.uid, ur.rid,username, name, rolename-->
+<!--        from t_user u-->
+<!--        inner join t_user_role ur-->
+<!--        on ur.uid = u.uid-->
+<!--        inner join t_role r-->
+<!--        on r.rid=ur.rid-->
+<!--    </select>-->
+
+
+
+    <select id="findAllRoleByLimit" parameterType="int" resultType="com.lisa.gametest.vo.RoleInfo">
+        select u.uid, r.rid, u.username, u.name, r.rolename
+        from t_user u
+        inner join t_user_role ur
+        on ur.uid = u.uid
+        inner join t_role r
+        on r.rid=ur.rid
+        <where>
+            <if test="rid != null and rid  != ''">
+                r.rid=#{rid}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryById" parameterType="int" resultType="TRole">
+        select * from t_role where uid=#{id}
+    </select>
+
+    <update id="updateUserRole" parameterType="TUserRole">
+         update t_user_role set rid=#{rid} where uid=#{uid}
+    </update>
+
     
 </mapper>

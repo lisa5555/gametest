@@ -14,54 +14,43 @@
 
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
-            <div class="layui-form-item">
+        <div class="layui-form searchDiv" id="id2">
+
+
+            <div class="layui-inline">
                 <div class="layui-inline">
-                    <label class="layui-form-label">ID</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="id" placeholder="请输入" autocomplete="off" class="layui-input">
+                    <div class="layui-input-inline">
+                        用户名：<input type="text" name="username" id="unid" lay-verify="text" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">用户名</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+                    <div class="layui-input-inline">
+                        名字：<input type="text" name="name" id="nid" lay-verify="text" placeholder="请输入密码" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">邮箱</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="email" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
+                <div class="layui-input-inline">
+                    性别：<select name="sex" lay-verify="sex" id="sid">
+                        <option value="">选择性别</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                    </select>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">性别</label>
-                    <div class="layui-input-block">
-                        <select name="sex">
-                            <option value="0">不限</option>
-                            <option value="1">男</option>
-                            <option value="2">女</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-user-front-search">
-                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
-                    </button>
-                </div>
+             <button type="button" class="layui-btn" data-type="reload">搜索</button>
             </div>
+
         </div>
 
         <div class="layui-card-body">
             <div style="padding-bottom: 10px;">
                 <button class="layui-btn layuiadmin-btn-useradmin" data-type="batchdel">删除</button>
-                <button class="layui-btn layuiadmin-btn-useradmin" data-type="add">添加</button>
+                <button class="layui-btn layuiadmin-btn-useradmin" data-type="add" onclick="add()">添加</button>
             </div>
 
             <table class="layui-hide" id="demo" lay-filter="test"></table>
-            <script type="text/html" id="table-useradmin-webuser">
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-xs" lay-event="check">审核</a>
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
         </div>
     </div>
@@ -76,12 +65,11 @@
             ,element = layui.element //元素操作
             ,form=layui.form;
 
-
         table.render({
             elem: '#demo',
             id:'transferTable',
             height:400  ,
-            url:'/dianjing/user/queryLimit.do',
+            url:'/dianjing/user/query2.do',
             page: {
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
                 //,curr: 5 //设定初始在第 5 页
@@ -97,6 +85,10 @@
                 ,{field: 'uid', title: 'uid',hide:true }
                 ,{field: 'username', title: '用户名', width:150}
                 ,{field: 'password', title: '密码', width:200, sort: true}
+                ,{field: 'name', title: '姓名', width:150}
+                ,{field: 'sex', title: '性别', width:150}
+                ,{field: 'phone', title: '电话', width:150}
+                ,{field: 'state', title: '审核', width:150}
                 ,{fixed: 'right',title: '操作', width: 165, align:'center', toolbar: '#barDemo'}
 
             ]]
@@ -112,7 +104,7 @@
                     //向服务端发送删除指令
                     $.ajax({
                         type:"get",
-                        url:"user/delete.do?id=" + data.id,
+                        url:"/dianjing/user/delete.do?id=" + data.uid,
                         dataType:"json",
                         success:function(data){
                             if(data.code == 0){
@@ -129,15 +121,62 @@
                     type: 2 //此处以iframe举例
                     , title: '修改用户'
                     , area: ['650px', '600px']
-                    , content: 'updateUser.html?id=' + data.id
+                    , content: 'updateUser.html?id=' + data.uid
                 })
+            } else if (layEvent === 'check') {
+                layer.confirm('是否通过审核', function(index){
+                    layer.close(index);
+                    //向服务端发送删除指令
+                    $.ajax({
+                        type:"get",
+                        url:"/dianjing/user/check.do?id=" + data.uid,
+                        dataType:"json",
+                        success:function(data){
+                            if(data.code == 0){
+                                table.reload('demo');
+                            }else{
+                                alert(data.info);
+                            }
+                        }
+                    })
+                });
             }
+        });
+
+        var active = {
+            reload: function(){
+                //执行重载
+                table.reload('transferTable', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: { // 额外需要提交的参数
+                        username:$("#unid").val(),
+                        name:$("#nid").val(),
+                        sex:$("#sid").val(),
+                    }
+                });
+            }
+        };
+        $('.searchDiv .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
         });
 
     })
 </script>
 <script type="text/html" id="xuhao">
     {{d.LAY_TABLE_INDEX+1}}
+</script>
+<script type="text/javascript">
+    function add(){
+        layer.open({
+            type: 2 //此处以iframe举例
+            , title: '添加用户'
+            , area: ['650px', '600px']
+            , content: 'addUser.html'
+        })
+    }
 </script>
 </body>
 </html>

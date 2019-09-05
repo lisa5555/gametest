@@ -58,5 +58,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{tRolePermisionId}
         </foreach>
     </delete>
-    
+
+    <select id="findPersionById"  resultType="com.lisa.gametest.vo.PersionInfo">
+        select rp.rid, rp.pid, p.resource_name
+        from t_role_permision rp
+        inner join t_permision p
+        on rp.pid = p.pid
+        <where>
+            <if test="rid != null and rid  != ''">
+                rid=#{id}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteById" parameterType="int">
+        delete from t_role_permision where pid =#{pid} and rid=#{rid}
+
+    </delete>
+
+
+    <select id="add" parameterType="int">
+        insert into t_role_permision(rid,pid)
+        values (#{rid}, #{pid})
+    </select>
 </mapper>

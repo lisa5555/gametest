@@ -28,9 +28,23 @@ public class TUserServiceImpl implements ITUserService
     }
 
     @Override
+    public List<TUser> findAll1(Integer page, Integer limit, String username, String name, String sex) {
+        PageHelper.startPage(page, limit);
+        List<TUser> all = user.findAll1(page, limit, username, name, sex);
+        return all;
+    }
+
+    @Override
     public List<TUser> findAllByLimit(Integer page, Integer limit) {
         PageHelper.startPage(page, limit);
         List<TUser> userAllByLimit = user.findAllByLimit();
+        return userAllByLimit;
+    }
+
+    @Override
+    public List<TUserInfo> findAllByLimit2(Integer page, Integer limit) {
+        PageHelper.startPage(page, limit);
+        List<TUserInfo> userAllByLimit = user.findAllByLimit2();
         return userAllByLimit;
     }
 
@@ -53,6 +67,11 @@ public class TUserServiceImpl implements ITUserService
     @Override
     public void deleteById(Integer id) {
         user.deleteById(id);
+    }
+
+    @Override
+    public void checkById(Integer id) {
+        user.checkById(id);
     }
 
     @Override
