@@ -1,5 +1,6 @@
 package com.lisa.gametest.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lisa.gametest.OverPaperVo.PaperAnswerInfo;
@@ -9,6 +10,8 @@ import com.lisa.gametest.entity.TUser;
 import com.lisa.gametest.service.ITOverPaperService;
 import com.lisa.gametest.service.ITTestNumberService;
 import com.lisa.gametest.service.ITUserService;
+import com.lisa.gametest.vo.AnswerExam;
+import com.lisa.gametest.vo.AnswerExamList;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -62,15 +65,20 @@ public class TOverPaperController {
      * @return
      */
     @RequestMapping("/correctExam.do")
-    public AjaxResult correctExam(Integer kid, String info){
+    public AjaxResult correctExam(Integer kid, String info, AnswerExamList answerExamList){
+
         System.out.println(info);
         ObjectMapper mapper = new ObjectMapper();
         try {
+            List<AnswerExam> examList = answerExamList.getAnswerExamList();
+
+            String answerString = mapper.writeValueAsString(examList);
+
             TTestNumber testNumber = itestNumberService.findById(kid);
             List<PaperAnswerInfo> lendReco = mapper.readValue(info,new TypeReference<List<PaperAnswerInfo>>() { });
             String username = redisTemplate.opsForValue().get("token");
             TUser user = itUserService.findByName(username);
-            overPaperService.correctionPaper(testNumber.getQid(), user.getUid(), lendReco);
+            overPaperService.correctionPaper(testNumber.getQid(), user.getUid(), lendReco,answerString );
             return new AjaxResult(1,null);
 
         } catch (IOException e) {
@@ -79,4 +87,8 @@ public class TOverPaperController {
         }
 
     }
+
+
+
+
 }

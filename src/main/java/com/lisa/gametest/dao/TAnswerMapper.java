@@ -2,6 +2,7 @@ package com.lisa.gametest.dao;
 
 import com.lisa.gametest.entity.TAnswer;
 
+import com.lisa.gametest.vo.AnswerExam;
 import com.lisa.gametest.vo.MyAnswer;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,4 +29,6 @@ public interface TAnswerMapper {
     List<MyAnswer> selectBySearch(@Param("tid") Integer tid, @Param("searchName") String searchName, @Param("score") Integer score);
 
     int updateTAnswer(TAnswer tAnswer);
+
+    List<AnswerExam> findAnswerExamList(Integer qid);
 }

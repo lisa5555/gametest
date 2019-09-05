@@ -1,9 +1,13 @@
 package com.lisa.gametest.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lisa.gametest.OverPaperVo.QuestionJosn;
 import com.lisa.gametest.common.AjaxResult;
 import com.lisa.gametest.entity.TPaper;
 import com.lisa.gametest.service.*;
+import com.lisa.gametest.vo.AnswerExam;
+import com.lisa.gametest.vo.AnswerExamList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -46,6 +50,24 @@ public class PaperController {
         }
         return result;
     }
+
+    /**
+     * 查找该课程的简答题
+     * @param kid
+     * @return
+     */
+    @RequestMapping("/findAnswerExam.do")
+    public AjaxResult findAnswerExam(Integer kid){
+        try {
+            int qid = service.findQidBKid(kid);
+            List<AnswerExam> list = itAnswerService.findAnswer(qid);
+            return new AjaxResult(1, list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AjaxResult(0, "查询出错");
+        }
+    }
+
 
 
     /**

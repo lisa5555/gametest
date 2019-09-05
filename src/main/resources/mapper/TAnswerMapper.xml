@@ -18,6 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where aid = #{aid}
     </select>
 
+    <select id="findAnswerExamList" parameterType="int" resultType="AnswerExam">
+        SELECT aid,coment,decs,score FROM t_answer WHERE
+        (SELECT FIND_IN_SET(aid, a.answer) from t_paper a where a.qid = #{qid});
+    </select>
+
     <select id="findTTAnswerByPid" parameterType="int" resultMap="TAnswerResult">
         SELECT * FROM t_answer c WHERE
         (SELECT FIND_IN_SET(c.cid, a.answer) from t_paper a where a.qid = #{qid});

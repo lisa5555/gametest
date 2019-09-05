@@ -9,6 +9,7 @@ import com.lisa.gametest.dao.TAnswerMapper;
 import com.lisa.gametest.entity.TAnswer;
 import com.lisa.gametest.entity.TJudge;
 import com.lisa.gametest.service.ITAnswerService;
+import com.lisa.gametest.vo.AnswerExam;
 import com.lisa.gametest.vo.MyAnswer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,5 +82,10 @@ public class TAnswerServiceImpl implements ITAnswerService {
         map.put("count", total);
         map.put("data", list);
         return map;
+    }
+
+    @Override
+    public List<AnswerExam> findAnswer(Integer qid) {
+        return tAnswerMapper.findAnswerExamList(qid);
     }
 }

@@ -58,7 +58,7 @@ public class TOverPaperServiceImpl implements ITOverPaperService {
     }
 
     @Override
-    public void correctionPaper(Integer qid, Integer uid, List<PaperAnswerInfo> list) {
+    public void correctionPaper(Integer qid, Integer uid, List<PaperAnswerInfo> list, String answerString) {
 
         int size = 0;
 
@@ -66,6 +66,7 @@ public class TOverPaperServiceImpl implements ITOverPaperService {
         overPaper.setPid(qid);
         overPaper.setUid(uid);
         overPaper.setState(0);
+        overPaper.setCommitjudge(answerString);
 
 
         int chooseScore = 0;
