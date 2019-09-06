@@ -39,27 +39,23 @@
 <div>
     <h2>考试场次管理</h2>
     <div class="layui-form searchDiv" id="id2">
-
-
-
+        <button type="button" class="layui-btn" onclick="add()">
+            添加 <span class="badge"></span>
+        </button>
         <div class="layui-inline">
             <div class="layui-input-inline">
                 <select name="tid" lay-verify="required" id="cid">
                     <option value="" selected>按照科目查询</option>
                 </select>
             </div>
-
-
             <button type="button" class="layui-btn" data-type="reload">搜索</button>
         </div>
-
     </div>
 </div>
 
 <hr>
 <table class="layui-hide layui-l" id="demo" lay-filter="test"></table>
 <hr>
-<div id="content" ><button type="button" class="layui-btn" onclick="add()">添加</button></div>
 
 <script type="text/html" id="barDemo">
 

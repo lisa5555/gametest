@@ -39,7 +39,7 @@
 </head>
 <body class="layui-layout-body">
 <div>
-    <h2>选择题管理</h2>
+    <h2>判断题管理</h2>
     <div class="layui-form searchDiv" id="id2">
         <button type="button" class="layui-btn" onclick="answer()">
             查看简答题 <span class="badge"></span>
@@ -130,8 +130,9 @@
             ,title: '判断题表'
             ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
-                ,curr: 5 //设定初始在第 5 页
-                //,groups: 1 //只显示 1 个连续页码
+                ,curr: 1 //设定初始在第 5 页
+                ,limit: 5
+                ,groups: 3 //只显示 1 个连续页码
                 ,first: false //不显示首页
                 ,last: false //不显示尾页
                 ,limits:[5,10]
@@ -182,8 +183,8 @@
                 //layer.msg('编辑操作');
                 layer.open({
                     type: 2 //此处以iframe举例
-                    , title: '修改员工'
-                    , area: ['650px', '600px']
+                    , title: '修改判断题'
+                    , area: ['650px', '500px']
                     , content: 'judgeUpdate.html?id='+data.jid
                 })
             }
@@ -260,7 +261,7 @@
         layer.open({
             type: 2 //此处以iframe举例
             , title: '添加判断题'
-            , area: ['650px', '600px']
+            , area: ['650px', '500px']
             , content: 'judgeAdd.html'
         })
     }
