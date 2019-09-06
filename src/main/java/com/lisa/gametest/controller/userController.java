@@ -243,4 +243,17 @@ public class userController {
     }
 
 
+//    @RequestMapping("/deleteSomeTUser")
+//    public AjaxResult deleteSomeTUser(String ids) {
+//        String[] strings = ids.split(",");
+//        try {
+//            service.deleteTUserByIds(strings);
+//            return new AjaxResult(1, null);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new AjaxResult(0, "批量删除失败");
+//        }
+//    }
+
+
 }

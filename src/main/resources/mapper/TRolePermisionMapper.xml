@@ -71,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     <delete id="deleteById" parameterType="int">
-        delete from t_role_permision where pid =#{pid} and rid=#{rid}
+        delete from t_role_permision where pid =#{pid} and rid=#{rid} and rid!=1
 
     </delete>
 

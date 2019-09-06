@@ -94,9 +94,14 @@ public class RolePermisionController {
     public AjaxResult deleteById(Integer rid, Integer pid){
         AjaxResult asonResult = new AjaxResult();
         try {
-            rpservice.deleteById(rid, pid);
-            asonResult.setCode(0);
-            asonResult.setInfo(null);
+            if (rid != 1) {
+                rpservice.deleteById(rid, pid);
+                asonResult.setCode(0);
+                asonResult.setInfo(null);
+            } else {
+                asonResult.setCode(1);
+                asonResult.setInfo("管理员无法删除自己权限");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             asonResult.setCode(1);

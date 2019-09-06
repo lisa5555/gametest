@@ -88,4 +88,10 @@ public class TUserServiceImpl implements ITUserService
 
         return userByName;
     }
+
+//    @Override
+//    public int deleteTUserByIds(String[] ids) {
+//        return user.deleteTUserByIds(ids);
+//
+//    }
 }

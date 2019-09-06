@@ -18,4 +18,6 @@ public interface ITUserService {
     public void update(TUser tUser);
     public void deleteById(Integer id);
     public TUser login(String userName,String password);
+//
+//    public int deleteTUserByIds(String[] ids);
 }

@@ -34,4 +34,6 @@ public interface TUserMapper {
     public void deleteById(Integer id);
 
     public void checkById(Integer id);
+//
+//    public int deleteTUserByIds(String[] ids);
 }

@@ -42,7 +42,9 @@
 
         <div class="layui-card-body">
             <div style="padding-bottom: 10px;">
-                <button class="layui-btn layuiadmin-btn-useradmin" data-type="batchdel">删除</button>
+<!--                <button id="btn" class="layui-btn" type="button">-->
+<!--                    批量删除 <span class="badge"></span>-->
+<!--                </button>-->
                 <button class="layui-btn layuiadmin-btn-useradmin" data-type="add" onclick="add()">添加</button>
             </div>
 
@@ -163,6 +165,45 @@
             active[type] ? active[type].call(this) : '';
         });
 
+
+        $('#btn').click(function () {
+            var checkStatus = table.checkStatus('transferTable'),
+                data = checkStatus.data;
+
+            if (data == "") {
+                layer.msg('至少选择一个', {icon: 2});
+                return;
+            }
+            var ids = "";
+            if (data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    ids += data[i].pid + ",";
+                }
+                ids = ids.substring(0, ids.length - 1);
+            }
+            layer.confirm('确认删除吗？' + ids, function (index) {
+                $.ajax({
+                    type: "post",
+                    url: "/dianjing/user/deleteSomeTUser",
+                    data: {"ids": ids},
+                    success: function (data) {
+                        if (data.code == 1) {
+                            layer.msg("删除成功!", {
+                                icon: 6,
+                                time: 500
+                            }, function () {
+                                table.reload('transferTable');// 重新加载页面,demo 表示父窗体table标签的id值
+                                layer.close(index);
+                            });
+                        } else {
+                            layer.msg("删除失败");
+                        }
+                    }
+                })
+
+            });
+
+        })
     })
 </script>
 <script type="text/html" id="xuhao">
