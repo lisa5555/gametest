@@ -29,9 +29,9 @@ public class TUserServiceImpl implements ITUserService
     }
 
     @Override
-    public List<TUser> findAll1(Integer page, Integer limit, String username, String name, String sex) {
+    public List<TUser> findAll1(Integer page, Integer limit, String username, String name, String sex,Integer state) {
         PageHelper.startPage(page, limit);
-        List<TUser> all = user.findAll1(page, limit, username, name, sex);
+        List<TUser> all = user.findAll1(page, limit, username, name, sex,state);
         return all;
     }
 

@@ -13,7 +13,7 @@ public class TUser {
 
     private String phone;
 
-    private boolean state;
+    private Integer state;
 
     public String getName() {
         return name;
@@ -39,11 +39,11 @@ public class TUser {
         this.phone = phone;
     }
 
-    public boolean isState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(boolean state) {
+    public void setState(Integer state) {
         this.state = state;
     }
 

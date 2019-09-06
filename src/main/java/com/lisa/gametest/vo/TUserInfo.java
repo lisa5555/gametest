@@ -16,7 +16,7 @@ public class TUserInfo {
 
         private String rolename;
 
-        private boolean state;
+        private Integer state;
 
         public String getRolename() {
             return rolename;
@@ -50,15 +50,15 @@ public class TUserInfo {
             this.phone = phone;
         }
 
-        public boolean isState() {
-            return state;
-        }
+    public Integer getState() {
+        return state;
+    }
 
-        public void setState(boolean state) {
-            this.state = state;
-        }
+    public void setState(Integer state) {
+        this.state = state;
+    }
 
-        public Integer getUid() {
+    public Integer getUid() {
             return uid;
         }
 

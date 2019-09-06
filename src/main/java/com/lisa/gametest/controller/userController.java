@@ -80,8 +80,8 @@ public class userController {
     }
 
     @RequestMapping("/query2.do")
-    public Map<String,Object> findByCondition(Integer page,Integer limit,String username,String name,String sex){
-        List<TUser> list = service.findAll1(page, limit, username, name, sex);
+    public Map<String,Object> findByCondition(Integer page,Integer limit,String username,String name,String sex,Integer state){
+        List<TUser> list = service.findAll1(page, limit, username, name, sex,state);
         long total = ((Page) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);

@@ -19,7 +19,7 @@ public interface TUserMapper {
     // 获取所有用户信息的list集合
     public List<TUser> findAll();
 
-    public List<TUser> findAll1(Integer page,Integer limit,String username,String name,String sex);
+    public List<TUser> findAll1(Integer page,Integer limit,String username,String name,String sex,Integer state);
     // 分页获取用户信息
     public List<TUser> findAllByLimit();
     // 分页获取用户信息

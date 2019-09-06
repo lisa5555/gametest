@@ -35,6 +35,13 @@
                     <option value="女">女</option>
                     </select>
                 </div>
+                <div class="layui-input-inline">
+                    性别：<select name="state" lay-verify="state" id="stateid">
+                    <option value="">审核情况</option>
+                    <option value="1">审核通过</option>
+                    <option value="0">审核未通过</option>
+                </select>
+                </div>
              <button type="button" class="layui-btn" data-type="reload">搜索</button>
             </div>
 
@@ -156,6 +163,7 @@
                         username:$("#unid").val(),
                         name:$("#nid").val(),
                         sex:$("#sid").val(),
+                        state:$("#stateid").val(),
                     }
                 });
             }
