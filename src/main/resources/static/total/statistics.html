@@ -12,6 +12,7 @@
     var tl = new Array();
     var tl1 = new Array();
     var tn = new Array();
+    var tn1 = new Array();
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
 
@@ -51,27 +52,6 @@
                 formatter: '{value} 分'
             }
         },
-        // series: [
-        //     {
-        //         name: '平均分',
-        //         type: 'line',
-        //         data: [],
-        //         markPoint: {
-        //             data: [
-        //                 {type: 'max', name: '最大值'},
-        //                 {type: 'min', name: '最小值'}
-        //             ]
-        //         },
-
-                // markLine: {
-                //     data: [
-                //         {type: 'average', name: '平均值'}
-                //     ]
-                // }
-
-
-        //     },
-        // ]
 
         series: [
             {
@@ -117,24 +97,7 @@
                     ]
                 },
                 markLine: {
-                    data: [
-                        // {type: 'average', name: '平均值'},
-                        // [{
-                        //     symbol: 'none',
-                        //     x: '90%',
-                        //     yAxis: 'max'
-                        // }, {
-                        //     symbol: 'circle',
-                        //     label: {
-                        //         normal: {
-                        //             position: 'start',
-                        //             formatter: '最大值'
-                        //         }
-                        //     },
-                        //     type: 'max',
-                        //     name: '最高点'
-                        // }]
-                    ]
+                    data: []
                 }
             }
         ]
@@ -143,6 +106,9 @@
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
 
+    /**
+     * 平均分
+     */
     $.ajax({
         type: "post",
         url: "findByTypeName",
@@ -171,6 +137,9 @@
     })
 
 
+    /**
+     * 总分
+     */
     $.ajax({
         type: "post",
         url: "findByTypeNameSUM",
@@ -180,7 +149,7 @@
                 tl1.push(data.total[i]);
             }
             for (var i = 0; i < data.TN.length; i++) {
-                tn.push(data.TN[i]);
+                tn1.push(data.TN[i]);
             }
             myChart.setOption({
                 // xAxis: {

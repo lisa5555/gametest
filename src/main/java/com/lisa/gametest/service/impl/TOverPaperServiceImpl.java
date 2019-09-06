@@ -35,10 +35,17 @@ public class TOverPaperServiceImpl implements ITOverPaperService {
     private TJudgeMapper tJudgeMapper;
 
     @Override
-    public List<overPaperInfo> findAllTOverPaper(String typeName,String name,Integer page, Integer limit) {
+    public Map<String, Object> findAllTOverPaper(String typeName,Integer state,String name,Integer page, Integer limit) {
+        HashMap<String, Object> map = new HashMap<>();
+
         PageHelper.startPage(page,limit);
-        List<overPaperInfo> list = tOverPaperMapper.findAllTP(typeName,name);
-        return list;
+        List<overPaperInfo> list = tOverPaperMapper.findAllTP(typeName,state,name);
+        long total = ((Page) list).getTotal();
+        map.put("code", 0);
+        map.put("msg", "");
+        map.put("count", total);
+        map.put("data", list);
+        return map;
     }
 
     @Override

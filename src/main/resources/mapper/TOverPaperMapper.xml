@@ -29,12 +29,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         inner join t_test_type ty
         on ty.tid=tp.tid
         where 1 = 1
+            <if test="state != null">
+                and top.state=#{state}
+            </if>
             <if test="name != null and name  != ''">
                 and tu.name like "%${name}%"
             </if>
             <if test="typeName != null and typeName != ''">
                 and ty.typeName=#{typeName}
             </if>
+
     </select>
 
     <select id="findByState" parameterType="int" resultType="com.lisa.gametest.vo.overPaperInfo">

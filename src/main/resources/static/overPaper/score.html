@@ -37,7 +37,7 @@
 </head>
 <body class="layui-layout-body">
 <div>
-    <h2>考试卷纸管理</h2>
+    <h2>阅卷管理</h2>
     <div class="layui-form searchDiv" id="id2">
 
 
@@ -64,8 +64,10 @@
 
             <div class="layui-inline">
                 <div class="layui-input-inline">
-                    <select name="state" lay-verify="required" id="sid">
+                    <select name="state" lay-verify="required" id="state">
                         <option value="">是否修改</option>
+                        <option value="1">已修改</option>
+                        <option value="0">未修改</option>
                     </select>
                 </div>
             </div>
@@ -111,7 +113,7 @@
         //         if(data.code == 1){
         //             var infos = data.info
         //             $(infos).each(function () {
-        //                 var html = '<option value="' + this.uid + '">' + this.name + '</option>'
+        //                 var html = '<option value="' + this.state + '">' + this.state + '</option>'
         //                 $("#mid").append($(html))
         //
         //             })
@@ -172,6 +174,17 @@
                 ,{fixed: 'right',title: '操作', width: 150, align:'center', toolbar: '#barDemo'}
 
             ]]
+            , done: function (res, curr, count) {
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                $("[data-field='state']").children().each(function () {
+                    if ($(this).text() == '0') {
+                        $(this).text('未修改');
+                    } else if ($(this).text() == '1') {
+                        $(this).text('已修改');
+                    }
+                })
+            }
         });
 
 
@@ -216,8 +229,8 @@
                     }
                     ,where: { // 额外需要提交的参数
                         typeName:$("#nid").val(),
+                        state:$("#state").val(),
                         name:$("#mid").val(),
-                        // courseTitle:$("#cid").val(),
                     }
                 });
             }

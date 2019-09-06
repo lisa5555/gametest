@@ -42,15 +42,8 @@ public class overPaperController {
      */
     @ResponseBody
     @RequestMapping("/query.do")
-    public Map<String,Object> findAllTOverPaper(String typeName,String name,Integer page, Integer limit) {
-        List<overPaperInfo> list = itOverPaperService.findAllTOverPaper(typeName,name,page, limit);
-        long total = ((Page) list).getTotal();
-
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("code", 0);
-        map.put("msg", "");
-        map.put("count", total);
-        map.put("data", list);
+    public Map<String,Object> findAllTOverPaper(String typeName,Integer state,String name,Integer page, Integer limit) {
+        Map<String, Object> map = itOverPaperService.findAllTOverPaper(typeName,state,name,page, limit);
 
         return map;
     }

@@ -13,12 +13,8 @@ public interface TOverPaperMapper {
      * 展示所有做完题目的方法
      * @return 返回值为所有做完题目的列表
      */
-    //public List<TOverPaper> findAllTOverPaper();
 
-
-   //public List<TOverPaper> findAllTOverPaper2();
-
-    public List<overPaperInfo> findAllTP(@Param("typeName") String typeName,@Param("name") String name);
+    public List<overPaperInfo> findAllTP(@Param("typeName") String typeName,@Param("state")Integer state, @Param("name") String name);
 
 
     /**
@@ -65,6 +61,10 @@ public interface TOverPaperMapper {
      */
     public void updateTOverPaper(TOverPaper tOverPaper);
 
-
+    /**
+     * 批量删除方法
+     * @param oidArr
+     * @return
+     */
     public Integer deleteAll(int[] oidArr);
 }
