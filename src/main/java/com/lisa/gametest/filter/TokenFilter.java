@@ -33,6 +33,10 @@ public class TokenFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
+        if(uri.contains("regist")){
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
         // 修改请求头中数据后，会先发送提交类型是options的请求
         if(method.equals("OPTIONS")){
             return;

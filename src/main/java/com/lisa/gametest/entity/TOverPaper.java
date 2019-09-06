@@ -3,35 +3,19 @@ package com.lisa.gametest.entity;
 public class TOverPaper {
     private Integer oid;
 
-    private Integer pid;
+    private Integer qid;
 
     private Integer uid;
 
-    private String commitchoose;
+    private String commitChoose;
 
-    private String commitjudge;
+    private String commitJudge;
 
-    private String commitanswer;
+    private String commitAnswer;
 
     private Integer score;
 
     private Integer state;
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
 
     public Integer getOid() {
         return oid;
@@ -41,12 +25,12 @@ public class TOverPaper {
         this.oid = oid;
     }
 
-    public Integer getPid() {
-        return pid;
+    public Integer getQid() {
+        return qid;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setQid(Integer qid) {
+        this.qid = qid;
     }
 
     public Integer getUid() {
@@ -57,27 +41,43 @@ public class TOverPaper {
         this.uid = uid;
     }
 
-    public String getCommitchoose() {
-        return commitchoose;
+    public String getCommitChoose() {
+        return commitChoose;
     }
 
-    public void setCommitchoose(String commitchoose) {
-        this.commitchoose = commitchoose == null ? null : commitchoose.trim();
+    public void setCommitChoose(String commitChoose) {
+        this.commitChoose = commitChoose;
     }
 
-    public String getCommitjudge() {
-        return commitjudge;
+    public String getCommitJudge() {
+        return commitJudge;
     }
 
-    public void setCommitjudge(String commitjudge) {
-        this.commitjudge = commitjudge == null ? null : commitjudge.trim();
+    public void setCommitJudge(String commitJudge) {
+        this.commitJudge = commitJudge;
     }
 
-    public String getCommitanswer() {
-        return commitanswer;
+    public String getCommitAnswer() {
+        return commitAnswer;
     }
 
-    public void setCommitanswer(String commitanswer) {
-        this.commitanswer = commitanswer == null ? null : commitanswer.trim();
+    public void setCommitAnswer(String commitAnswer) {
+        this.commitAnswer = commitAnswer;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
     }
 }

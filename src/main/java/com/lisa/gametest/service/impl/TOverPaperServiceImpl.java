@@ -70,10 +70,10 @@ public class TOverPaperServiceImpl implements ITOverPaperService {
         int size = 0;
 
         TOverPaper overPaper = new TOverPaper();
-        overPaper.setPid(qid);
+        overPaper.setQid(qid);
         overPaper.setUid(uid);
         overPaper.setState(0);
-        overPaper.setCommitjudge(answerString);
+        overPaper.setCommitAnswer(answerString);
 
 
         int chooseScore = 0;
@@ -88,48 +88,39 @@ public class TOverPaperServiceImpl implements ITOverPaperService {
 
             if (paperAnswer != null){
                 int id = paperAnswer.getId();
-                id--;
-
-                if (paperAnswer.getId() == 0) {
+                if (id == i) {
                     if (paperAnswer.getAnswer().equals(tChoose.getCorrect())) {
                         chooseScore += tChoose.getScore();
                     }
                     size++;
-                } else if (id == i) {
-                    if (paperAnswer.getAnswer().equals(tChoose.getCorrect())) {
-                        chooseScore += tChoose.getScore();
+                    if (size >= list.size()){
+                        break;
                     }
-                    size++;
                 }
             }
         }
 
         List<TJudge> judgeList = tJudgeMapper.findTJudgeByPid(qid);
         int c = chooseList.size();
-
-        for (j = 0; j <= judgeList.size(); j++){
-            c += j;
-            PaperAnswerInfo paperAnswer = list.get(size);
-            TJudge tjudge = judgeList.get(j);
-            if (paperAnswer != null) {
-
-                int id = paperAnswer.getId();
-                id--;
-
-                if (paperAnswer.getId() == 0) {
-                    if (paperAnswer.getAnswer().equals(tjudge.getCorrect())) {
-                        judgeScore += tjudge.getScore();
+        if (size < list.size()) {
+            for (j = 0; j <= judgeList.size(); j++) {
+                c += j;
+                PaperAnswerInfo paperAnswer = list.get(size);
+                TJudge tjudge = judgeList.get(j);
+                if (paperAnswer != null) {
+                    int id = paperAnswer.getId();
+                    if (c == id) {
+                        if (paperAnswer.getAnswer().equals(tjudge.getCorrect())) {
+                            judgeScore += tjudge.getScore();
+                        }
+                        size++;
+                        if (size >= list.size()) {
+                            break;
+                        }
                     }
-                    size++;
-                } else if (c == id) {
-                    if (paperAnswer.getAnswer().equals(tjudge.getCorrect())) {
-                        judgeScore += tjudge.getScore();
-                    }
-                    size++;
                 }
             }
         }
-
 
         chooseScore += judgeScore;
         overPaper.setScore(chooseScore);

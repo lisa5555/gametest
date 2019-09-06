@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.lisa.gametest.common.AjaxResult;
+import com.lisa.gametest.entity.TKuinfo;
 import com.lisa.gametest.entity.TUser;
+import com.lisa.gametest.service.ITKuinfoService;
 import com.lisa.gametest.service.ITTestNumberService;
 import com.lisa.gametest.service.ITUserService;
 import com.lisa.gametest.utils.MD5Utils;
@@ -29,14 +31,16 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/api")
 public class LoginController {
-
+    @Autowired
+    private ITUserService service;
     @Autowired
     private ITTestNumberService ns;
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
     @Autowired
-    private ITUserService service;
+    private ITUserService service1;
     @RequestMapping("/login.do")
     //public Map<String, Object> login(String name, String password, HttpSession session){
     public AjaxResult login(String username, String password,String vercode){
@@ -69,6 +73,24 @@ public class LoginController {
 
 
 
+    }
+
+    @RequestMapping("/regist.do")
+    public AjaxResult add2(TUser tUser){
+        AjaxResult ajaxResult = new AjaxResult();
+        String password = tUser.getPassword();
+        String s = MD5Utils.md5(password);
+        tUser.setPassword(s);
+        try {
+            service1.add(tUser);
+            ajaxResult.setCode(0);
+            ajaxResult.setInfo(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxResult.setCode(1);
+            ajaxResult.setInfo(e.getMessage());
+        }
+        return ajaxResult;
     }
     @RequestMapping("/createVcode.do")
     public void createVcode(HttpServletResponse response) throws IOException {
@@ -107,4 +129,50 @@ public class LoginController {
         return map;
     }
 
+    @RequestMapping("/info.do")
+    public AjaxResult getInfo(){
+        AjaxResult jsonResult = new AjaxResult();
+        String username = redisTemplate.opsForValue().get("token");
+        if (username!=null){
+            jsonResult.setCode(1);
+            jsonResult.setInfo(username);
+            return jsonResult;
+        }else {
+            jsonResult.setCode(0);
+            jsonResult.setInfo(null);
+            return jsonResult;
+        }
+
+    }
+    @Autowired
+    private ITKuinfoService itKuinfoService;
+
+    @Autowired
+    private ITUserService itUserService;
+
+
+
+
+    /**
+     * 报名考试
+     * @param kid 考场id
+     * @return
+     */
+    @RequestMapping("/addTKuinfo")
+    public AjaxResult addTKuinfo(Integer kid) {
+        String username = redisTemplate.opsForValue().get("token");
+
+        TUser user = itUserService.findByName(username);
+        TKuinfo tKuinfo = new TKuinfo();
+        tKuinfo.setKid(kid);
+        tKuinfo.setUid(user.getUid());
+        try {
+            itKuinfoService.insertTKuinfo(tKuinfo);
+            return new AjaxResult(1,null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AjaxResult(0,"添加失败");
+        }
+
+    }
 }
