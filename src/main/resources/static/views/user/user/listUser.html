@@ -108,7 +108,6 @@
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'del'){
                 layer.confirm('真的要删除吗？？？', function(index){
-                    obj.del(); //删除对应行（tr）的DOM结构
                     layer.close(index);
                     //向服务端发送删除指令
                     $.ajax({
@@ -117,6 +116,7 @@
                         dataType:"json",
                         success:function(data){
                             if(data.code == 0){
+                                obj.del(); //删除对应行（tr）的DOM结构
                                 table.reload('demo');
                             }else{
                                 alert(data.info);

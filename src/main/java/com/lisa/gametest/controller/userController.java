@@ -208,9 +208,15 @@ public class userController {
     public AjaxResult deleteById(Integer id){
         AjaxResult asonResult = new AjaxResult();
         try {
-            service.deleteById(id);
-            asonResult.setCode(0);
-            asonResult.setInfo(null);
+
+            if (id != 1) {
+                service.deleteById(id);
+                asonResult.setCode(0);
+                asonResult.setInfo(null);
+            } else {
+                asonResult.setCode(1);
+                asonResult.setInfo("管理员无法删除自己权限");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             asonResult.setCode(1);

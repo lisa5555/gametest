@@ -147,7 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null and sex != ''">
                 and sex  like"%"#{sex}"%"
             </if>
-            <if test="state != null and state != ''">
+            <if test="state != null">
                 and state=#{state}
             </if>
         </where>
