@@ -5,8 +5,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lisa.gametest.OverPaperVo.PaperAnswerInfo;
 import com.lisa.gametest.common.AjaxResult;
+import com.lisa.gametest.entity.TChoose;
 import com.lisa.gametest.entity.TTestNumber;
 import com.lisa.gametest.entity.TUser;
+import com.lisa.gametest.service.ITChooseService;
 import com.lisa.gametest.service.ITOverPaperService;
 import com.lisa.gametest.service.ITTestNumberService;
 import com.lisa.gametest.service.ITUserService;
@@ -34,6 +36,8 @@ public class TOverPaperController {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    private ITChooseService itChooseService;
 
     @Autowired
     private ITOverPaperService overPaperService;
@@ -84,8 +88,6 @@ public class TOverPaperController {
         }
 
     }
-
-
 
 
 

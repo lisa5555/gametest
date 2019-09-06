@@ -41,8 +41,15 @@
 <div>
     <h2>选择题管理</h2>
     <div class="layui-form searchDiv" id="id2">
-
-
+        <button type="button" class="layui-btn" onclick="answer()">
+            查看简答题 <span class="badge"></span>
+        </button>
+        <button type="button" class="layui-btn" onclick="choose()">
+            查看选择题 <span class="badge"></span>
+        </button>
+        <button type="button" class="layui-btn" onclick="add()">
+            添加 <span class="badge"></span>
+        </button>
         <button id="btn" class="layui-btn" type="button">
             批量删除 <span class="badge"></span>
         </button>
@@ -68,10 +75,7 @@
                 </div>
             </div>
             <button type="button" class="layui-btn" data-type="reload">搜索</button>
-
         </div>
-        <div id="content" ><button type="button" class="layui-btn" onclick="add()">添加</button></div>
-
     </div>
 </div>
 
@@ -259,6 +263,12 @@
             , area: ['650px', '600px']
             , content: 'judgeAdd.html'
         })
+    }
+    function choose() {
+        window.location.href = "choose.html"
+    }
+    function answer() {
+        window.location.href = "judge.html"
     }
 
 </script>

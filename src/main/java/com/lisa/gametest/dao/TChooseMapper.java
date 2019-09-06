@@ -14,6 +14,8 @@ public interface TChooseMapper {
 
     int deleteTChooseByIds(String[] array);
 
+    List<TChoose> findTenTChoose();
+
     int insertTChoose(TChoose tChoose);
 
     int insertSomeChoose(List<TChoose> list);
