@@ -143,13 +143,24 @@
                 ,{field: '', title: '序号', templet:'#xuhao', width:80, sort: true, fixed: 'left'}
                 ,{field: 'coment', title: '题目', align:'center',width:160, sort: true}
                 ,{field: 'jid', title: 'jid', hide:true }
-                ,{field: 'correct', title: '答案',align:'center', width:50}
+                ,{field: 'correct', title: '答案',align:'center', width:100}
                 ,{field: 'decs', title: '解析', width:200, align:'center', sort: true}
                 ,{field: 'score', title: '分值',align:'center', width:80}
                 ,{field:'typeName',title:'所属课程',width:140, align:"center"}
                 ,{fixed: 'right',title: '操作', width: 165, align:'center', toolbar: '#barDemo'}
 
             ]]
+            , done: function (res, curr, count) {
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                $("[data-field='correct']").children().each(function () {
+                    if ($(this).text() == 'A') {
+                        $(this).text('正确');
+                    } else if ($(this).text() == 'B') {
+                        $(this).text('错误');
+                    }
+                })
+            }
         });
 
 
