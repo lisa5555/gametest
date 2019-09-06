@@ -20,6 +20,7 @@ public interface ITChooseService {
 
     public int updateTChoose(TChoose tChoose);
 
+    public List<TChoose> findTenTChoose();
 
     public TChoose selectTChooseById(Integer cid);
 

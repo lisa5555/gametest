@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lisa.gametest.OverPaperVo.QuestionJosn;
 import com.lisa.gametest.common.AjaxResult;
+import com.lisa.gametest.entity.TChoose;
 import com.lisa.gametest.entity.TPaper;
 import com.lisa.gametest.service.*;
 import com.lisa.gametest.vo.AnswerExam;
@@ -94,6 +95,17 @@ public class PaperController {
         } catch (Exception e) {
             e.printStackTrace();
             return new AjaxResult(0,"生成失败");
+        }
+    }
+
+    @RequestMapping("/findTenTChoose")
+    public AjaxResult findTen(){
+        try {
+            List<TChoose> list = itChooseService.findTenTChoose();
+            return new AjaxResult(1, list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AjaxResult(0,"未查到");
         }
     }
 

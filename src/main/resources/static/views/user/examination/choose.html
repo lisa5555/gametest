@@ -41,8 +41,15 @@
 <div>
     <h2>选择题管理</h2>
     <div class="layui-form searchDiv" id="id2">
-
-
+        <button type="button" class="layui-btn" onclick="answer()">
+            查看简答题 <span class="badge"></span>
+        </button>
+        <button type="button" class="layui-btn" onclick="judge()">
+            查看判断题 <span class="badge"></span>
+        </button>
+        <button type="button" class="layui-btn" onclick="add()">
+            添加 <span class="badge"></span>
+        </button>
         <button id="btn" class="layui-btn" type="button">
             批量删除 <span class="badge"></span>
         </button>
@@ -70,7 +77,6 @@
             <button type="button" class="layui-btn" data-type="reload">搜索</button>
 
         </div>
-        <div id="content" ><button type="button" class="layui-btn" onclick="add()">添加</button></div>
 
     </div>
 </div>
@@ -118,13 +124,13 @@
         table.render({
             elem: '#demo'
             ,id:"transferTable"
-            ,height: 500
+            ,height: 'full'
             ,width: 'full'
             ,url: '/dianjing/TChoose/listTChoose' //数据接口
             ,title: '视频表'
             ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
-                //,curr: 5 //设定初始在第 5 页
+                ,curr: 5 //设定初始在第 5 页
                 //,groups: 1 //只显示 1 个连续页码
                 ,first: false //不显示首页
                 ,last: false //不显示尾页
@@ -134,7 +140,7 @@
             ,cols: [[ //表头
                 {type: 'checkbox', fixed: 'left', filter:"test"}
                 ,{field: '', title: '序号', templet:'#xuhao', width:80, sort: true, fixed: 'left'}
-                ,{field: 'coment', title: '题目', width:200, align:'center', sort: true}
+                ,{field: 'coment', title: '题目', width:150, align:'center', sort: true}
                 ,{field: 'cid', title: 'cid', hide: true }
                 ,{field: 'axuanxiang', title: 'A选项', width:100, align:'center', sort: true}
                 ,{field: 'bxuanxiang', title: 'B选项', width:100, align:'center', sort: true}
@@ -142,7 +148,7 @@
                 ,{field: 'dxuanxiang', title: 'D选项', width:100, align:'center', sort: true}
                 ,{field:'typeName',title:'所属课程',width:120, align:"center"}
                 ,{field: 'correct', title: '正确选项',align:'center', width:100}
-                ,{field: 'decs', title: '解析', width:200, align:'center', sort: true}
+                ,{field: 'decs', title: '解析', width:160, align:'center', sort: true}
                 ,{field: 'score', title: '分值', width:80},
 				,{fixed: 'right',title: '操作', width: 165, align:'center', toolbar: '#barDemo'}
             ]]
@@ -260,6 +266,13 @@
             , area: ['700px', '600px']
             , content: 'chooseAdd.html'
         })
+    }
+
+    function answer() {
+        window.location.href = "answer.html"
+    }
+    function judge() {
+        window.location.href = "judge.html"
     }
 
 </script>
